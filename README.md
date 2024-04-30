@@ -6,6 +6,7 @@ This browser based web application to ...
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
+* Hi! My name is Jiarui Xing, and people usually call me Jerry. I will try my best to work in a team!
 * ...
 * ...
 * ...
@@ -13,9 +14,14 @@ List team members and/or short bio's here...
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 * HTML, CSS, JavaScript
-* Bootstrap 5.0 (Frontend library)
-* Firebase 8.0 (BAAS - Backend as a Service)
-* ...
+* Bootstrap v5.0 (Frontend library)
+* Firebase v10.9.0 (BAAS - Backend as a Service)
+* Node.js v20.11.1, npm v10.2.4, CommonJS model, ECMAScript (JS in Server)
+* Microsoft Edge, Google Chrome (Browser)
+* Git v2.44.0.windows.1, GitHub, GitKraken v9.13.0 (Version control)
+* Adobe Photoshop 2023 (For Icons and Logo)
+* JetBrains WebStorm v2024.1, Microsoft Visual Studio Code (IDE)
+* Microsoft Windows 10 22H2, 11 (OS)
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
@@ -35,27 +41,3 @@ What we'd like to build in the future:
 * ...
 * ...
 * ...
-	
-## 7. Contents of Folder
-Content of the project folder:
-
-```
- Top level of project folder: 
-├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
-└── README.md
-
-It has the following subfolders and files:
-├── .git                     # Folder for git repo
-├── images                   # Folder for images
-    /blah.jpg                # Acknowledge source
-├── scripts                  # Folder for scripts
-    /blah.js                 # 
-├── styles                   # Folder for styles
-    /blah.css                # 
-
-
-
-```
-
-
