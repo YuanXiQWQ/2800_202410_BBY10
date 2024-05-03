@@ -1,3 +1,8 @@
+/**
+ * Just a practice of using the API; maybe you guys can use it as a reference? I don't think our
+ * project will need this. Just for example.
+ */
+
 import readline from 'node:readline';
 const rl = readline.createInterface({
     input: process.stdin,
@@ -25,16 +30,14 @@ const key = "sk-YsyYChLSPXi3Y2sdQLApDDU0TbI7cCnuBewOZUGyYAod5uhr";
 let conversationHistory = [];
 
 /**
- * Asks the user for input and sends it to ChatGPT
+ * Gets the user question from input and sends it to ChatGPT
  */
 function askQuestion() {
     rl.question("User: ", (answer) => {
-        if (answer.toLowerCase() === "exit") {
-            console.log("Exiting chat...");
+        if (answer.toLowerCase().trim() === "exit") {
             rl.close();
         } else {
-            sendMessageToChatGPT(answer)
-                .catch(e => console.error(e));
+            sendMessageToChatGPT(answer).catch(e => console.error(e));
         }
     });
 }
@@ -45,6 +48,7 @@ function askQuestion() {
  * @return {Promise<void>}
  */
 async function sendMessageToChatGPT(messageToSend) {
+    // From API Doc
     let header = new Headers();
     header.append("Authorization", "Bearer " + key);
     header.append("User-Agent", "Apifox/1.0.0 (https://apifox.com)");
@@ -88,25 +92,20 @@ async function sendMessageToChatGPT(messageToSend) {
         redirect: 'follow'
     };
 
-    // Async request so tries/catches
-    try {
-        const response = await fetch("https://api.chatanywhere.tech/v1/chat/completions",
-            httpPost);
-        const result = await response.json();
-
-        const message = result.choices[0].message.content;
-        console.log("ChatGPT: " + message);
-
-        // Add response to conversation history
-        conversationHistory.push({
-            "role": "system",
-            "content": message
-        });
-
-        askQuestion();
-    } catch (error) {
-        console.error('Error communicating with ChatGPT:', error);
-    }
+    fetch("https://api.chatanywhere.tech/v1/chat/completions", httpPost)
+        .then(response => response.json())
+        .then(data => {
+            console.log("ChatGPT: " + data.choices[0].message.content);
+            // Add response to conversation history
+            conversationHistory.push({
+                "role": "system",
+                "content": data.choices[0].message.content
+            });
+            // Run again
+            askQuestion();
+        })
+        .catch(e => console.error(e));
 }
 
+// Start
 askQuestion();

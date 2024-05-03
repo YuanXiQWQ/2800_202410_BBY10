@@ -7,7 +7,7 @@
  * You might need Google translator; if you are using Microsoft Edge,
  * right-click and find "translate"; for other browsers, add Google
  * Translator plugin.
- * TODO: Delete this in final version
+ * TODO: Delete this key in final version
  */
 const key = "sk-YsyYChLSPXi3Y2sdQLApDDU0TbI7cCnuBewOZUGyYAod5uhr";
 
@@ -109,21 +109,17 @@ and so on. Please note: your response should only contain the JSON itself, witho
         redirect: 'follow'
     };
 
-    try {
-        const response = await fetch("https://api.chatanywhere.tech/v1/chat/completions",
-            httpPost);
-        const data = await response.json();
-
-        /* The content that we need in GPT's response is under the "data" key, "choices" array,
+    fetch("https://api.chatanywhere.tech/v1/chat/completions", httpPost)
+        .then(response => response.json())
+        .then(data => {
+            /* The content that we need in GPT's response is under the "data" key, "choices" array,
         and "message" object. */
-        return JSON.parse(data.choices[0].message.content);
-
-    } catch (error) {
-        console.error('Error communicating with ChatGPT:', error);
-    }
+            console.log(data.choices[0].message.content);
+        })
+        .catch(e => console.error(e));
 }
 
 // Usage example:
 sendMessageToGPT("2024/5/2", "2024/5/8", "Normal")
     .then(response => console.log(response))
-    .catch(error => console.error(error));
+    .catch(e => console.error(e));
