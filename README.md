@@ -1,22 +1,34 @@
 # Project Title
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+
+Our project, BBY-10, is developing an AI-powered fitness app to assist individuals who struggle with planning or
+maintaining proper form during their fitness journey. Our solution offers personalised workout plans, goal setting, and
+progress tracking through a user-friendly calendar interface. Additionally, users can monitor their form in real-time by
+integrating AI technology and the MoveNet API.
 
 ## 2. Names of Contributors
-List team members and/or short bio's here... 
-* Hi! My name is Jiarui Xing, and people usually call me Jerry. I will try my best to work in a team!
-* ...
-* ...
-* ...
-	
+
+List team members and/or short bio's here...
+
+| **Team Name**    | BBY-10                                                                                              |
+|------------------|-----------------------------------------------------------------------------------------------------|
+| **Team Members** | **Bios**                                                                                            |
+| Matthew Wing     |                                                                                                     |
+| Jason Liu        |                                                                                                     |
+| Amal Allaham     |                                                                                                     |
+| Jiarui Xing      | Hi! My name is Jiarui Xing, and people usually call me Jerry. I will try my best to work in a team! |
+
 ## 3. Technologies and Resources Used
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
+
+List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that
+were used.
+
 * HTML, CSS, JavaScript
 * Bootstrap v5.0 (Frontend library)
 * Firebase v10.9.0 (BAAS - Backend as a Service)
 * Node.js v20.11.1, npm v10.2.4, CommonJS model, ECMAScript (JS in Server)
+* OpenAI (AI API), MoveNet (Move Track API)
 * Microsoft Edge, Google Chrome (Browser)
 * Git v2.44.0.windows.1, GitHub, GitKraken v9.13.0 (Version control)
 * Adobe Photoshop 2023 (For Icons and Logo)
@@ -24,20 +36,26 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * Microsoft Windows 10 22H2, 11 (OS)
 
 ## 4. Complete setup/installion/usage
-State what a user needs to do when they come to your project.  How do others start using your code or application?
+
+State what a user needs to do when they come to your project. How do others start using your code or application?
 Here are the steps ...
+
 * ...
 * ...
 * ...
 
 ## 5. Known Bugs and Limitations
+
 Here are some known bugs:
+
 * ...
 * ...
 * ...
 
 ## 6. Features for Future
+
 What we'd like to build in the future:
+
 * ...
 * ...
 * ...
