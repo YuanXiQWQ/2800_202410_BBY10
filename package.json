@@ -1,8 +1,15 @@
 {
-  "name": "2800_2024_bby10",
+  "name": "2800_202410_bby10",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
+  "description": "Our project, BBY-10, is developing an AI-powered fitness app to assist individuals who struggle with planning or maintaining proper form during their fitness journey. Our solution offers personalised workout plans, goal setting, and progress tracking through a user-friendly calendar interface. Additionally, users can monitor their form in real-time by integrating AI technology and the MoveNet API.",
   "main": "index.js",
-  "author": "",
-  "license": "MIT"
+  "scripts": {
+    "run": "node index.js"
+  },
+  "author": "Matthew Wing, Jason Liu, Amal Allaham, Jerry Xing",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
 }
