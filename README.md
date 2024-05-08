@@ -16,7 +16,8 @@ List team members and/or short bio's here...
 | **Team Members** | **Bios**                                                                                            |
 | Matthew Wing     |                                                                                                     |
 | Jason Liu        |                                                                                                     |
-| Amal Allaham     |                                                                                                     |
+| Amal Allaham     |    
+                                                                                                 |
 | Jiarui Xing      | Hi! My name is Jiarui Xing, and people usually call me Jerry. I will try my best to work in a team! |
 
 ## 3. Technologies and Resources Used
