@@ -1,4 +1,3 @@
-// const express = require("express");
 import express from "express"
 import connectDB from "./db.js";
 import path from "path"
@@ -36,7 +35,8 @@ app.use(
 
 
 app.get("/", (req, res) => {
-
+  register();
+  login()
 });
 
 app.listen(PORT, () => {
