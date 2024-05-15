@@ -51,7 +51,7 @@ app.get('/signup', (req, res) => {
 });
 
 app.get('/resetPassword', (req, res) => {
-    res.render('resetPassword');
+    res.render('changePassword');
 });
 
 app.post('/submitUser', async (req, res) => {
