@@ -1,19 +1,17 @@
-import MongoStore from "connect-mongo"
-import session from "express-session"
+import {register, login, changePassword} from './controller/auth.js';
+import MongoStore from "connect-mongo";
+import session from "express-session";
 import {fileURLToPath} from 'url';
 import connectDB from "./db.js";
+import express from "express";
 import {dirname} from 'path';
-import express from "express"
 import bcrypt from 'bcrypt';
-import path from "path"
-//import User from "./model/User.js"; // Import the User model
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import path from "path";
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const PORT = process.env.PORT || 3000;
-
 const saltRounds = 10;
 
 connectDB();
@@ -36,8 +34,11 @@ app.use(
         store: MongoStore.create({
             mongoUrl: process.env.MONGODB_URI,
         }),
-    })
-);
+        cookie: {
+            // I set in 1 day, but IDK you guys opinion or are we even need this
+            maxAge: 1000 * 60 * 60 * 24
+        }
+    }));
 
 
 app.get("/", (req, res) => {
@@ -94,9 +95,9 @@ app.get("/additional-info", (req, res) => {
 
 app.post("/submitAdditionalInfo", (req, res) => {
 
-    var weight = req.body.weight;
-    var height = req.body.height;
-    var workoutLevel = req.body.workoutLevel;
+    const weight = req.body.weight
+    const height = req.body.height
+    const workoutLevel = req.body.workoutLevel
 
     req.session.userData = {
         ...req.session.userData,
@@ -117,6 +118,8 @@ app.get("/test", (req, res) => {
     res.render("test", {userData: userData});
     console.log(userData);
 });
+
+app.post('/change-password', changePassword);
 
 app.listen(PORT, () => {
     console.log(`Server started: http://localhost:${PORT}`);

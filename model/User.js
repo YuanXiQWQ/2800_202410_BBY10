@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
     {
@@ -51,9 +52,19 @@ const userSchema = new mongoose.Schema(
             enum: ["beginner", "intermediate", "advanced"],
         },
     },
-    {timestamps: true}
+    { timestamps: true }
 );
 
-const User = mongoose.model("users", userSchema);
+export function findByUsername(username) {
+    return this.findOne({ username });
+}
 
-module.exports = User;
+export function getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+}
+
+export async function validatePassword(password) {
+    return await bcrypt.compare(password, this.password);
+}
+
+export const User = mongoose.model("User", userSchema);
