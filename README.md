@@ -2,14 +2,14 @@
 
 ## 1. Project Description
 
-Our project, BBY-10, is developing an AI-powered fitness app to assist individuals who struggle with planning or
+Our project, BBY-10, is developing an AI-powered fitness app to help individuals who struggle with planning or
 maintaining proper form during their fitness journey. Our solution offers personalised workout plans, goal setting, and
 progress tracking through a user-friendly calendar interface. Additionally, users can monitor their form in real-time by
 integrating AI technology and the MoveNet API.
 
 ## 2. Names of Contributors
 
-List team members and/or short bio's here...
+List team members and/or short bio here...
 
 | **Team Name**    | BBY-10                                                                                              |
 |------------------|-----------------------------------------------------------------------------------------------------|
@@ -21,7 +21,7 @@ List team members and/or short bio's here...
 
 ## 3. Technologies and Resources Used
 
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that
+List technologies (with version numbers), API, icons, fonts, images, media or data sources, and other resources that
 were used.
 
 * HTML, CSS, JavaScript
@@ -35,7 +35,7 @@ were used.
 * JetBrains WebStorm v2024.1, Microsoft Visual Studio Code (IDE)
 * Microsoft Windows 10 22H2, 11 (OS)
 
-## 4. Complete setup/installion/usage
+## 4. Complete setup/installation/usage
 
 State what a user needs to do when they come to your project. How do others start using your code or application?
 Here are the steps ...
