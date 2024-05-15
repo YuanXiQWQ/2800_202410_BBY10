@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>navbar</title>
+    <style>
+      #bottomNavbar {
+        display: none;
+        }
+
+      @media (max-width: 701px) {
+        body {
+          position: relative;
+          }
+
+        #topNavbar {
+          display: none
+          }
+
+        #bottomNavbar {
+          bottom: 0;
+          padding: 0;
+          width: 100vw;
+          display: grid;
+          position: fixed;
+          font-size: .8rem;
+          grid-template-columns: repeat(4, 1fr);
+          background-color: rgba(74, 37, 160, 20%);
+          }
+
+        .nav-item {
+          width: auto;
+          padding: 5px 0;
+          text-align: center;
+          align-content: center;
+          }
+
+        .nav-item:hover {
+          background-color: rgba(170, 165, 183, 20%);
+          }
+        }
+
+      .nav-item > svg {
+        height: min(80%, 35px);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/fitness">Fitness</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/calendar">Calendar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav id="bottomNavbar">
+    <div class="nav-item">
+        <svg width="51" height="45" viewBox="0 0 51 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M43.9554 42.4588C43.9554 43.0555 43.7145 43.6278 43.2856 44.0498C42.8566 44.4718 42.2749 44.7088 41.6683 44.7088H9.64851C9.04193 44.7088 8.46019 44.4718 8.03127 44.0498C7.60235 43.6278 7.36139 43.0555 7.36139 42.4588V22.2088H0.5L24.1192 1.0858C24.5403 0.708879 25.0891 0.5 25.6584 0.5C26.2277 0.5 26.7766 0.708879 27.1977 1.0858L50.8168 22.2088H43.9554V42.4588Z"
+                  fill="black"/>
+        </svg>
+        <a class="nav-link" href="/">Home</a>
+    </div>
+    <div class="nav-item">
+        <svg width="43" height="46" viewBox="0 0 43 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M39.1133 29.3442L42.0522 26.1267L39.1133 22.9092L31.7761 30.9417L14.1628 11.6592L21.5 3.62668L18.561 0.40918L15.6221 3.62668L12.6831 0.40918L8.2849 5.22418L5.34593 2.00668L2.40696 5.22418L5.34593 8.44168L0.947754 13.2567L3.88672 16.4742L0.947754 19.6917L3.88672 22.9092L11.2239 14.8767L28.8371 34.1592L21.5 42.1917L24.439 45.4092L27.3779 42.1917L30.3169 45.4092L34.7151 40.5942L37.6541 43.8117L40.593 40.5942L37.6541 37.3767L42.0522 32.5617L39.1133 29.3442Z"
+                  fill="black"/>
+        </svg>
+        <a class="nav-link" href="/fitness">Fitness</a>
+    </div>
+    <div class="nav-item">
+        <svg width="45" height="46" viewBox="0 0 45 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M33.75 5.25H42.75C43.3467 5.25 43.919 5.48705 44.341 5.90901C44.763 6.33097 45 6.90326 45 7.5V43.5C45 44.0967 44.763 44.669 44.341 45.091C43.919 45.5129 43.3467 45.75 42.75 45.75H2.25C1.65326 45.75 1.08097 45.5129 0.65901 45.091C0.237053 44.669 0 44.0967 0 43.5V7.5C0 6.90326 0.237053 6.33097 0.65901 5.90901C1.08097 5.48705 1.65326 5.25 2.25 5.25H11.25V0.75H15.75V5.25H29.25V0.75H33.75V5.25ZM4.5 18.75V41.25H40.5V18.75H4.5ZM9 27.75H20.25V36.75H9V27.75Z"
+                  fill="black"/>
+        </svg>
+        <a class="nav-link" href="/calendar">Calendar</a>
+    </div>
+    <div class="nav-item">
+        <svg width="37" height="48" viewBox="0 0 37 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M36.5 48H0.5V43.5C0.5 40.5163 1.68526 37.6548 3.79505 35.545C5.90483 33.4353 8.76631 32.25 11.75 32.25H25.25C28.2337 32.25 31.0952 33.4353 33.2049 35.545C35.3147 37.6548 36.5 40.5163 36.5 43.5V48ZM18.5 27.75C16.7272 27.75 14.9717 27.4008 13.3338 26.7224C11.6959 26.0439 10.2076 25.0495 8.95406 23.7959C7.70047 22.5424 6.70606 21.0541 6.02763 19.4162C5.34919 17.7783 5 16.0228 5 14.25C5 12.4772 5.34919 10.7217 6.02763 9.08377C6.70606 7.44588 7.70047 5.95765 8.95406 4.70406C10.2076 3.45047 11.6959 2.45606 13.3338 1.77763C14.9717 1.09919 16.7272 0.75 18.5 0.75C22.0804 0.75 25.5142 2.17232 28.0459 4.70406C30.5777 7.2358 32 10.6696 32 14.25C32 17.8304 30.5777 21.2642 28.0459 23.7959C25.5142 26.3277 22.0804 27.75 18.5 27.75Z"
+                  fill="black"/>
+        </svg>
+        <a class="nav-link" href="/profile">Profile</a>
+    </div>
+</nav>
+
+</body>
