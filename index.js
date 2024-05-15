@@ -1,4 +1,4 @@
-import {register, login, changePassword} from './controller/auth.js';
+import {register, login, changePassword, AdditionalUserInfo} from './controller/auth.js';
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import {fileURLToPath} from 'url';
@@ -7,6 +7,9 @@ import express from "express";
 import {dirname} from 'path';
 import bcrypt from 'bcrypt';
 import path from "path";
+
+
+
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -58,34 +61,7 @@ app.get('/signup', (req, res) => {
 
 app.post('/submitUser', async (req, res) => {
 
-
-  try {
-
-    var user_name = req.body.user_name;
-    var first_name = req.body.first_name;
-    var last_name = req.body.last_name;
-    var email = req.body.email;
-
-    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-
-    req.session.userData = {
-      user_name: user_name,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      password: hashedPassword
-    };
-
-    console.log("hi");
-
-    
-    res.redirect('/additional-info');
-  } catch (error) {
-    console.error('Error hashing password:', error);
-    res.status(500).send('Internal Server Error');
-  }
-
+ register(req,res);
 
 });
 
@@ -96,27 +72,18 @@ app.get("/additional-info", (req,res) => {
 
 app.post("/submitAdditionalInfo", (req, res) => {
 
-  var weight = req.body.weight;
-  var height = req.body.height;
-  var workoutLevel = req.body.workoutLevel;
+  AdditionalUserInfo(req,res);
 
-  req.session.userData = {
-    ...req.session.userData,
-    weight: weight,
-    height: height,
-    workoutLevel: workoutLevel
-  }
-
-  res.redirect("/test");
-})
+  
+});
 
 //test page after user enters all their info
-app.get("/test", (req, res) => {
+app.get("/profile", (req, res) => {
   // Access user data from the session
   const userData = req.session.userData;
   
   // Render a view with the user data
-  res.render("test", { userData: userData });
+  res.render("profile", { userData: userData });
   console.log(userData);
 });
 
