@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         type: String, required: false, enum: ["beginner", "intermediate", "advanced"],
     },
 }, {
-    timestamps: true, collection: 'users'
+    timestamps: true, collection: 'users', collation: {locale: 'en', strength: 2}
 });
 
 export function findByUsername(username) {
