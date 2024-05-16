@@ -1,0 +1,80 @@
+/**
+ * style.css for global
+ */
+
+/* Global */
+.hidden {
+  display: none !important;
+  }
+
+.undecorated {
+  /* box */
+  padding: 0;
+  margin: 0;
+  /* font */
+  text-decoration: none;
+  list-style-type: none;
+  /* style */
+  background-color: transparent;
+  border: none;
+  }
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.primary-color {
+  background-color: #6D36EC;
+  color: #FFF;
+}
+
+.primary-color-hover:hover {
+  background-color: #4A25A0
+}
+
+.secondary-color {
+  background-color: #F8D262;
+  color: #000;
+}
+
+#bottomNavbar {
+  display: none;
+}
+
+@media (max-width: 701px) {
+  body {
+    position: relative;
+  }
+
+  #topNavbar {
+    display: none
+  }
+
+  #bottomNavbar {
+    bottom: 0;
+    padding: 0;
+    width: 100vw;
+    display: grid;
+    position: fixed;
+    font-size: .8rem;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: rgba(74, 37, 160, 20%);
+  }
+
+  .nav-item {
+    width: auto;
+    padding: 5px 0;
+    text-align: center;
+    align-content: center;
+  }
+
+  .nav-item:hover {
+    background-color: rgba(170, 165, 183, 20%);
+  }
+}
+
+.nav-item > svg {
+  height: min(80%, 35px);
+}
