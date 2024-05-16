@@ -9,9 +9,9 @@ export async function register(req, res) {
 
     try {
 
-        const user_name = req.body.username
-        const first_name = req.body.first_name
-        const last_name = req.body.last_name
+        const username = req.body.username
+        const firstName = req.body.firstName
+        const lastName = req.body.lastName
         const email = req.body.email
         const birthday = req.body.birthday
 
@@ -19,12 +19,12 @@ export async function register(req, res) {
     
     
         req.session.userData = {
-          username: user_name,
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          password: hashedPassword,
-          birthday: birthday
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: hashedPassword,
+            birthday: birthday
         };
     
         
@@ -59,19 +59,19 @@ export async function AdditionalUserInfo(req, res){
 
   //console.log(req.session.userData);
 
-  const newUser = new User({
-    username: req.session.userData.username, // Set username here
-    first_name: req.session.userData.first_name,
-    last_name: req.session.userData.last_name,
-    email: req.session.userData.email,
-    password: hashedPassword,
-    birthday: req.session.userData.birthday,
-    weight: weight,
-    height: height,
-    workoutLevel: workoutLevel,
-    time: time,
-    goal: goal
-});
+    const newUser = new User({
+        username: req.session.userData.username,
+        firstName: req.session.userData.firstName,
+        lastName: req.session.userData.lastName,
+        email: req.session.userData.email,
+        password: hashedPassword,
+        birthday: req.session.userData.birthday,
+        weight: weight,
+        height: height,
+        workoutLevel: workoutLevel,
+        time: time,
+        goal: goal
+    });
 
   console.log(newUser);
 
