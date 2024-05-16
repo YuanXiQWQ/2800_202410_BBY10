@@ -52,6 +52,10 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+app.get('/changePassword', (req, res) => {
+    res.render('changePassword');
+});
+
 app.post('/submitUser', async (req, res) => {
     try {
         await register(req, res);
