@@ -4,77 +4,96 @@
 
 /* Global */
 .hidden {
-  display: none !important;
-  }
+    display: none !important;
+}
 
 .undecorated {
-  /* box */
-  padding: 0;
-  margin: 0;
-  /* font */
-  text-decoration: none;
-  list-style-type: none;
-  /* style */
-  background-color: transparent;
-  border: none;
-  }
+    /* box */
+    padding: 0;
+    margin: 0;
+    /* font */
+    text-decoration: none;
+    list-style-type: none;
+    /* style */
+    background-color: transparent;
+    border: none;
+}
 
 html,
 body {
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+body {
+    position: relative;
+}
+
+#topNavbar {
+    top: 0;
+    padding: .5rem 0;
+    width: 100vw;
+    z-index: 1000;
+    position: fixed;
+    font-size: 1rem;
 }
 
 .primary-color {
-  background-color: #6D36EC;
-  color: #FFF;
+    background-color: #6D36EC;
+    color: #FFF;
 }
 
 .primary-color-hover:hover {
-  background-color: #4A25A0
+    background-color: #4A25A0
 }
 
 .secondary-color {
-  background-color: #F8D262;
-  color: #000;
+    background-color: #F8D262;
+    color: #000;
 }
 
 #bottomNavbar {
-  display: none;
+    display: none;
+}
+
+#bottomNavbarPlaceholder {
+    display: none;
 }
 
 @media (max-width: 701px) {
-  body {
-    position: relative;
-  }
+    #topNavbar {
+        display: none;
+    }
 
-  #topNavbar {
-    display: none
-  }
+    #bottomNavbar {
+        bottom: 0;
+        padding: 0;
+        width: 100vw;
+        z-index: 1000;
+        display: grid;
+        position: fixed;
+        font-size: .8rem;
+        grid-template-columns: repeat(4, 1fr);
+        background-color: #DAD4EB;
+    }
 
-  #bottomNavbar {
-    bottom: 0;
-    padding: 0;
-    width: 100vw;
-    display: grid;
-    position: fixed;
-    font-size: .8rem;
-    grid-template-columns: repeat(4, 1fr);
-    background-color: rgba(74, 37, 160, 20%);
-  }
+    .nav-item {
+        width: auto;
+        padding: 5px 0;
+        text-align: center;
+        align-content: center;
+    }
 
-  .nav-item {
-    width: auto;
-    padding: 5px 0;
-    text-align: center;
-    align-content: center;
-  }
+    .nav-item:hover {
+        background-color: rgba(170, 165, 183, 20%);
+    }
 
-  .nav-item:hover {
-    background-color: rgba(170, 165, 183, 20%);
-  }
-}
+    .nav-item > svg {
+        height: min(80%, 35px);
+    }
 
-.nav-item > svg {
-  height: min(80%, 35px);
+    #bottomNavbarPlaceholder {
+        display: block;
+        height: 80px;
+    }
 }
