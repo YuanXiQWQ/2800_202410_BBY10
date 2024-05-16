@@ -3,47 +3,7 @@
 
 <head>
     <title>navbar</title>
-    <style>
-      #bottomNavbar {
-        display: none;
-        }
-
-      @media (max-width: 701px) {
-        body {
-          position: relative;
-          }
-
-        #topNavbar {
-          display: none
-          }
-
-        #bottomNavbar {
-          bottom: 0;
-          padding: 0;
-          width: 100vw;
-          display: grid;
-          position: fixed;
-          font-size: .8rem;
-          grid-template-columns: repeat(4, 1fr);
-          background-color: rgba(74, 37, 160, 20%);
-          }
-
-        .nav-item {
-          width: auto;
-          padding: 5px 0;
-          text-align: center;
-          align-content: center;
-          }
-
-        .nav-item:hover {
-          background-color: rgba(170, 165, 183, 20%);
-          }
-        }
-
-      .nav-item > svg {
-        height: min(80%, 35px);
-        }
-    </style>
+    <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavbar">

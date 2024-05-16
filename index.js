@@ -2,7 +2,7 @@ import {register, login, changePassword, AdditionalUserInfo} from './controller/
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import {fileURLToPath} from 'url';
-import connectDB from "./db.js";
+import connectDB, {mongoUri} from "./db.js";
 import express from "express";
 import {dirname} from 'path';
 import bcrypt from 'bcrypt';
@@ -35,7 +35,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URI,
+            mongoUrl: mongoUri,
         }),
     })
 );
