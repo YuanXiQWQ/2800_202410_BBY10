@@ -47,6 +47,10 @@ body {
     background-color: #4A25A0
 }
 
+.primary-color-click:active {
+    background-color: #5B2DC6
+}
+
 .secondary-color {
     background-color: #F8D262;
     color: #000;
