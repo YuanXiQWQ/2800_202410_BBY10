@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import {findByUsername, validatePassword} from '../model/user.js';
-import { User } from '../model/user.js';
+//import {findByUsername, validatePassword} from '../model/user.js';
+import { User } from '../model/User.js';
 
 
 export async function register(req, res) {
