@@ -9,12 +9,12 @@ export async function register(req, res) {
 
     try {
 
-        var user_name = req.body.user_name;
-        var first_name = req.body.first_name;
-        var last_name = req.body.last_name;
-        var email = req.body.email;
-        var birthday = req.body.birthday;
-    
+        const user_name = req.body.username
+        const first_name = req.body.first_name
+        const last_name = req.body.last_name
+        const email = req.body.email
+        const birthday = req.body.birthday
+
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     
     
@@ -38,13 +38,13 @@ export async function register(req, res) {
 }
 
 export async function AdditionalUserInfo(req, res){
-  var weight = req.body.weight;
-  var height = req.body.height;
-  var workoutLevel = req.body.workoutLevel;
-  var time = req.body.time;
-  var goal = req.body.goal;
+    const weight = req.body.weight
+    const height = req.body.height
+    const workoutLevel = req.body.workoutLevel
+    const time = req.body.time
+    const goal = req.body.goal
 
-  const hashedPassword = req.session.userData.password;
+    const hashedPassword = req.session.userData.password;
   
 
   req.session.userData = {
