@@ -9,7 +9,7 @@ export async function register(req, res) {
 
     try {
 
-        const user_name = req.body.username
+        const user_name = req.body.user_name
         const first_name = req.body.first_name
         const last_name = req.body.last_name
         const email = req.body.email
@@ -27,8 +27,8 @@ export async function register(req, res) {
           birthday: birthday
         };
     
-        
-    
+        //console.log(req.body);
+        console.log(req.session.userData);
         
         res.redirect('/additional-info');
       } catch (error) {
@@ -73,7 +73,7 @@ export async function AdditionalUserInfo(req, res){
     goal: goal
 });
 
-  console.log(newUser);
+  //console.log(newUser);
 
   await newUser.save();
 
