@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true, collection: 'users'
 });
+    {
+        timestamps: true,
+        collection: 'users',
+        collation: {locale: 'en', strength: 2}
+    }
+);
 
 export function findByUsername(username) {
     return this.findOne({username});
