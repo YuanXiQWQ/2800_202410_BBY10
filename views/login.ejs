@@ -1,58 +1,68 @@
 <%- include("templates/header") %>
+<head>
     <title>Log In</title>
-    <form id="login-form">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn primary-color primary-color-hover">Sign In</button>
-    </form>
-    <div id="status-message"></div>
-    <%- include("templates/footer") %>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
 
-        <script>
-            const loginForm = document.getElementById('login-form');
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                const statusMessage = document.getElementById('status-message');
+        form {
+            margin: auto;
+        }
+    </style>
+</head>
+<form id="login-form">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn primary-color primary-color-hover">Sign In</button>
+</form>
+<div id="status-message"></div>
+<%- include("templates/footer") %>
 
-                statusMessage.style.visibility = 'hidden';
-                statusMessage.textContent = '';
+<script>
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const statusMessage = document.getElementById('status-message');
 
-                if (!username || !password) {
-                    statusMessage.textContent = 'Please enter a username and password';
-                    statusMessage.style.visibility = 'visible';
-                    statusMessage.style.color = 'orange';
-                }
-                else {
-                    const response = await fetch('/logging-in', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ username, password })
-                    });
-                    try {
-                        const data = await response.json();
-                        if (data.success) {
-                                window.location.href = '/profile';
-                        }
-                        else {
-                            statusMessage.style.visibility = 'visible';
-                            statusMessage.style.color = 'red';
-                            statusMessage.textContent = data.message;
-                        }
-                    } catch (err) {
-                        statusMessage.style.visibility = 'visible';
-                        statusMessage.style.color = 'red';
-                        statusMessage.textContent = 'An error occurred. Please try again.'+err;
-                    }
-                }
+        statusMessage.style.visibility = 'hidden';
+        statusMessage.textContent = '';
+
+        if (!username || !password) {
+            statusMessage.textContent = 'Please enter a username and password';
+            statusMessage.style.visibility = 'visible';
+            statusMessage.style.color = 'orange';
+        } else {
+            const response = await fetch('/logging-in', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({username, password})
             });
-        </script>
+            try {
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = '/profile';
+                } else {
+                    statusMessage.style.visibility = 'visible';
+                    statusMessage.style.color = 'red';
+                    statusMessage.textContent = data.message;
+                }
+            } catch (err) {
+                statusMessage.style.visibility = 'visible';
+                statusMessage.style.color = 'red';
+                statusMessage.textContent = 'An error occurred. Please try again.' + err;
+            }
+        }
+    });
+</script>
