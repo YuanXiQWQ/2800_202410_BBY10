@@ -3,20 +3,12 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import {GridFSBucket} from "mongodb";
 import multer from "multer";
-import crypto from "crypto";
 import mongoose from "mongoose";
 import path from "path";
 import {fileURLToPath} from "url";
 import connectDB, {gfs, mongoUri} from "./db.js";
-import {
-    register,
-    changePassword,
-    postPersonalInformation,
-    AdditionalUserInfo,
-    findByUsername,
-    updateWorkoutSettings,
-    postUserAvatar
-} from "./controller/auth.js";
+import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
+import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -34,10 +26,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended: true}));
 
 app.use(session({
-    secret: process.env.NODE_SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
+    secret: process.env.NODE_SESSION_SECRET, resave: false, saveUninitialized: false, store: MongoStore.create({
         mongoUrl: mongoUri,
     }),
 }));
