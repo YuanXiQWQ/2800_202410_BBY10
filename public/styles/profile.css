@@ -15,15 +15,6 @@ header {
     text-decoration: none;
 }
 
-form {
-    width: min(90%, 40em);
-    margin: auto;
-}
-
-.btn-primary {
-    width: 100%;
-}
-
 @media (max-width: 701px) {
     header {
         margin: 0 1em 1em 1em;
