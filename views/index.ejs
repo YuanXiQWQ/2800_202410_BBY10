@@ -1,8 +1,53 @@
 <%- include("templates/header") %>
+<head>
+    <title>index</title>
+    <style>
+        nav {
+            display: none !important;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        img {
+            width: min(60vw, 200px);
+            margin-right: auto;
+            margin-bottom: 15vh;
+            margin-left: auto;
+        }
+
+        a {
+            margin-right: auto;
+            margin-bottom: 35px;
+            margin-left: auto;
+            height: fit-content;
+            width: min(80vw, 300px);
+        }
+
+        button {
+            height: 3em;
+            width: 100%
+        }
+
+        .btn:hover {
+            color: #FFF;
+        }
+
+        @media (min-width: 701px) {
+            a {
+                width: min(80vw, 800px);
+            }
+        }
+    </style>
+</head>
+<img src="/images/logo_NexGenFit_all_noBackground.png" alt="NexGenFit">
 <a href="/signup">
-    <button type="button" class="btn btn-primary">Sign Up</button>
+    <button type="button" class="btn primary-color primary-color-hover">Sign Up</button>
 </a>
 <a href="/login">
-    <button type="button" class="btn btn-primary">Log In</button>
+    <button type="button" class="btn primary-color primary-color-hover">Log In</button>
 </a>
 <%- include("templates/footer") %>
