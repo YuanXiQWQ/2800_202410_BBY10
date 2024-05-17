@@ -21,6 +21,11 @@ import {
 import { sendInformation } from "./controller/chatgptIntegration.js";
 import { getListOfExercises } from "./controller/exercises.js";
 import { authValidation, sessionValidation } from "./middleware/authorization.js";
+import {fileURLToPath} from "url";
+import connectDB, {gfs, mongoUri} from "./db.js";
+import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
+import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
+import {logIn} from './controller/login.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -59,13 +64,14 @@ app.get("/signup", authValidation, (req, res) => {
   res.render("signup");
 });
 
-app.post("/submitUser", async (req, res) => {
-  try {
-    await register(req, res);
-  } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).send("Internal Server Error");
-  }
+
+app.post('/submitUser', async (req, res) => {
+    try {
+        await register(req, res);
+    } catch (error) {
+        console.error('Error registering user:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 app.get("/additional-info", (req, res) => {
@@ -78,9 +84,15 @@ app.post("/submitAdditionalInfo", (req, res) => {
   );
 });
 
-app.get("/profile", sessionValidation, (req, res) => {
-  const userData = req.session.userData;
-  res.render("profile", { userData: userData });
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+app.post("/logging-in", logIn);
+
+app.get("/profile", (req, res) => {
+    const userData = req.session.userData;
+    res.render("profile", {userData: userData});
 });
 
 app.get("/editUserAvatar", sessionValidation, (req, res) => {
