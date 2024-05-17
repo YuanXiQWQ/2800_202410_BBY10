@@ -3,7 +3,9 @@
     <title>change password</title>
     <link rel="stylesheet" href="/styles/profile.css">
     <style>
-        header {
+        #userInfo {
+            color: #000;
+            width: 100%;
             display: flex;
             justify-content: space-between;
         }
@@ -64,9 +66,16 @@
 <%- include("templates/navbar") %>
 <div class="container mt-5">
     <header class="d-flex align-items-center mb-4">
-        <span class="lang-text" data-key="helloUser">Hello, <%= userData.username %></span>
-        <!-- TODO: Avatar -->
-        <% userData.avatar %>
+        <a href="/editUserAvatar" class="d-flex align-items-center undecorated" id="userInfo">
+            <span class="lang-text" data-key="helloUser">Hello, <%= userData.username %></span>
+            <div id="userAvatar">
+                <% if (userData.avatar) { %>
+                    <img src="/avatar/<%= userData.avatar %>" alt="User Avatar" class="user-avatar">
+                <% } else { %>
+                    <img src="/images/userAvatar_default.png" alt="Default Avatar" class="user-avatar">
+                <% } %>
+            </div>
+        </a>
     </header>
     <main>
         <span class="lang-text" data-key="personalInformation">Personal information</span>

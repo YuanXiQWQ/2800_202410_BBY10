@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
     }, fitnessLevel: {
         type: String, required: false, enum: ["beginner", "intermediate", "advanced"],
     },
+    avatar: {
+        type: String, required: false,
+    },
+    usernameLastUpdated: {
+        type: Date, required: false,
+    },
 }, {
     timestamps: true, collection: 'users', collation: {locale: 'en', strength: 2}
 });
