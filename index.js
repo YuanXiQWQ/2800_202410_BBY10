@@ -21,10 +21,7 @@ import {
 import { sendInformation } from "./controller/chatgptIntegration.js";
 import { getListOfExercises } from "./controller/exercises.js";
 import { authValidation, sessionValidation } from "./middleware/authorization.js";
-import {fileURLToPath} from "url";
-import connectDB, {gfs, mongoUri} from "./db.js";
-import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
-import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
+
 import {logIn} from './controller/login.js';
 
 const app = express();
@@ -40,10 +37,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Static files
 app.use(express.static(__dirname + "/public"));
-<<<<<<< HEAD
-=======
 
->>>>>>> 44aa3c6c5a19062cf124fb92b67dfe9b92128d2f
 app.use(express.urlencoded({extended: true}));
 
 app.use(
