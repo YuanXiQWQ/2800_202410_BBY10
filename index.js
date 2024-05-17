@@ -1,23 +1,26 @@
-import {
-  register,
-  login,
-  changePassword,
-  postPersonalInformation,
-  AdditionalUserInfo,
-} from "./controller/auth.js";
-import MongoStore from "connect-mongo";
-import session from "express-session";
-import { fileURLToPath } from "url";
-import connectDB, { mongoUri } from "./db.js";
 import express from "express";
-import { dirname } from "path";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import {GridFSBucket} from "mongodb";
+import multer from "multer";
+import mongoose from "mongoose";
 import path from "path";
+import {fileURLToPath} from "url";
+import connectDB, {gfs, mongoUri} from "./db.js";
+import {
+    register,
+    changePassword,
+    postPersonalInformation,
+    AdditionalUserInfo,
+    findByUsername,
+    updateWorkoutSettings,
+    postUserAvatar
+} from "./controller/auth.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
-const saltRounds = 10;
 
 connectDB();
 
@@ -27,21 +30,22 @@ app.set("views", path.join(__dirname, "views"));
 
 // Static files
 app.use(express.static(__dirname + "/public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
-app.use(
-  session({
+app.use(session({
     secret: process.env.NODE_SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: mongoUri,
+        mongoUrl: mongoUri,
     }),
-  })
-);
+}));
+
+const storage = multer.memoryStorage();
+const upload = multer({storage});
 
 app.get("/", (req, res) => {
-  res.render("index");
+    res.render("index");
 });
 
 app.get("/signup", (req, res) => {
@@ -58,39 +62,82 @@ app.post("/submitUser", async (req, res) => {
 });
 
 app.get("/additional-info", (req, res) => {
-  res.render("additional-info");
+    res.render("additional-info");
 });
 
 app.post("/submitAdditionalInfo", (req, res) => {
-  AdditionalUserInfo(req, res).catch((err) =>
-    res.status(400).send("Invalid input: " + err)
-  );
+    AdditionalUserInfo(req, res).catch(err => res.status(400).send("Invalid input: " + err));
 });
 
-app.get("/profile", async (req, res) => {
-  const userData = req.session.userData;
-  res.render("profile", { userData: userData });
+app.get("/profile", (req, res) => {
+    const userData = req.session.userData;
+    res.render("profile", {userData: userData});
 });
 
-app.get("/personalInformation", (req, res) => {
-  res.render("personalInformation");
+app.get('/editUserAvatar', (req, res) => {
+    res.render('editUserAvatar', {userData: req.session.userData});
 });
 
-app.post("/postPersonalInformation", postPersonalInformation);
+app.post('/postUserAvatar', upload.single('avatar'), postUserAvatar);
 
-app.get("/workoutSettings", (req, res) => {
-  res.render("workoutSettings");
-});
+app.get('/avatar/:filename', async (req, res) => {
+    try {
+        const bucket = new GridFSBucket(mongoose.connection.db, {bucketName: 'uploads'});
+        const file = await gfs.files.findOne({filename: req.params.filename});
+        if (!file) {
+            return res.status(404).send('File not found');
+        }
 
-app.post("/postWorkoutSettings", (req, res) => {
-  res.redirect("/profile");
+        const readstream = bucket.openDownloadStream(file._id);
+        readstream.pipe(res);
+    } catch (error) {
+        console.error('Error retrieving avatar:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 app.get("/changePassword", (req, res) => {
   res.render("changePassword");
 });
 
-app.post("/postPassword", changePassword);
+app.post('/postPassword', changePassword);
+
+app.get("/personalInformation", async (req, res) => {
+    try {
+        const user = await findByUsername(req.session.userData.username);
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+        res.render("personalInformation", {userData: user});
+    } catch (error) {
+        console.error('Error retrieving user information:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/postPersonalInformation', postPersonalInformation);
+
+app.get("/workoutSettings", async (req, res) => {
+    try {
+        const user = await findByUsername(req.session.userData.username);
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+        res.render("workoutSettings", {userData: user});
+    } catch (error) {
+        console.error('Error retrieving user information:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post("/postWorkoutSettings", async (req, res) => {
+    try {
+        await updateWorkoutSettings(req, res);
+    } catch (error) {
+        console.error('Error updating workout settings:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);

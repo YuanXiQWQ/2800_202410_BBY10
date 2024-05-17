@@ -1,6 +1,6 @@
 <%- include("templates/header") %>
 <head>
-    <title>change password</title>
+    <title>Edit Personal Information</title>
     <link rel="stylesheet" href="/styles/profile.css">
 </head>
 <%- include("templates/navbar") %>
@@ -24,73 +24,104 @@
         <form method="POST" action="/postPersonalInformation" class="needs-validation" id="personalInformationForm"
               novalidate>
             <div class="mb-3">
-                <label for="name" class="form-label"><span class="lang-text" data-key="name">
-                    Name
+                <label for="firstName" class="form-label"><span class="lang-text" data-key="firstName">
+                    First Name
                 </span>:</label>
-                <input name="name" id="name" type="text" class="form-control">
+                <input name="firstName" id="firstName" type="text" class="form-control"
+                       placeholder="<%= userData.firstName %>">
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label"><span class="lang-text" data-key="lastName">
+                    Last Name
+                </span>:</label>
+                <input name="lastName" id="lastName" type="text" class="form-control"
+                       placeholder="<%= userData.lastName %>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label"><span class="lang-text" data-key="email">
                     Email
                 </span>:</label>
-                <input name="email" id="email" type="email" class="form-control">
+                <input name="email" id="email" type="email" class="form-control" placeholder="<%= userData.email %>">
             </div>
             <div class="mb-3">
                 <label for="birthday" class="form-label"><span class="lang-text" data-key="birthday">
                     Birthday
                 </span>:</label>
-                <input name="birthday" id="birthday" type="date" class="form-control">
+                <input name="birthday" id="birthday" type="date" class="form-control"
+                       value="<%= userData.birthday ? userData.birthday.toISOString().substring(0, 10) : '' %>">
             </div>
             <div class="mb-3">
                 <label for="height" class="form-label"><span class="lang-text" data-key="height">
-                    Height (cm)
-                </span>:</label>
-                <input name="height" id="height" type="number" class="form-control">
+                    Height
+                </span>(cm):</label>
+                <input name="height" id="height" type="number" class="form-control"
+                       placeholder="<%= userData.height %>">
             </div>
             <div class="mb-3">
                 <label for="weight" class="form-label"><span class="lang-text" data-key="weight">
-                    Weight (kg)
-                </span>:</label>
-                <input name="weight" id="weight" type="number" class="form-control">
+                    Weight
+                </span>(kg):</label>
+                <input name="weight" id="weight" type="number" class="form-control"
+                       placeholder="<%= userData.weight %>">
             </div>
             <button type="submit" class="btn btn-primary primary-color primary-color-hover">Submit</button>
         </form>
+        <div id="statusMessage"></div>
     </main>
 </div>
-</body>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusMessage = document.getElementById('statusMessage');
+        if (localStorage.getItem('successFlag')) {
+            statusMessage.textContent = 'Information edit successfully.';
+            statusMessage.style.color = 'green';
+            localStorage.removeItem('successFlag');
+        }
+    });
+
     document.getElementById('personalInformationForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
         const form = event.target;
         const formData = new FormData(form);
-        const notification = document.getElementById('notification');
+        const statusMessage = document.getElementById('statusMessage');
 
-        fetch(form.action, {
-            method: form.method,
-            body: JSON.stringify(Object.fromEntries(formData)),
+        // This to show the user that this page is still alive and responsive
+        statusMessage.textContent = '';
+        statusMessage.style.visibility = 'hidden';
+        setTimeout(() => {
+            statusMessage.style.visibility = 'visible';
+        }, 100);
+
+        const infoData = {
+            firstName: formData.get('firstName') || undefined,
+            lastName: formData.get('lastName') || undefined,
+            email: formData.get('email') || undefined,
+            birthday: formData.get('birthday') || undefined,
+            height: formData.get('height') || undefined,
+            weight: formData.get('weight') || undefined
+        };
+
+        fetch('/postPersonalInformation', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(infoData)
         })
             .then(response => response.json())
             .then(data => {
-                notification.style.display = 'block';
                 if (data.success) {
-                    notification.textContent = 'Submit successfully';
-                    notification.classList.remove('alert-danger');
-                    notification.classList.add('alert-success');
+                    localStorage.setItem('successFlag', 'true');
+                    location.reload();
                 } else {
-                    notification.textContent = 'Submit failed';
-                    notification.classList.remove('alert-success');
-                    notification.classList.add('alert-danger');
+                    statusMessage.textContent = data.message;
+                    statusMessage.style.color = 'red';
                 }
             })
-            .catch(error => {
-                notification.style.display = 'block';
-                notification.textContent = 'Submit failed';
-                notification.classList.remove('alert-success');
-                notification.classList.add('alert-danger');
+            .catch(err => {
+                statusMessage.textContent = 'An error occurred. Please try again.';
+                statusMessage.style.color = 'red';
             });
     });
 </script>

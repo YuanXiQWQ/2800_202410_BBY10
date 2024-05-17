@@ -3,6 +3,13 @@
     overflow: hidden;
 }
 
+#userAvatar,
+#userAvatar img {
+    width: 70px;
+    height: 70px;
+}
+
+
 header {
     font-size: 1.5rem;
     font-weight: bold;
@@ -13,15 +20,6 @@ header {
 
 #btn-back {
     text-decoration: none;
-}
-
-form {
-    width: min(90%, 40em);
-    margin: auto;
-}
-
-.btn-primary {
-    width: 100%;
 }
 
 @media (max-width: 701px) {

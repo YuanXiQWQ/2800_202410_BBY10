@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
-      unique: true 
+      unique: true,
     },
     firstName: {
       type: String,
@@ -53,6 +53,14 @@ const userSchema = new mongoose.Schema(
       required: false,
       enum: ["beginner", "intermediate", "advanced"],
     },
+    avatar: {
+      type: String,
+      required: false,
+    },
+    usernameLastUpdated: {
+      type: Date,
+      required: false,
+    },
   },
   {
     timestamps: true,
@@ -64,6 +72,9 @@ const userSchema = new mongoose.Schema(
 var encKey = process.env.SOME_32BYTE_BASE64_STRING;
 var sigKey = process.env.SOME_64BYTE_BASE64_STRING;
 
-userSchema.plugin(encrypt, { encryptionKey: encKey, signingKey: sigKey });
+userSchema.plugin(encrypt, {
+  encryptionKey: encKey,
+  signingKey: sigKey,
+});
 
 export const User = mongoose.model("User", userSchema);
