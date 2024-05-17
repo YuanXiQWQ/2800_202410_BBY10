@@ -1,17 +1,28 @@
-import mongoose from "mongoose"
+import Grid from "gridfs-stream";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
+
 dotenv.config();
 
-export default async function connectDB() {
-    try {
-        mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log("Connected to MongoDB");
-    } catch (error) {
-        console.log("Error connecting to MongoDB:", error);
-        process.exit(1);
-    }
-}
+const config = {
+    user: process.env.MONGODB_USER,
+    pass: process.env.MONGODB_PASSWORD,
+    host: process.env.MONGODB_HOST,
+    db: process.env.MONGODB_DATABASE,
+    option: process.env.MONGODB_OPTION
+};
+export const mongoUri = `mongodb+srv://${config.user}:${config.pass}@${config.host}/${config.db}?${config.option}`;
 
+let gfs;
+
+mongoose.connection.once("open", () => {
+    gfs = Grid(mongoose.connection.db, mongoose.mongo);
+    gfs.collection("uploads");
+});
+
+export { gfs };
+
+export default async function connectDB() {
+    await mongoose.connect(mongoUri);
+    console.log("Successfully connected to MongoDB at", config.db);
+}

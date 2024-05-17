@@ -1,0 +1,49 @@
+#additional-info {
+    width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(128, 123, 137, 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    /* height: 100%; */
+}
+
+#additional-info h1 {
+    text-align: center;
+    color: #333;
+    
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#additional-info label {
+    font-size: 15px;
+   
+}
+
+/* #additional-info input[type="text"],
+#additional-info select {
+    width: 100%;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    
+} */
+
+
+#additional-info .btn-primary {
+    width: 100%;
+    height: 60px;
+    background-color: #d2cbcb;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+
+#additional-info .btn-primary:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+}
