@@ -8,16 +8,18 @@
 }
 
 .undecorated {
-    /* box */
-    padding: 0;
-    margin: 0;
-    /* font */
-    text-decoration: none;
-    list-style-type: none;
-    /* style */
-    background-color: transparent;
-    border: none;
-}
+
+  /* box */
+  padding: 0;
+  margin: 0;
+  /* font */
+  text-decoration: none;
+  list-style-type: none;
+  /* style */
+  background-color: transparent;
+  border: none;
+  }
+  
 
 
 html,
@@ -112,3 +114,4 @@ form > .btn {
         height: 80px;
     }
 }
+

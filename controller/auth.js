@@ -87,7 +87,7 @@ export async function AdditionalUserInfo(req, res) {
         goal
     });
 
-    console.log(newUser);
+  //console.log(newUser);
 
     try {
         await newUser.save();

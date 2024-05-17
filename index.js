@@ -24,6 +24,11 @@ app.set("views", path.join(__dirname, "views"));
 
 // Static files
 app.use(express.static(__dirname + "/public"));
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 720700ee475a8066a4944a4cb6f700ad8e942ec7
 app.use(express.urlencoded({extended: true}));
 
 app.use(session({

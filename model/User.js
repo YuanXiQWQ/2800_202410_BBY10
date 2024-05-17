@@ -53,6 +53,7 @@ const userSchema = new mongoose.Schema(
       required: false,
       enum: ["beginner", "intermediate", "advanced"],
     },
+
     avatar: {
       type: String,
       required: false,
