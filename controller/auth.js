@@ -145,6 +145,14 @@ export async function postPersonalInformation(req, res) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
+        // Check if email already exists
+        if (email && email !== user.email) {
+            const emailExists = await User.findOne({ email });
+            if (emailExists) {
+                return res.status(400).json({ success: false, message: 'Email already exists' });
+            }
+        }
+
         user.firstName = firstName || user.firstName;
         user.lastName = lastName || user.lastName;
         user.email = email || user.email;
