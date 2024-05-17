@@ -1,54 +1,50 @@
-/**
- * Just a practice of using the API; maybe you guys can use it as a reference? I don't think our
- * project will need this. Just for example.
- */
+// import readline from 'node:readline';
+// const rl = readline.createInterface({
+//     input: process.stdin,
+//     output: process.stdout
+// });
 
-import readline from 'node:readline';
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-/**
- * Free API key
- *
- * @type {string} The API key
- *
- * @see https://chatanywhere.apifox.cn/
- * You might need Google translator; if you are using Microsoft Edge,
- * right-click and find "translate"; for other browsers, add Google
- * Translator plugin.
- * TODO: Delete this in final version
- */
+// /**
+//  * Free API key
+//  *
+//  * @type {string} The API key
+//  *
+//  * @see https://chatanywhere.apifox.cn/
+//  * You might need Google translator; if you are using Microsoft Edge,
+//  * right-click and find "translate"; for other browsers, add Google
+//  * Translator plugin.
+//  * TODO: Delete this in final version
+//  */
 const key = "sk-YsyYChLSPXi3Y2sdQLApDDU0TbI7cCnuBewOZUGyYAod5uhr";
 
-/**
- * This is the conversation history, send this to ChatGPT so that it can
- * continue the conversation but not start a new one.
- * @type {*[]} The whole conversation history
- */
+// /**
+//  * This is the conversation history, send this to ChatGPT so that it can
+//  * continue the conversation but not start a new one.
+//  * @type {*[]} The whole conversation history
+//  */
 let conversationHistory = [];
 
-/**
- * Gets the user question from input and sends it to ChatGPT
- */
-function askQuestion() {
-    rl.question("User: ", (answer) => {
-        if (answer.toLowerCase().trim() === "exit") {
-            rl.close();
-        } else {
-            sendMessageToChatGPT(answer).catch(e => console.error(e));
-        }
-    });
-}
+// /**
+//  * Asks the user for input and sends it to ChatGPT
+//  */
+// function askQuestion() {
+//     rl.question("User: ", (answer) => {
+//         if (answer.toLowerCase() === "exit") {
+//             console.log("Exiting chat...");
+//             rl.close();
+//         } else {
+//             sendMessageToChatGPT(answer)
+//                 .catch(e => console.error(e));
+//         }
+//     });
+// }
 
 /**
  * Sends the message to ChatGPT
  * @param messageToSend The message to send
  * @return {Promise<void>}
  */
-async function sendMessageToChatGPT(messageToSend) {
-    // From API Doc
+export async function sendMessageToChatGPT(messageToSend) {
     let header = new Headers();
     header.append("Authorization", "Bearer " + key);
     header.append("User-Agent", "Apifox/1.0.0 (https://apifox.com)");
@@ -92,20 +88,25 @@ async function sendMessageToChatGPT(messageToSend) {
         redirect: 'follow'
     };
 
-    fetch("https://api.chatanywhere.tech/v1/chat/completions", httpPost)
-        .then(response => response.json())
-        .then(data => {
-            console.log("ChatGPT: " + data.choices[0].message.content);
-            // Add response to conversation history
-            conversationHistory.push({
-                "role": "system",
-                "content": data.choices[0].message.content
-            });
-            // Run again
-            askQuestion();
-        })
-        .catch(e => console.error(e));
+    // Async request so tries/catches
+    try {
+        const response = await fetch("https://api.chatanywhere.tech/v1/chat/completions",
+            httpPost);
+        const result = await response.json();
+
+        const message = result.choices[0].message.content;
+        // console.log("ChatGPT: " + message);
+
+        // Add response to conversation history
+        conversationHistory.push({
+            "role": "system",
+            "content": message
+        });
+
+        return JSON.parse(message);
+        // askQuestion();
+    } catch (error) {
+        console.error('Error communicating with ChatGPT:', error);
+    }
 }
 
-// Start
-askQuestion();

@@ -1,6 +1,6 @@
 
 function isValidSession(req) {
-    if (req.session.userData.username) {
+    if (req?.session?.userData?.username) {
       return true;
     }
     return false;
@@ -10,7 +10,7 @@ function isValidSession(req) {
     if (!isValidSession(req)) {
       next();
     } else {
-      res.redirect("/");
+      res.redirect("/exercises");
     }
   }
   
@@ -18,6 +18,6 @@ function isValidSession(req) {
     if (isValidSession(req)) {
       next();
     } else {
-      res.redirect("/login");
+      res.redirect("/");
     }
 }
