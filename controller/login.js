@@ -12,7 +12,7 @@ export async function logIn(req, res) {
             return res.status(400).json({message:'Invalid password', success: false});
         }
         req.session.userData = user;
-        res.redirect("/profile");
+        res.status(200).json({success:true});
     }
     catch (error) {
         console.error('Error logging in:', error);

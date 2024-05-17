@@ -9,6 +9,7 @@ import {fileURLToPath} from "url";
 import connectDB, {gfs, mongoUri} from "./db.js";
 import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
 import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
+import {logIn} from './controller/login.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
