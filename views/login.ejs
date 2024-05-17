@@ -1,7 +1,7 @@
 <%- include("templates/header") %>
 <head>
     <title>Log In</title>
-    <style>
+    <!-- <style>
         body {
             display: flex;
             justify-content: center;
@@ -10,8 +10,12 @@
         form {
             margin: auto;
         }
-    </style>
+    </style> -->
+    <head>
+        <link rel="stylesheet" href="./styles/login.css">
+      </head>
 </head>
+<div class="form-container">
 <form id="login-form">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -21,8 +25,9 @@
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
     </div>
-    <button type="submit" class="btn primary-color primary-color-hover">Sign In</button>
+    <button type="submit" class="btn-primary">Sign In</button>
 </form>
+</div>
 <div id="status-message"></div>
 <%- include("templates/footer") %>
 
