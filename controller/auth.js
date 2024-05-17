@@ -14,6 +14,22 @@ export async function register(req, res) {
         const last_name = req.body.last_name
         const email = req.body.email
         const birthday = req.body.birthday
+        const password = req.body.password;
+
+
+        const missingFields = [];
+
+        if(!user_name) missingFields.push('username');
+        if (!first_name) missingFields.push('first name');
+        if (!last_name) missingFields.push('last name');
+        if (!email) missingFields.push('email');
+        if (!birthday) missingFields.push('birthday');
+        if (!password) missingFields.push('password');
+
+        if (missingFields.length > 0) {
+          return res.render('signup', { error: `Please fill in the : ${missingFields.join(', ')} fields.`, userData: req.body });
+      }
+
 
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     
@@ -43,6 +59,20 @@ export async function AdditionalUserInfo(req, res){
     const workoutLevel = req.body.workoutLevel
     const time = req.body.time
     const goal = req.body.goal
+
+
+
+    const missingFields = [];
+
+        if(!weight) missingFields.push('weight');
+        if (!height) missingFields.push('height name');
+        if (!time) missingFields.push('time');
+        if (!goal) missingFields.push('goal');
+       
+
+        if (missingFields.length > 0) {
+          return res.render('add-info', { error: `Please fill in the : ${missingFields.join(', ')} fields.`, userData: req.body });
+      }
 
     const hashedPassword = req.session.userData.password;
   
