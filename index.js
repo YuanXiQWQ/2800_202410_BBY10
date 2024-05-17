@@ -1,4 +1,10 @@
-import {register, login, changePassword, postPersonalInformation, AdditionalUserInfo} from './controller/auth.js';
+import {
+    register,
+    changePassword,
+    postPersonalInformation,
+    AdditionalUserInfo,
+    findByUsername
+} from './controller/auth.js';
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import {fileURLToPath} from 'url';
@@ -81,8 +87,23 @@ app.get("/profile", (req, res) => {
     console.log(userData);
 });
 
-app.get("/personalInformation", (req, res) => {
-    res.render("personalInformation");
+app.get('/changePassword', (req, res) => {
+    res.render('changePassword');
+});
+
+app.post('/postPassword', changePassword);
+
+app.get("/personalInformation", async (req, res) => {
+    try {
+        const user = await findByUsername(req.session.userData.username);
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+        res.render("personalInformation", { userData: user });
+    } catch (error) {
+        console.error('Error retrieving user information:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 app.post('/postPersonalInformation', postPersonalInformation);
@@ -95,12 +116,6 @@ app.post('/postWorkoutSettings', (req, res) => {
     // TODO: save data
     res.redirect('/profile');
 });
-
-app.get('/changePassword', (req, res) => {
-    res.render('changePassword');
-});
-
-app.post('/postPassword', changePassword);
 
 // function isValidSession(req) {
 //   if (req.session.authenticated) {

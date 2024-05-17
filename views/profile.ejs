@@ -99,7 +99,7 @@
                 <a href="/personalInformation">
                     <span class="lang-text list-group-title" data-key="birthday">Birthday</span>
                     <span class="list-group-content">
-                        <%= userData.birthday ? userData.birthday : '-' %>
+                        <%= userData.birthday ? new Date(userData.birthday).toISOString().substring(0, 10) : '-' %>
                     </span>
                     <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
@@ -173,18 +173,6 @@
                     <span class="lang-text list-group-title" data-key="workoutDuration">Workout Duration</span>
                     <span class="list-group-content">
                         <%= userData.time ? userData.time : '-' %>
-                    </span>
-                    <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-                              fill="black"/>
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="/workoutSettings">
-                    <span class="lang-text list-group-title" data-key="workoutDays">Workout Days</span>
-                    <span class="list-group-content">
-                        <%= userData.day ? userData.day : '-' %>
                     </span>
                     <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
