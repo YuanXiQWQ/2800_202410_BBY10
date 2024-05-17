@@ -3,7 +3,6 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import {GridFSBucket} from "mongodb";
 import multer from "multer";
-import crypto from "crypto";
 import mongoose from "mongoose";
 import path from "path";
 import {fileURLToPath} from "url";
@@ -49,17 +48,17 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get('/signup', (req, res) => {
-    res.render('signup');
+app.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
-app.post('/submitUser', async (req, res) => {
-    try {
-        await register(req, res);
-    } catch (error) {
-        console.error('Error registering user:', error);
-        res.status(500).send('Internal Server Error');
-    }
+app.post("/submitUser", async (req, res) => {
+  try {
+    await register(req, res);
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/additional-info", (req, res) => {
@@ -97,8 +96,8 @@ app.get('/avatar/:filename', async (req, res) => {
     }
 });
 
-app.get('/changePassword', (req, res) => {
-    res.render('changePassword');
+app.get("/changePassword", (req, res) => {
+  res.render("changePassword");
 });
 
 app.post('/postPassword', changePassword);
@@ -141,5 +140,5 @@ app.post("/postWorkoutSettings", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
+  console.log(`Server started on http://localhost:${PORT}`);
 });
