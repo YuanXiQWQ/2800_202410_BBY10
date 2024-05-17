@@ -10,6 +10,7 @@ async function getUserId(username) {
 
 function saveExercises(userId, exercise) {
 
+  console.log(exercise)
   new exercises({ exercises: exercise, user: userId })
     .save()
     .then((doc) => console.log("Exercise saved successfully:"))
