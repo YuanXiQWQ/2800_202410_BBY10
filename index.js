@@ -1,4 +1,4 @@
-import {register, login, changePassword, AdditionalUserInfo} from './controller/auth.js';
+import {register, login, changePassword, postPersonalInformation, AdditionalUserInfo} from './controller/auth.js';
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import {fileURLToPath} from 'url';
@@ -24,9 +24,6 @@ app.set("views", path.join(__dirname, "views"));
 
 // Static files
 app.use(express.static(__dirname + "/public"));
-app.use("/styles", express.static(path.resolve(__dirname, "./public/styles")));
-app.use("/images", express.static(path.resolve(__dirname + "./views/images")));
-
 app.use(express.urlencoded({extended: true}));
 
 
@@ -41,7 +38,9 @@ app.use(
     })
 );
 
-
+/**
+ * Index page
+ */
 app.get("/", (req, res) => {
     //register();
     //login()
@@ -50,10 +49,6 @@ app.get("/", (req, res) => {
 
 app.get('/signup', (req, res) => {
     res.render('signup');
-});
-
-app.get('/changePassword', (req, res) => {
-    res.render('changePassword');
 });
 
 app.post('/submitUser', async (req, res) => {
@@ -65,18 +60,18 @@ app.post('/submitUser', async (req, res) => {
     }
 });
 
-
 app.get("/additional-info", (req, res) => {
     res.render("additional-info");
 })
 
 app.post("/submitAdditionalInfo", (req, res) => {
-
     AdditionalUserInfo(req, res)
         .catch(err => res.status(400).send("Invalid input: " + err));
 });
 
-//test page after user enters all their info
+/**
+ * Profile page
+ */
 app.get("/profile", (req, res) => {
     // Access user data from the session
     const userData = req.session.userData;
@@ -86,6 +81,26 @@ app.get("/profile", (req, res) => {
     console.log(userData);
 });
 
+app.get("/personalInformation", (req, res) => {
+    res.render("personalInformation");
+});
+
+app.post('/postPersonalInformation', postPersonalInformation);
+
+app.get("/workoutSettings", (req, res) => {
+    res.render("workoutSettings");
+});
+
+app.post('/postWorkoutSettings', (req, res) => {
+    // TODO: save data
+    res.redirect('/profile');
+});
+
+app.get('/changePassword', (req, res) => {
+    res.render('changePassword');
+});
+
+app.post('/postPassword', changePassword);
 
 // function isValidSession(req) {
 //   if (req.session.authenticated) {
