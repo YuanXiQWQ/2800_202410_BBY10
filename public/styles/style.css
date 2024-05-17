@@ -4,20 +4,21 @@
 
 /* Global */
 .hidden {
-    display: none !important;
-}
+  display: none !important;
+  }
 
 .undecorated {
-    /* box */
-    padding: 0;
-    margin: 0;
-    /* font */
-    text-decoration: none;
-    list-style-type: none;
-    /* style */
-    background-color: transparent;
-    border: none;
-}
+  /* box */
+  padding: 0;
+  margin: 0;
+  /* font */
+  text-decoration: none;
+  list-style-type: none;
+  /* style */
+  background-color: transparent;
+  border: none;
+  }
+  
 
 html,
 body {
@@ -27,6 +28,15 @@ body {
 
 body {
     position: relative;
+}
+
+form {
+    width: min(90%, 40em);
+    margin: auto;
+}
+
+form > .btn {
+    width: 100%;
 }
 
 #topNavbar {
@@ -47,7 +57,7 @@ body {
     background-color: #4A25A0
 }
 
-.primary-color-click:active {
+.primary-color-hover:active {
     background-color: #5B2DC6
 }
 
