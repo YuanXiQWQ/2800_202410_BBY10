@@ -18,7 +18,7 @@
 
 .login-header {
     text-align: center;
-    margin: 20px 0 40px 0;
+    margin: 20px 0 0;
 }
 
 .login-header header {
@@ -26,6 +26,23 @@
     font-size: 30px;
     font-weight: 600;
 }
+
+.logo {
+    max-width: 300px; /* Adjust the size as needed */
+    max-height: 300px; /* Adjust the size as needed */
+    display: block; /* Centers the image horizontally */
+    margin: 0 auto; /* Centers the image horizontally */
+    
+}
+
+.title {
+    margin-bottom: 100px; /* Adjust the margin as needed */
+    text-align: center;
+    color: rgb(255, 255, 0);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adjust the shadow values as needed */
+
+}
+
 
 .input-box .input-field{
     width: 100%;

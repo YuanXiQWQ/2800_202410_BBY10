@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
-import { User } from "../model/user.js";
+import bcrypt from 'bcrypt';
+import { User } from '../model/user.js';
 import crypto from "crypto";
 import path from "path";
 import { GridFSBucket } from "mongodb";
@@ -30,7 +30,7 @@ const schemaSignin = Joi.object({
  * @return {Promise<User|null>} A promise that resolves to the user document if found, or null if not found.
  */
 export async function findByUsername(username) {
-  return await User.findOne({ username });
+    return await User.findOne({ username });
 }
 
 /**
@@ -108,15 +108,17 @@ export async function register(req, res) {
  * @param {Response} res - Express response object
  */
 export async function AdditionalUserInfo(req, res) {
-  const { weight, height, time, goal, fitnessLevel } = req.body;
-  const {
-    username,
-    firstName,
-    lastName,
-    email,
-    birthday,
-    password: hashedPassword,
-  } = req.session.userData;
+
+    // const { error } = additionalInfoSchema.validate(req.body);
+    // if (error) {
+    //     console.error('Error validating additional user info:', error);
+    //     res.redirect("/additional-info");
+    //     return;
+    // }
+
+
+    const { weight, height, time, goal, fitnessLevel } = req.body;
+    const { username, firstName, lastName, email, birthday, password: hashedPassword } = req.session.userData;
 
   req.session.userData = {
     ...req.session.userData,
