@@ -1,41 +1,34 @@
 <%- include("templates/header") %>
     <head><link rel="stylesheet" href="./styles/index.css"></head>
 
+  
+<div class="wrapper">
     <div class="index-container">
         <div class="login-box">
             <div class="login-header">
-                <header>Login</header>
+                <img src="./images/logo_NexGenFit_all_noBackground.png" alt="">
             </div>
-            <div class="input-box">
-                <input type="text" class="input-field" placeholder="Email" autocomplete="off" required>
-            </div>
-            <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password" autocomplete="off" required>
-            </div>
-        
-            <div class="forgot">
-                <section>
-                    <input type="checkbox" id="check">
-                    <label for="check">Remember me</label>
-                </section>
-                <section>
-                    <a href="#">Forgot password</a>
-                </section>
-            </div>
+            
             <div class="input-submit">
-                <button class="submit-btn" id="submit"></button>
-                <label for="submit">Sign in</label>
+                <a href="/signup"><button type="button" class="submit-btn">Get Started</button></a>
+                <a href="/login"><button type="button" class="submit-btn">Login</button></a>
             </div>
-            <div class="sign-up-link">
-                <p>Don't have an account? <a href="#">Sign Up</a></p>
-            </div>
+            
+           
         </div>
+    </div>
+</div>
 
 
-        <a href="/signup"><button type="button" class="btn btn-primary">Sign Up</button></a>
-        <a href="/login"><button type="button" class="btn btn-primary">Log In</button></a>
+
+
+
+        
 
     </div>
  <%- include("templates/footer") %>
+
+ <!-- <a href="/signup"><button type="button" class="btn btn-primary">Sign Up</button></a>
+        <a href="/login"><button type="button" class="btn btn-primary">Log In</button></a> -->
 
 

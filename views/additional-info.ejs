@@ -1,6 +1,9 @@
 <%- include("templates/header") %>
-<h1>Additional Information</h1>
-<form action="/submitAdditionalInfo" method="POST">
+<head><link rel="stylesheet" href="./styles/additional-info.css"></head>
+
+
+<form action="/submitAdditionalInfo" method="POST" id="additional-info">
+    <h1>Workout Details</h1>
     <label for="weight">Weight:</label>
     <input type="text" id="weight" name="weight" required><br><br>
 

@@ -9,7 +9,7 @@ export async function register(req, res) {
 
     try {
 
-        const user_name = req.body.user_name
+        const user_name = req.body.username
         const first_name = req.body.first_name
         const last_name = req.body.last_name
         const email = req.body.email
