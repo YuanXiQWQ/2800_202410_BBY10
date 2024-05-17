@@ -4,10 +4,11 @@
 
 /* Global */
 .hidden {
-  display: none !important;
-  }
+    display: none !important;
+}
 
 .undecorated {
+
   /* box */
   padding: 0;
   margin: 0;
@@ -19,8 +20,7 @@
   border: none;
   }
   
-<<<<<<< HEAD
-=======
+
 
 html,
 body {
@@ -56,7 +56,8 @@ form > .btn {
 }
 
 .primary-color-hover:hover {
-    background-color: #4A25A0
+    background-color: #4A25A0;
+    color: #FFF;
 }
 
 .primary-color-hover:active {
@@ -113,4 +114,4 @@ form > .btn {
         height: 80px;
     }
 }
->>>>>>> 720700ee475a8066a4944a4cb6f700ad8e942ec7
+

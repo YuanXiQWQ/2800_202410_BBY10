@@ -1,0 +1,128 @@
+<%- include("templates/header") %>
+<head>
+    <title>Edit Personal Information</title>
+    <link rel="stylesheet" href="/styles/profile.css">
+</head>
+<%- include("templates/navbar") %>
+<div id="notification" class="alert notification hidden"></div>
+<div class="container mt-5">
+    <header class="d-flex align-items-center mb-4">
+        <a id="btn-back" href="/profile" class="btn btn-outline-secondary me-3">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.65419 7.95837H17.3334V10.0417H4.65419L10.2417 15.6292L8.76877 17.1021L0.666687 9.00003L8.76877 0.897949L10.2417 2.37087L4.65419 7.95837Z"
+                      fill="black"/>
+            </svg>
+        </a>
+        <span class="lang-text" data-key="editYourPersonalInformation">Edit Your Personal Information</span>
+    </header>
+    <main>
+        <div class="alert secondary-color">
+            <span class="lang-text" data-key="changeYourPersonalInformationTips">
+                Edit your personal information here.
+            </span>
+        </div>
+        <form method="POST" action="/postPersonalInformation" class="needs-validation" id="personalInformationForm"
+              novalidate>
+            <div class="mb-3">
+                <label for="firstName" class="form-label"><span class="lang-text" data-key="firstName">
+                    First Name
+                </span>:</label>
+                <input name="firstName" id="firstName" type="text" class="form-control"
+                       placeholder="<%= userData.firstName %>">
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label"><span class="lang-text" data-key="lastName">
+                    Last Name
+                </span>:</label>
+                <input name="lastName" id="lastName" type="text" class="form-control"
+                       placeholder="<%= userData.lastName %>">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label"><span class="lang-text" data-key="email">
+                    Email
+                </span>:</label>
+                <input name="email" id="email" type="email" class="form-control" placeholder="<%= userData.email %>">
+            </div>
+            <div class="mb-3">
+                <label for="birthday" class="form-label"><span class="lang-text" data-key="birthday">
+                    Birthday
+                </span>:</label>
+                <input name="birthday" id="birthday" type="date" class="form-control"
+                       value="<%= userData.birthday ? userData.birthday.toISOString().substring(0, 10) : '' %>">
+            </div>
+            <div class="mb-3">
+                <label for="height" class="form-label"><span class="lang-text" data-key="height">
+                    Height
+                </span>(cm):</label>
+                <input name="height" id="height" type="number" class="form-control"
+                       placeholder="<%= userData.height %>">
+            </div>
+            <div class="mb-3">
+                <label for="weight" class="form-label"><span class="lang-text" data-key="weight">
+                    Weight
+                </span>(kg):</label>
+                <input name="weight" id="weight" type="number" class="form-control"
+                       placeholder="<%= userData.weight %>">
+            </div>
+            <button type="submit" class="btn btn-primary primary-color primary-color-hover">Submit</button>
+        </form>
+        <div id="statusMessage"></div>
+    </main>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusMessage = document.getElementById('statusMessage');
+        if (localStorage.getItem('successFlag')) {
+            statusMessage.textContent = 'Information edit successfully.';
+            statusMessage.style.color = 'green';
+            localStorage.removeItem('successFlag');
+        }
+    });
+
+    document.getElementById('personalInformationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const statusMessage = document.getElementById('statusMessage');
+
+        // This to show the user that this page is still alive and responsive
+        statusMessage.textContent = '';
+        statusMessage.style.visibility = 'hidden';
+        setTimeout(() => {
+            statusMessage.style.visibility = 'visible';
+        }, 100);
+
+        const infoData = {
+            firstName: formData.get('firstName') || undefined,
+            lastName: formData.get('lastName') || undefined,
+            email: formData.get('email') || undefined,
+            birthday: formData.get('birthday') || undefined,
+            height: formData.get('height') || undefined,
+            weight: formData.get('weight') || undefined
+        };
+
+        fetch('/postPersonalInformation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(infoData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem('successFlag', 'true');
+                    location.reload();
+                } else {
+                    statusMessage.textContent = data.message;
+                    statusMessage.style.color = 'red';
+                }
+            })
+            .catch(err => {
+                statusMessage.textContent = 'An error occurred. Please try again.';
+                statusMessage.style.color = 'red';
+            });
+    });
+</script>
+<%- include("templates/footer") %>

@@ -3,6 +3,13 @@
     overflow: hidden;
 }
 
+#userAvatar,
+#userAvatar img {
+    width: 70px;
+    height: 70px;
+}
+
+
 header {
     font-size: 1.5rem;
     font-weight: bold;
@@ -15,11 +22,9 @@ header {
     text-decoration: none;
 }
 
-form {
-    width: min(90%, 40em);
-    margin: auto;
-}
-
-.btn-primary {
-    width: 100%;
+@media (max-width: 701px) {
+    header {
+        margin: 0 1em 1em 1em;
+        padding-bottom: 1em;
+    }
 }

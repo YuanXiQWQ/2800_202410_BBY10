@@ -25,31 +25,25 @@ const userSchema = new mongoose.Schema({
     }, fitnessLevel: {
         type: String, required: false, enum: ["beginner", "intermediate", "advanced"],
     },
-<<<<<<< HEAD
+
+    avatar: {
+        type: String, required: false,
+    },
+    usernameLastUpdated: {
+        type: Date, required: false,
+    },
+
 },
 
     {
         timestamps: true,
         collection: 'users',
-        collation: {locale: 'en', strength: 2}
+        collation: { locale: 'en', strength: 2 }
     }
 );
-=======
-}, {
-    timestamps: true, collection: 'users', collation: {locale: 'en', strength: 2}
-});
->>>>>>> 720700ee475a8066a4944a4cb6f700ad8e942ec7
 
-export function findByUsername(username) {
-    return this.findOne({username});
-}
 
-export function getFullName() {
-    return `${this.firstName} ${this.lastName}`;
-}
 
-export async function validatePassword(password) {
-    return await bcrypt.compare(password, this.password);
-}
+
 
 export const User = mongoose.model("User", userSchema);
