@@ -1,301 +1,342 @@
 <%- include("templates/header") %>
 <head>
-  <title>change password</title>
-  <link rel="stylesheet" href="/styles/profile.css" />
-  <style>
-    #userInfo {
-      color: #000;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
+    <title>change password</title>
+    <link rel="stylesheet" href="/styles/profile.css"/>
+    <style>
+        #userInfo {
+            color: #000;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
 
-    main {
-      margin: 1em;
-    }
+        main {
+            margin: 1em;
+        }
 
-    main > span {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #4f4f4f;
-    }
+        main > span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4f4f4f;
+        }
 
-    #personalInformation,
-    #workoutSettings {
-      border: 1px solid #dadada;
-      border-radius: 20px;
-      margin: 2px;
-      padding: 5px 20px;
-    }
+        #personalInformation,
+        #workoutSettings,
+        #accountSettings {
+            border: 1px solid #dadada;
+            border-radius: 20px;
+            margin: 2px;
+            padding: 5px 20px;
+        }
 
-    li a {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      grid-template-rows: 1fr auto;
-      grid-template-areas:
+        li a {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: 1fr auto;
+            grid-template-areas:
         "title icon"
         "content icon";
-      text-decoration: none;
-      color: #000;
-      padding: 10px 0;
-      border-bottom: 1px solid #dadada;
-    }
+            text-decoration: none;
+            color: #000;
+            padding: 10px 0;
+            border-bottom: 1px solid #dadada;
+        }
 
-    ul li:last-child a {
-      border-bottom: none;
-    }
+        ul li:last-child a {
+            border-bottom: none;
+        }
 
-    .list-group-title {
-      grid-area: title;
-      font-size: 1rem;
-    }
+        .list-group-title {
+            grid-area: title;
+            font-size: 1rem;
+        }
 
-    .list-group-content {
-      grid-area: content;
-      font-size: 0.8rem;
-    }
+        .list-group-content {
+            grid-area: content;
+            font-size: 0.8rem;
+        }
 
-    a svg {
-      grid-area: icon;
-      justify-self: center;
-      align-self: center;
-    }
-  </style>
+        a svg {
+            grid-area: icon;
+            justify-self: center;
+            align-self: center;
+        }
+    </style>
 </head>
 <%- include("templates/navbar") %>
 <div class="container mt-5 pb-5">
-  <header class="d-flex align-items-center mb-4">
-    <a
-      href="/editUserAvatar"
-      class="d-flex align-items-center undecorated"
-      id="userInfo"
-    >
+    <header class="d-flex align-items-center mb-4">
+        <a
+                href="/editUserAvatar"
+                class="d-flex align-items-center undecorated"
+                id="userInfo"
+        >
       <span class="lang-text" data-key="helloUser"
-        >Hello, <%= userData.username %></span
+      >Hello, <%= userData.username %></span
       >
-      <div id="userAvatar">
-        <% if (userData.avatar) { %>
-        <img
-          src="/avatar/<%= userData.avatar %>"
-          alt="User Avatar"
-          class="user-avatar"
-        />
-        <% } else { %>
-        <img
-          src="/images/userAvatar_default.png"
-          alt="Default Avatar"
-          class="user-avatar"
-        />
-        <% } %>
-      </div>
-    </a>
-  </header>
+            <div id="userAvatar">
+                <% if (userData.avatar) { %>
+                    <img
+                            src="/avatar/<%= userData.avatar %>"
+                            alt="User Avatar"
+                            class="user-avatar"
+                    />
+                <% } else { %>
+                    <img
+                            src="/images/userAvatar_default.png"
+                            alt="Default Avatar"
+                            class="user-avatar"
+                    />
+                <% } %>
+            </div>
+        </a>
+    </header>
 
-  <div>
-    <p class="lang-text" data-key="personalInformation"
-      >Personal information</p
-    >
-    <ul class="undecorated" id="personalInformation">
-      <li>
-        <a href="/personalInformation">
-          <span class="lang-text list-group-title" data-key="name">Name</span>
-          <span class="list-group-content">
+    <div>
+        <p class="lang-text" data-key="personalInformation"
+        >Personal information</p
+        >
+        <ul class="undecorated" id="personalInformation">
+            <li>
+                <a href="/personalInformation">
+                    <span class="lang-text list-group-title" data-key="name">Name</span>
+                    <span class="list-group-content">
             <%= userData.username ? userData.username : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/personalInformation">
-          <span class="lang-text list-group-title" data-key="email">Email</span>
-          <span class="list-group-content">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/personalInformation">
+                    <span class="lang-text list-group-title" data-key="email">Email</span>
+                    <span class="list-group-content">
             <%= userData.email ? userData.email : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/personalInformation">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/personalInformation">
           <span class="lang-text list-group-title" data-key="birthday"
-            >Birthday</span
+          >Birthday</span
           >
-          <span class="list-group-content">
+                    <span class="list-group-content">
             <%= userData.birthday ? new
             Date(userData.birthday).toISOString().substring(0, 10) : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/personalInformation">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/personalInformation">
           <span class="lang-text list-group-title" data-key="height"
-            >Height</span
+          >Height</span
           >
-          <span class="list-group-content">
+                    <span class="list-group-content">
             <%= userData.height ? userData.height : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/personalInformation">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/personalInformation">
           <span class="lang-text list-group-title" data-key="weight"
-            >Weight</span
+          >Weight</span
           >
-          <span class="list-group-content">
+                    <span class="list-group-content">
             <%= userData.weight ? userData.weight : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/changePassword">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/changePassword">
           <span class="lang-text list-group-title" data-key="changePassword"
-            >Change Password</span
+          >Change Password</span
           >
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-    </ul>
-  </div>
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-  <div class="mt-4">
-    <p class="lang-text" data-key="workoutSettings">Workout Settings</p>
-    <ul class="undecorated" id="workoutSettings">
-      <li>
-        <a href="/workoutSettings">
+    <div class="mt-4">
+        <p class="lang-text" data-key="workoutSettings">Workout Settings</p>
+        <ul class="undecorated" id="workoutSettings">
+            <li>
+                <a href="/workoutSettings">
           <span class="lang-text list-group-title" data-key="fitnessGoal"
-            >Fitness Goal</span
+          >Fitness Goal</span
           >
-          <span class="list-group-content">
+                    <span class="list-group-content">
             <%= userData.goal ? userData.goal : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/workoutSettings">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/workoutSettings">
           <span class="lang-text list-group-title" data-key="fitnessExperience"
-            >Fitness Experience</span
+          >Fitness Experience</span
           >
-          <span class="list-group-content">
+                    <span class="list-group-content">
             <%= userData.fitnessLevel ? userData.fitnessLevel : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="/workoutSettings">
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/workoutSettings">
           <span class="lang-text list-group-title" data-key="workoutDuration"
-            >Workout Duration</span
+          >Workout Duration</span
           >
-          <span class="list-group-content">
+                    <span class="list-group-content">
             <%= userData.time ? userData.time : '-' %>
           </span>
-          <svg
-            width="9"
-            height="11"
-            viewBox="0 0 9 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
-              fill="black"
-            />
-          </svg>
-        </a>
-      </li>
-    </ul>
-  </div>
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mt-4">
+        <p class="lang-text" data-key="accountSettings">Account</p>
+        <ul class="undecorated" id="accountSettings">
+            <li>
+                <a href="/logout">
+                    <span class="lang-text list-group-title" data-key="logout">Logout</span>
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/deleteAccount">
+                    <span class="lang-text list-group-title" data-key="deleteAccount">Delete Account</span>
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
 <%- include("templates/footer") %>
