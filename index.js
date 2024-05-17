@@ -21,10 +21,7 @@ import {
 import { sendInformation } from "./controller/chatgptIntegration.js";
 import { getListOfExercises } from "./controller/exercises.js";
 import { authValidation, sessionValidation } from "./middleware/authorization.js";
-import {fileURLToPath} from "url";
-import connectDB, {gfs, mongoUri} from "./db.js";
-import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
-import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
+
 import {logIn} from './controller/login.js';
 
 const app = express();

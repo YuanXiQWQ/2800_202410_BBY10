@@ -10,35 +10,31 @@
 
   <form action='/submitUser' method='post' class="form-container">
     <h1>Create User</h1>
-    <% if (typeof error !=='undefined' && error) { %>
-      <div class="error-message">
-        <%= error %>
-      </div>
-      <% } %>
+    
         <div class="mb-3">
           <class="form-label">User Name</label>
-            <input name="username" type="text" class="form-control" id="userName">
+            <input name="username" type="text" class="form-control" id="userName" required>
         </div>
         <div class="mb-3">
           <class="form-label">First Name</label>
-            <input name="first_name" type="text" class="form-control" id="firstName">
+            <input name="first_name" type="text" class="form-control" id="firstName" required>
         </div>
         <div class="mb-3">
           <class="form-label">Last Name</label>
-            <input name="last_name" type="text" class="form-control" id="lastName">
+            <input name="last_name" type="text" class="form-control" id="lastName" required>
         </div>
         <div class="mb-3">
           <class="form-label">Birthday</label>
-            <input name="birthday" type="date" class="form-control" id="birthday">
+            <input name="birthday" type="date" class="form-control" id="birthday" required>
         </div>
         <div class="mb-3">
           <class="form-label">Email address</label>
-            <input name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp">
+            <input name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp" required>
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
         </div>
         <div class="mb-3">
           <class="form-label">Password</label>
-            <input name="password" type="password" class="form-control" id="password">
+            <input name="password" type="password" class="form-control" id="password" required>
         </div>
 
 
