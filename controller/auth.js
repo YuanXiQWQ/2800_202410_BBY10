@@ -1,10 +1,43 @@
-import bcrypt from 'bcrypt';
-import { User } from '../model/user.js';
+import bcrypt from "bcrypt";
+import { User } from "../model/user.js";
 import crypto from "crypto";
 import path from "path";
 import { GridFSBucket } from "mongodb";
 import mongoose from "mongoose";
-import Joi from 'joi'
+import Joi from "joi";
+
+const schemaSignin = Joi.object({
+  email: Joi.string().email().required(),
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  password: Joi.string().max(20).required(),
+  firstName: Joi.string().alphanum().min(3).max(30).required(),
+  lastName: Joi.string().alphanum().min(3).max(30).required(),
+  birthday: Joi.date().iso().max("now").required(),
+});
+
+const schemaInfo = Joi.object({
+  weight: Joi.number().positive().required(),
+
+  height: Joi.number().positive().required(),
+
+  time: Joi.number()
+    .valid(0, 1, 2, 3, 4, 5, 6) // Enumerating valid options for 'time'
+    .required(),
+
+  goal: Joi.string()
+    .min(3) // Minimum length of the goal text
+    .max(200) // Maximum length
+    .required(),
+
+  fitnessLevel: Joi.string()
+    .valid("beginner", "intermediate", "advanced") // Enumerating valid options for 'fitnessLevel'
+    .required(),
+});
+
+const schemaLogin = Joi.object({
+  email: Joi.string().email(),
+  password: Joi.string().max(20).required(),
+});
 
 /**
  * Function to find a user in the database by username.
@@ -13,7 +46,7 @@ import Joi from 'joi'
  * @return {Promise<User|null>} A promise that resolves to the user document if found, or null if not found.
  */
 export async function findByUsername(username) {
-    return await User.findOne({ username });
+  return await User.findOne({ username });
 }
 
 /**
@@ -24,7 +57,7 @@ export async function findByUsername(username) {
  * @return {Promise<boolean>} A promise that resolves to true if the password is correct, or false if not.
  */
 export async function validatePassword(user, password) {
-    return await bcrypt.compare(password, user.password);
+  return await bcrypt.compare(password, user.password);
 }
 
 /**
@@ -33,59 +66,58 @@ export async function validatePassword(user, password) {
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object
  */
+export async function register(req, res) {
+  const saltRounds = 10;
+  const { username, firstName, lastName, email, birthday, password } = req.body;
 
+  const validationResult = schemaSignin.validate({
+    username,
+    firstName,
+    lastName,
+    email,
+    birthday,
+    password,
+  });
 
+  if (validationResult.error) {
+    return res.status(400).render("validationError", {
+      error: validationResult.error.details[0].message,
+      link: "signup",
+      linkImage: "images/validation-error.jpg",
+    });
+  }
 
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).render("validationError", {
+        error: "User already exists with this email.",
+        link: "signup",
+        linkImage: "validation-error.jpg",
+      });
+    }
 
-export function register(req, res) {
-
-
-
-    const saltRounds = 10;
-
-    const { username, firstName, lastName, email, birthday, password } = req.body;
-
-
-    const schema = Joi.object(
-		{
-			firstName: Joi.string().alphanum().max(30).required(),
-            lastName: Joi.string().alphanum().max(30).required(),
-           
-            email: Joi.string().max(40).required(),
-			password: Joi.string().max(30).required()
-            
-		});
-	
-	const validationResult = schema.validate({firstName, lastName, email, password});
-	if (validationResult.error != null) {
-        const errorMessage = validationResult.error.details.map(detail => detail.message).join('. ');
-        const missingFields = validationResult.error.details.map(detail => detail.context.label);
-        const missingFieldsMessage = missingFields.map(field => `Please provide a ${field}`).join('. ');
-
-        // Send back error message and link to sign up page
-        return res.send(`<p>${errorMessage}. ${missingFieldsMessage}</p><a href="/signup">Try again</a>`);
-   }
-
-
-    bcrypt.hash(password, saltRounds)
-        .then(hashedPassword => {
-            req.session.userData = {
-                username,
-                firstName,
-                lastName,
-                email,
-                password: hashedPassword,
-                birthday
-            };
-            res.redirect('/additional-info');
-        })
-        .catch(error => {
-            console.error('Error hashing password:', error);
-            res.status(500).send('Internal Server Error');
-        });
-
-
-
+    bcrypt
+      .hash(password, saltRounds)
+      .then((hashedPassword) => {
+        req.session.userData = {
+          username,
+          firstName,
+          lastName,
+          email,
+          password: hashedPassword,
+          birthday,
+        };
+        res.redirect("/additional-info");
+      })
+      .catch((error) => {
+        console.error("Error hashing password:", error);
+        res.status(500).send("Internal Server Error");
+      });
+  } catch (error) {
+    console.error(error, "error");
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 /**
@@ -96,46 +128,59 @@ export function register(req, res) {
  */
 export async function AdditionalUserInfo(req, res) {
 
-    // const { error } = additionalInfoSchema.validate(req.body);
-    // if (error) {
-    //     console.error('Error validating additional user info:', error);
-    //     res.redirect("/additional-info");
-    //     return;
-    // }
+  const { weight, height, time, goal, fitnessLevel } = req.body;
 
+  const validationResult2 = schemaInfo.validate({
+    weight, height, time, goal, fitnessLevel
+  });
 
-    const { weight, height, time, goal, fitnessLevel } = req.body;
-    const { username, firstName, lastName, email, birthday, password: hashedPassword } = req.session.userData;
-
-    req.session.userData = {
-        ...req.session.userData,
-        weight,
-        height,
-        time,
-        goal,
-        fitnessLevel
-    };
-
-    const newUser = new User({
-        username,
-        firstName,
-        lastName,
-        email,
-        password: hashedPassword,
-        birthday,
-        weight,
-        height,
-        fitnessLevel,
-        time,
-        goal
+  if (validationResult2.error) {
+    return res.status(400).render("validationError", {
+      error: validationResult2.error.details[0].message,
+      link: "additional-info",
+      linkImage: "images/validation-error.jpg",
     });
+  }
 
 
-    try {
-        await newUser.save();
-        res.redirect("/process");
-    } catch (error) {
-        console.error('Error saving new user:', error);
-        res.status(500).send('Internal Server Error');
-    }
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    birthday,
+    password: hashedPassword,
+  } = req.session.userData;
+
+  req.session.userData = {
+    ...req.session.userData,
+    weight,
+    height,
+    time,
+    goal,
+    fitnessLevel,
+  };
+
+
+  const newUser = new User({
+    username,
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+    birthday,
+    weight,
+    height,
+    fitnessLevel,
+    time,
+    goal,
+  });
+
+  try {
+    await newUser.save();
+    res.redirect("/process");
+  } catch (error) {
+    console.error("Error saving new user:", error);
+    res.status(500).send("Internal Server Error");
+  }
 }

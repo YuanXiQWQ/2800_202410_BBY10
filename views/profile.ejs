@@ -65,13 +65,13 @@
     </style>
 </head>
 <%- include("templates/navbar") %>
-<div class="container mt-5 pb-5">
-    <header class="d-flex align-items-center mb-4">
-        <a
-                href="/editUserAvatar"
-                class="d-flex align-items-center undecorated"
-                id="userInfo"
-        >
+<div class="container " style="padding-bottom: 8rem;">
+  <header class="d-flex align-items-center mb-4">
+    <a
+      href="/editUserAvatar"
+      class="d-flex align-items-center undecorated"
+      id="userInfo"
+    >
       <span class="lang-text" data-key="helloUser"
       >Hello, <%= userData.username %></span
       >
@@ -93,15 +93,15 @@
         </a>
     </header>
 
-    <div>
-        <p class="lang-text" data-key="personalInformation"
-        >Personal information</p
-        >
-        <ul class="undecorated" id="personalInformation">
-            <li>
-                <a href="/personalInformation">
-                    <span class="lang-text list-group-title" data-key="name">Name</span>
-                    <span class="list-group-content">
+  <div class="mx-2">
+    <p class="lang-text" style="font-weight: 900" data-key="personalInformation"
+      >Personal information</p
+    >
+    <ul class="undecorated" id="personalInformation">
+      <li>
+        <a href="/personalInformation">
+          <span class="lang-text list-group-title" data-key="name">Name</span>
+          <span class="list-group-content">
             <%= userData.username ? userData.username : '-' %>
           </span>
                     <svg
@@ -227,11 +227,11 @@
         </ul>
     </div>
 
-    <div class="mt-4">
-        <p class="lang-text" data-key="workoutSettings">Workout Settings</p>
-        <ul class="undecorated" id="workoutSettings">
-            <li>
-                <a href="/workoutSettings">
+  <div class="mt-4 mx-2">
+    <p class="lang-text" style="font-weight: 900" data-key="workoutSettings">Workout Settings</p>
+    <ul class="undecorated" id="workoutSettings">
+      <li>
+        <a href="/workoutSettings">
           <span class="lang-text list-group-title" data-key="fitnessGoal"
           >Fitness Goal</span
           >

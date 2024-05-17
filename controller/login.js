@@ -3,6 +3,8 @@ import { findByUsername, validatePassword } from "./auth.js";
 export async function logIn(req, res) {
   const { username, password } = req.body;
   try {
+
+    
     const user = await findByUsername(username);
     if (!user) {
       return res

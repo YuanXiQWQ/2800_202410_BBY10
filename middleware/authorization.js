@@ -1,6 +1,6 @@
 
 function isValidSession(req) {
-    if (req?.session?.userData?.username) {
+    if (req?.session?.userData?.username && req?.session?.userData?.goal) {
       return true;
     }
     return false;
