@@ -35,22 +35,22 @@ export async function register(req, res) {
     
     
         req.session.userData = {
-          username: user_name,
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          password: hashedPassword,
-          birthday: birthday
+            username,
+            firstName,
+            lastName,
+            email,
+            password: hashedPassword,
+            birthday
         };
     
         //console.log(req.body);
         console.log(req.session.userData);
         
         res.redirect('/additional-info');
-      } catch (error) {
+    } catch (error) {
         console.error('Error hashing password:', error);
         res.status(500).send('Internal Server Error');
-      }
+    }
 }
 
 export async function AdditionalUserInfo(req, res){
@@ -77,38 +77,38 @@ export async function AdditionalUserInfo(req, res){
     const hashedPassword = req.session.userData.password;
   
 
-  req.session.userData = {
-    ...req.session.userData,
-    weight: weight,
-    height: height,
-    workoutLevel: workoutLevel,
-    time: time,
-    goal: goal
+    req.session.userData = {
+        ...req.session.userData,
+        weight,
+        height,
+        time,
+        goal,
+        fitnessLevel
+    };
 
-  }
-
-  //console.log(req.session.userData);
-
-  const newUser = new User({
-    username: req.session.userData.username, // Set username here
-    first_name: req.session.userData.first_name,
-    last_name: req.session.userData.last_name,
-    email: req.session.userData.email,
-    password: hashedPassword,
-    birthday: req.session.userData.birthday,
-    weight: weight,
-    height: height,
-    workoutLevel: workoutLevel,
-    time: time,
-    goal: goal
-});
+    const newUser = new User({
+        username,
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword,
+        birthday,
+        weight,
+        height,
+        fitnessLevel,
+        time,
+        goal
+    });
 
   //console.log(newUser);
 
-  await newUser.save();
-
-
-  res.redirect("/profile");
+    try {
+        await newUser.save();
+        res.redirect("/profile");
+    } catch (error) {
+        console.error('Error saving new user:', error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 export function login() {
@@ -116,24 +116,56 @@ export function login() {
 }
 
 export async function changePassword(req, res) {
-    const { oldPassword, newPassword } = req.body;
+    const {oldPassword, newPassword} = req.body;
 
     try {
-            const user = await findByUsername(req.session.username);
+        const user = await findByUsername(req.session.username);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({message: 'User not found'});
         }
 
         const isMatch = await validatePassword(oldPassword);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Old password is incorrect' });
+            return res.status(400).json({message: 'Old password is incorrect'});
         }
 
         user.password = await bcrypt.hash(newPassword, 10);
         await user.save();
 
-        res.status(200).json({ message: 'Password changed successfully' });
+        res.status(200).json({message: 'Password changed successfully'});
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({message: 'Server error', error});
+    }
+}
+
+export async function postPersonalInformation(req, res) {
+    const {name, email, birthday, height, weight} = req.body;
+
+    try {
+        const user = await User.findById(req.session.userId);
+        if (!user) {
+            return res.status(404).json({success: false, message: 'User not found'});
+        }
+
+        user.name = name;
+        user.email = email;
+        user.birthday = birthday;
+        user.height = height;
+        user.weight = weight;
+
+        await user.save();
+
+        req.session.userData = {
+            ...req.session.userData,
+            name,
+            email,
+            birthday,
+            height,
+            weight
+        };
+
+        res.status(200).json({success: true, message: 'Personal information updated successfully'});
+    } catch (error) {
+        res.status(500).json({success: false, message: 'Server error', error});
     }
 }
