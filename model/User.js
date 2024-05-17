@@ -29,16 +29,4 @@ const userSchema = new mongoose.Schema({
     timestamps: true, collection: 'users', collation: {locale: 'en', strength: 2}
 });
 
-export function findByUsername(username) {
-    return this.findOne({username});
-}
-
-export function getFullName() {
-    return `${this.firstName} ${this.lastName}`;
-}
-
-export async function validatePassword(password) {
-    return await bcrypt.compare(password, this.password);
-}
-
 export const User = mongoose.model("User", userSchema);
