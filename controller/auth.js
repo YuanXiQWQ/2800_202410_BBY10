@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt';
-import {User} from '../model/user.js';
+import bcrypt from "bcrypt";
+import { User } from "../model/user.js";
 
 /**
  * Function to find a user in the database by username.
@@ -8,7 +8,7 @@ import {User} from '../model/user.js';
  * @return {Promise<User|null>} A promise that resolves to the user document if found, or null if not found.
  */
 export async function findByUsername(username) {
-    return await User.findOne({username});
+  return await User.findOne({ username });
 }
 
 /**
@@ -19,7 +19,7 @@ export async function findByUsername(username) {
  * @return {Promise<boolean>} A promise that resolves to true if the password is correct, or false if not.
  */
 export async function validatePassword(user, password) {
-    return await bcrypt.compare(password, user.password);
+  return await bcrypt.compare(password, user.password);
 }
 
 /**
@@ -29,25 +29,26 @@ export async function validatePassword(user, password) {
  * @param {Response} res - Express response object
  */
 export function register(req, res) {
-    const saltRounds = 10;
+  const saltRounds = 10;
 
-    const {username, firstName, lastName, email, birthday, password} = req.body;
-    bcrypt.hash(password, saltRounds)
-        .then(hashedPassword => {
-            req.session.userData = {
-                username,
-                firstName,
-                lastName,
-                email,
-                password: hashedPassword,
-                birthday
-            };
-            res.redirect('/additional-info');
-        })
-        .catch(error => {
-            console.error('Error hashing password:', error);
-            res.status(500).send('Internal Server Error');
-        });
+  const { username, firstName, lastName, email, birthday, password } = req.body;
+  bcrypt
+    .hash(password, saltRounds)
+    .then((hashedPassword) => {
+      req.session.userData = {
+        username,
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword,
+        birthday,
+      };
+      res.redirect("/additional-info");
+    })
+    .catch((error) => {
+      console.error("Error hashing password:", error);
+      res.status(500).send("Internal Server Error");
+    });
 }
 
 /**
@@ -57,41 +58,47 @@ export function register(req, res) {
  * @param {Response} res - Express response object
  */
 export async function AdditionalUserInfo(req, res) {
-    const {weight, height, time, goal, fitnessLevel} = req.body;
-    const {username, firstName, lastName, email, birthday, password: hashedPassword} = req.session.userData;
+  const { weight, height, time, goal, fitnessLevel } = req.body;
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    birthday,
+    password: hashedPassword,
+  } = req.session.userData;
 
-    req.session.userData = {
-        ...req.session.userData,
-        weight,
-        height,
-        time,
-        goal,
-        fitnessLevel
-    };
+  req.session.userData = {
+    ...req.session.userData,
+    weight,
+    height,
+    time,
+    goal,
+    fitnessLevel,
+  };
 
-    const newUser = new User({
-        username,
-        firstName,
-        lastName,
-        email,
-        password: hashedPassword,
-        birthday,
-        weight,
-        height,
-        fitnessLevel,
-        time,
-        goal
-    });
+  const newUser = new User({
+    username,
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+    birthday,
+    weight,
+    height,
+    fitnessLevel,
+    time,
+    goal,
+  });
 
-    console.log(newUser);
 
-    try {
-        await newUser.save();
-        res.redirect("/profile");
-    } catch (error) {
-        console.error('Error saving new user:', error);
-        res.status(500).send('Internal Server Error');
-    }
+  try {
+    await newUser.save();
+    res.redirect("/profile");
+  } catch (error) {
+    console.error("Error saving new user:", error);
+    res.status(500).send("Internal Server Error");
+  }
 }
 
 /**
@@ -101,34 +108,39 @@ export async function AdditionalUserInfo(req, res) {
  * @param {Response} res - Express response object
  */
 export async function changePassword(req, res) {
-    const {oldPassword, newPassword} = req.body;
+  const { oldPassword, newPassword } = req.body;
 
-    try {
-        const user = await findByUsername(req.session.userData.username);
-        if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
-        }
-
-        const isMatch = await validatePassword(user, oldPassword);
-        if (!isMatch) {
-            return res.status(400).json({success: false, message: 'Old password is incorrect'});
-        }
-
-        user.password = await bcrypt.hash(newPassword, 10);
-        await user.save();
-
-        res.status(200).json({success: true, message: 'Password changed successfully'});
-    } catch (error) {
-        res.status(500).json({success: false, message: 'Server error', error});
+  try {
+    const user = await findByUsername(req.session.userData.username);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
-}
 
+    const isMatch = await validatePassword(user, oldPassword);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Old password is incorrect" });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password changed successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error });
+  }
+}
 
 /**
  * Function to log in a user.
  */
 export function login() {
-    // TODO
+  // TODO
 }
 
 /**
@@ -138,33 +150,40 @@ export function login() {
  * @param {Response} res - Express response object
  */
 export async function postPersonalInformation(req, res) {
-    const {name, email, birthday, height, weight} = req.body;
+  const { name, email, birthday, height, weight } = req.body;
 
-    try {
-        const user = await User.findById(req.session.userId);
-        if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
-        }
-
-        user.name = name;
-        user.email = email;
-        user.birthday = birthday;
-        user.height = height;
-        user.weight = weight;
-
-        await user.save();
-
-        req.session.userData = {
-            ...req.session.userData,
-            name,
-            email,
-            birthday,
-            height,
-            weight
-        };
-
-        res.status(200).json({success: true, message: 'Personal information updated successfully'});
-    } catch (error) {
-        res.status(500).json({success: false, message: 'Server error', error});
+  try {
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
+
+    user.name = name;
+    user.email = email;
+    user.birthday = birthday;
+    user.height = height;
+    user.weight = weight;
+
+    await user.save();
+
+    req.session.userData = {
+      ...req.session.userData,
+      name,
+      email,
+      birthday,
+      height,
+      weight,
+    };
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Personal information updated successfully",
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error });
+  }
 }
