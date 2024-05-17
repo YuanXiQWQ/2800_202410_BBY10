@@ -9,6 +9,7 @@ import {fileURLToPath} from "url";
 import connectDB, {gfs, mongoUri} from "./db.js";
 import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
 import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
+import {logIn} from './controller/login.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -42,6 +43,7 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+
 app.post('/submitUser', async (req, res) => {
     try {
         await register(req, res);
@@ -58,6 +60,12 @@ app.get("/additional-info", (req, res) => {
 app.post("/submitAdditionalInfo", (req, res) => {
     AdditionalUserInfo(req, res).catch(err => res.status(400).send("Invalid input: " + err));
 });
+
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+app.post("/logging-in", logIn);
 
 app.get("/profile", (req, res) => {
     const userData = req.session.userData;
