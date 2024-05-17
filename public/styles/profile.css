@@ -3,6 +3,13 @@
     overflow: hidden;
 }
 
+#userAvatar,
+#userAvatar img {
+    width: 70px;
+    height: 70px;
+}
+
+
 header {
     font-size: 1.5rem;
     font-weight: bold;
