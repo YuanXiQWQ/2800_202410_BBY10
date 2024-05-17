@@ -4,11 +4,7 @@
 
 <form action="/submitAdditionalInfo" method="POST" id="additional-info">
     <h1>Workout Details</h1>
-    <% if (typeof error !=='undefined' && error) { %>
-        <div class="error-message">
-          <%= error %>
-        </div>
-        <% } %>
+    
     <label for="weight">Weight:</label>
     <input type="text" id="weight" name="weight" required><br><br>
 
