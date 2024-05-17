@@ -91,7 +91,7 @@ export async function AdditionalUserInfo(req, res) {
 
     try {
         await newUser.save();
-        res.redirect("/profile");
+        res.redirect("/process");
     } catch (error) {
         console.error('Error saving new user:', error);
         res.status(500).send('Internal Server Error');

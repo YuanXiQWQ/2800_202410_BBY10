@@ -32,12 +32,12 @@ let conversationHistory = [];
 /**
  * Gets the user question from input and sends it to ChatGPT
  */
-function askQuestion() {
+export function askQuestion(question) {
     rl.question("User: ", (answer) => {
         if (answer.toLowerCase().trim() === "exit") {
             rl.close();
         } else {
-            sendMessageToChatGPT(answer).catch(e => console.error(e));
+            sendMessageToChatGPT(question).catch(e => console.error(e));
         }
     });
 }
@@ -47,7 +47,7 @@ function askQuestion() {
  * @param messageToSend The message to send
  * @return {Promise<void>}
  */
-async function sendMessageToChatGPT(messageToSend) {
+export async function sendMessageToChatGPT(messageToSend) {
     // From API Doc
     let header = new Headers();
     header.append("Authorization", "Bearer " + key);
@@ -107,5 +107,3 @@ async function sendMessageToChatGPT(messageToSend) {
         .catch(e => console.error(e));
 }
 
-// Start
-askQuestion();

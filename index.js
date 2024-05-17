@@ -9,6 +9,7 @@ import {fileURLToPath} from "url";
 import connectDB, {gfs, mongoUri} from "./db.js";
 import {register, findByUsername, AdditionalUserInfo} from './controller/auth.js';
 import {changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings} from './controller/profile.js';
+import { sendInformation } from "./controller/chatgptIntegration.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -129,6 +130,13 @@ app.post("/postWorkoutSettings", async (req, res) => {
     }
 });
 
+
+app.get('/process', async (req, res) => {
+    sendInformation(req, res)
+ });
+  
+
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
 });
+
