@@ -136,12 +136,6 @@ export async function changePassword(req, res) {
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object
  */
-/**
- * Function to update the user's personal information.
- *
- * @param {Request} req - Express request object
- * @param {Response} res - Express response object
- */
 export async function postPersonalInformation(req, res) {
     const { firstName, lastName, email, birthday, height, weight } = req.body;
 
@@ -173,6 +167,41 @@ export async function postPersonalInformation(req, res) {
         res.status(200).json({ success: true, message: 'Personal information updated successfully' });
     } catch (error) {
         console.error('Error saving personal information:', error);
+        res.status(500).json({ success: false, message: 'Server error', error });
+    }
+}
+
+/**
+ * Function to update the user's workout settings.
+ *
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ */
+export async function updateWorkoutSettings(req, res) {
+    const { goal, fitnessLevel, time } = req.body;
+
+    try {
+        const user = await findByUsername(req.session.userData.username);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        user.goal = goal || user.goal;
+        user.fitnessLevel = fitnessLevel || user.fitnessLevel;
+        user.time = time || user.time;
+
+        await user.save();
+
+        req.session.userData = {
+            ...req.session.userData,
+            goal: user.goal,
+            fitnessLevel: user.fitnessLevel,
+            time: user.time
+        };
+
+        res.status(200).json({ success: true, message: 'Workout settings updated successfully' });
+    } catch (error) {
+        console.error('Error saving workout settings:', error);
         res.status(500).json({ success: false, message: 'Server error', error });
     }
 }
