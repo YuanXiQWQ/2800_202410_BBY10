@@ -25,12 +25,12 @@
 html,
 body {
     width: 100vw;
-    min-height: 100vh;
+    height: 100%;
+    overflow-x: hidden;
+    margin: 0px;
+    padding: 0px;
 }
 
-body {
-    position: relative;
-}
 
 form {
     width: min(90%, 40em);
