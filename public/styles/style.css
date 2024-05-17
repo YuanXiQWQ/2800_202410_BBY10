@@ -90,7 +90,7 @@ form > .btn {
         display: grid;
         position: fixed;
         font-size: .8rem;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         background-color: #DAD4EB;
     }
 

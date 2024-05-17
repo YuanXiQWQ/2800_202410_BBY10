@@ -1,30 +1,66 @@
 <%- include("templates/header") %>
-<head><link rel="stylesheet" href="./styles/additional-info.css"></head>
+<head>
+  <link rel="stylesheet" href="./styles/additional-info.css" />
+</head>
 
+<form
+  action="/submitAdditionalInfo"
+  class="form-group"
+  method="POST"
+  id="additional-info"
+>
+  <h1>Workout Details</h1>
 
-<form action="/submitAdditionalInfo" method="POST" id="additional-info">
-    <h1>Workout Details</h1>
-    
+  <div class="my-4">
     <label for="weight">Weight:</label>
-    <input type="text" id="weight" name="weight" required><br><br>
+    <input class="form-control" id="weight" placeholder="in KG" name="weight" required />
+  </div>
 
+  <div class="my-4">
     <label for="height">Height:</label>
-    <input type="text" id="height" name="height" required><br><br>
+    <input class="form-control" placeholder="in cm" id="height" name="height" required />
+  </div>
 
+  <div class="my-4">
     <label for="time">Workout Plan Duration:</label>
-    <input type="text" id="workout_duration" name="time" required><br><br>
+    <select
+      class="form-select"
+      id="workout_duration"
+      name="time"
+      aria-label="Default select example"
+    >
+      <option selected>Select a day</option>
+      <option value="0">Monday</option>
+      <option value="1">Tuesday</option>
+      <option value="2">Wednesday</option>
+      <option value="3">Thursday</option>
+      <option value="4">Friday</option>
+      <option value="5">Sunday</option>
+    </select>
+  </div>
 
+  <div class="my-4">
     <label for="goal">Goal:</label>
-    <input type="text" id="goal" name="goal" required><br><br>
+    <textarea class="form-control"  id="goal" name="goal" required rows="3"></textarea>
+  </div>
 
-
+  <div class="my-4">
     <label for="workoutLevel">Workout Level:</label>
-    <select id="workoutLevel" name="workoutLevel" required>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-    </select><br><br>
-
-    <button type="submit" class="btn primary-color primary-color-hover">Submit</button>
+    <select
+      class="form-control"
+      required
+      id="workoutLevel"
+      name="workoutLevel"
+      required
+    >
+      <option selected>Select level</option>
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+    </select>
+  </div>
+  <button type="submit" class="btn primary-color primary-color-hover">
+    Submit
+  </button>
 </form>
 <%- include("templates/footer") %>
