@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import path from "path";
 import {fileURLToPath} from "url";
 import connectDB, {gfs, mongoUri} from "./db.js";
+import {logIn} from "./controller/login.js";
 import {
     register,
     changePassword,
@@ -49,13 +50,10 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get("/login", (req, res) => {
-    res.render("login");
-});
-
 app.get('/signup', (req, res) => {
     res.render('signup');
 });
+
 
 app.post('/submitUser', async (req, res) => {
     try {
@@ -73,6 +71,12 @@ app.get("/additional-info", (req, res) => {
 app.post("/submitAdditionalInfo", (req, res) => {
     AdditionalUserInfo(req, res).catch(err => res.status(400).send("Invalid input: " + err));
 });
+
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+app.post("/logging-in", logIn);
 
 app.get("/profile", (req, res) => {
     const userData = req.session.userData;

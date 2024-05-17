@@ -1,44 +1,21 @@
-// routes/users.js
-const express = require('express');
-const router = express.Router();
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
+import {findByUsername, validatePassword} from './auth.js';
 
-// Login Handle
-router.post('/loggingin', async (req, res) => {
-    const { email, password } = req.body;
-    let errors = [];
-
-    if (!email || !password) {
-        errors.push({ msg: 'Please enter all fields' });
-    }
-
-    if (errors.length > 0) {
-        return res.render('login', { errors, email, password });
-    }
-
+export async function logIn(req, res) {
+    const {username, password} = req.body;
     try {
-        // Find user by email
-        const user = await User.findOne({ email: email });
+        const user = await findByUsername(username);
         if (!user) {
-            errors.push({ msg: 'Invalid email or password' });
-            return res.render('login', { errors, email, password });
+            return res.status(404).json({message:'User not found', success: false});
         }
-
-        // Compare entered password with stored hashed password
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await validatePassword(user, password);
         if (!isMatch) {
-            errors.push({ msg: 'Invalid email or password' });
-            return res.render('login', { errors, email, password });
+            return res.status(400).json({message:'Invalid password', success: false});
         }
-
-        // If credentials match, set session and redirect to dashboard
-        req.session.user = user;
-        res.redirect('/dashboard');
-    } catch (err) {
-        console.error(err);
-        res.render('login', { errors: [{ msg: 'Server error, please try again later.' }], email, password });
+        req.session.userData = user;
+        res.redirect("/profile");
     }
-});
-
-module.exports = router;
+    catch (error) {
+        console.error('Error logging in:', error);
+        res.status(500).json({message:'Internal Server Error', success: false});
+    }
+}
