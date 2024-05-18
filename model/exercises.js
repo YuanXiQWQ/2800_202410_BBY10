@@ -17,12 +17,9 @@ const exerciseSchema = new mongoose.Schema(
   }
 );
 
-const encKey = process.env.SOME_32BYTE_BASE64_STRING;
-const sigKey = process.env.SOME_64BYTE_BASE64_STRING;
-
 exerciseSchema.plugin(encrypt, {
-  encryptionKey: encKey,
-  signingKey: sigKey,
+  encryptionKey: process.env.SOME_32BYTE_BASE64_STRING,
+  signingKey: process.env.SOME_64BYTE_BASE64_STRING,
   excludeFromEncryption: ['user']
 });
 

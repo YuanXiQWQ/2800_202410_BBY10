@@ -71,12 +71,9 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-var encKey = process.env.SOME_32BYTE_BASE64_STRING;
-var sigKey = process.env.SOME_64BYTE_BASE64_STRING;
-
 userSchema.plugin(encrypt, {
-  encryptionKey: encKey,
-  signingKey: sigKey,
+  encryptionKey: process.env.SOME_32BYTE_BASE64_STRING,
+  signingKey: process.env.SOME_64BYTE_BASE64_STRING
 });
 
 export const User = mongoose.model("User", userSchema);

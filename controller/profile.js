@@ -9,8 +9,9 @@ import {findByUsername, validatePassword} from './auth.js';
 /**
  * Function to change the user's password.
  *
- * @param {Request} req - Express request object
+ * @param {Request} req - Express request object containing the old and new passwords in the body
  * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the password is changed
  */
 export async function changePassword(req, res) {
     const {oldPassword, newPassword} = req.body;
@@ -38,8 +39,9 @@ export async function changePassword(req, res) {
 /**
  * Function to update the user's avatar and username.
  *
- * @param {Request} req - Express request object
+ * @param {Request} req - Express request object containing the new username and avatar file in the body
  * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the avatar and username are updated
  */
 export async function postUserAvatar(req, res) {
     try {
@@ -100,8 +102,9 @@ export async function postUserAvatar(req, res) {
 /**
  * Function to update the user's personal information.
  *
- * @param {Request} req - Express request object
+ * @param {Request} req - Express request object containing the user's personal information in the body
  * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the personal information is updated
  */
 export async function postPersonalInformation(req, res) {
     const {firstName, lastName, email, birthday, height, weight} = req.body;
@@ -149,8 +152,9 @@ export async function postPersonalInformation(req, res) {
 /**
  * Function to update the user's workout settings.
  *
- * @param {Request} req - Express request object
+ * @param {Request} req - Express request object containing the user's workout settings in the body
  * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the workout settings are updated
  */
 export async function updateWorkoutSettings(req, res) {
     const {goal, fitnessLevel, time} = req.body;
@@ -181,6 +185,13 @@ export async function updateWorkoutSettings(req, res) {
     }
 }
 
+/**
+ * Function to delete the user's account.
+ *
+ * @param {Request} req - Express request object
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the account is deleted
+ */
 export async function deleteAccount(req, res) {
     try {
         const user = await findByUsername(req.session.userData.username);
