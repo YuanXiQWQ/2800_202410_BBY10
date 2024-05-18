@@ -1,0 +1,77 @@
+<%- include("templates/header") %>
+<head>
+    <title>Delete Account</title>
+    <link rel="stylesheet" href="/styles/profile.css">
+    <style>
+        #confirmBtn {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        #deleteBtn {
+            margin-bottom: .8rem;
+        }
+    </style>
+</head>
+<%- include("templates/navbar") %>
+<div class="container mt-5">
+    <header class="d-flex align-items-center mb-4">
+        <a id="btn-back" href="/profile" class="btn btn-outline-secondary me-3">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.65419 7.95837H17.3334V10.0417H4.65419L10.2417 15.6292L8.76877 17.1021L0.666687 9.00003L8.76877 0.897949L10.2417 2.37087L4.65419 7.95837Z"
+                      fill="black"/>
+            </svg>
+        </a>
+        <span class="lang-text" data-key="changeYourPassword">Are you sure you want to delete this account?</span>
+    </header>
+    <main>
+        <div class="alert secondary-color">
+            <span class="lang-text" data-key="changeYourPasswordTips">
+                '<%= userData.username %>' will be lost forever! (A long time!)
+            </span>
+        </div>
+        <div id="confirmBtn">
+            <button id="deleteBtn" class="btn btn-primary btn-danger">
+                Delete
+            </button>
+            <button id="cancelBtn" class="btn btn-primary primary-color primary-color-hover">
+                Cancel
+            </button>
+        </div>
+        <div id="statusMessage"></div>
+    </main>
+</div>
+<%- include("templates/footer") %>
+
+<script>
+    const deleteBtn = document.getElementById("deleteBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const statusMessage = document.getElementById("statusMessage");
+
+    deleteBtn.addEventListener("click", async () => {
+        try {
+            const response = await fetch("/postDeletingAccount", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({delete: true})
+            });
+            const data = await response.json();
+            if (data.success) {
+                window.location.href = "/";
+            } else {
+                statusMessage.textContent = data.message;
+                statusMessage.style.color = 'red';
+            }
+        } catch (error) {
+            statusMessage.textContent = "An error occurred. Please try again.";
+            statusMessage.style.color = 'red';
+        }
+    });
+
+    cancelBtn.addEventListener("click", () => {
+        window.location.href = "/profile";
+    });
+</script>

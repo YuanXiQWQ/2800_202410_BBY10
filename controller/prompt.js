@@ -11,7 +11,7 @@ export function generatePrompt(
         adjusting the content according to the level: "${fitnessLevel}", weight: "${weight}kg", and 
         goal: "${goal}". Include different types of workouts and their durations (with time in minutes) 
         that fit the specified difficulty category. 
-    For example, if the start date is Monday, and the end date is Wednsday, and the total time is 180, 
+    For example, if the start date is Monday, and the end date is Wednesday, and the total time is 180, 
     your JSON format should be like this:
     {
       "Monday": [
@@ -25,7 +25,7 @@ export function generatePrompt(
         { "name": "...", "time": "..." },
         { "name": "...", "time": "..." }
       ],
-      "Wednsday": [
+      "Wednesday": [
         ...
       ]
     }
