@@ -1,23 +1,40 @@
+/**
+ * Checks if the session is valid.
+ * A valid session must have `username` and `goal` in `userData`.
+ *
+ * @param {Object} req - The request object.
+ * @returns {boolean} True if the session is valid, otherwise false.
+ */
+const isValidSession = req => !!(req?.session?.userData?.username && req?.session?.userData?.goal);
 
-function isValidSession(req) {
-    if (req?.session?.userData?.username && req?.session?.userData?.goal) {
-      return true;
-    }
-    return false;
-  }
-  
-  export function authValidation(req, res, next) {
+/**
+ * Middleware to handle authentication.
+ * If not authenticated, proceed to the next middleware.
+ * If authenticated, redirects to /exercises for root and signup paths.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
+export function authValidation(req, res, next) {
     if (!isValidSession(req)) {
-      next();
+        next();
+    } else if (req.path === "/" || req.path === "/signup") {
+        res.redirect("/exercises");
     } else {
-      res.redirect("/exercises");
+        next();
     }
-  }
-  
-  export function sessionValidation(req, res, next) {
-    if (isValidSession(req)) {
-      next();
-    } else {
-      res.redirect("/");
-    }
+}
+
+/**
+ * Middleware to validate the session.
+ * If the session is valid, proceed to the next middleware.
+ * If not, redirect to the root path.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
+export function sessionValidation(req, res, next) {
+    isValidSession(req) ? next() : res.redirect("/");
 }
