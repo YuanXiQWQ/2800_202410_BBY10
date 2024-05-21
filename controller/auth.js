@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
+import schedule from 'node-schedule';
 import crypto from "node:crypto";
 import {google} from "googleapis";
 import dotenv from "dotenv";
@@ -30,6 +31,32 @@ const schemaInfo = Joi.object({
 const schemaLogin = Joi.object({
     email: Joi.string().email(),
     password: Joi.string().max(20).required(),
+});
+
+/**
+ * Schedule a job to delete unverified users older than 24 hours.
+ */
+schedule.scheduleJob('0 0 * * *', async () => {
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    try {
+        const unverifiedUsers = await User.find({
+            isVerified: false,
+            createdAt: { $lt: twentyFourHoursAgo }
+        });
+
+        const usernames = unverifiedUsers.map(user => user.username);
+        const deleteResult = await User.deleteMany({
+            isVerified: false,
+            createdAt: { $lt: twentyFourHoursAgo }
+        });
+
+        console.log(`Unverified users cleanup completed. Deleted ${deleteResult.deletedCount} users.`);
+        console.log(`Deleted usernames: ${usernames.join(', ')}`);
+    } catch (error) {
+        console.error("Error during unverified users cleanup:", error);
+    }
 });
 
 const createTransporter = async () => {
@@ -179,7 +206,7 @@ export function AdditionalUserInfo(req, res) {
     return new Promise(async (resolve, reject) => {
         if (!req.session.userData) return res.redirect("/login");
 
-        const { weight, height, time, goal, fitnessLevel } = req.body;
+        const {weight, height, time, goal, fitnessLevel} = req.body;
         const validationResult2 = schemaInfo.validate({
             weight,
             height,
@@ -206,7 +233,7 @@ export function AdditionalUserInfo(req, res) {
         } = req.session.userData;
 
         try {
-            const user = await User.findOne({ username });
+            const user = await User.findOne({username});
             if (!user) {
                 return res.status(404).json({
                     success: false,
