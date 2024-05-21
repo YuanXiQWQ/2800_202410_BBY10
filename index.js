@@ -17,6 +17,7 @@ import {sendInformation} from "./controller/chatgptIntegration.js";
 import {getListOfExercises} from "./controller/exercises.js";
 import {authValidation, sessionValidation} from "./middleware/authorization.js";
 import {logIn} from './controller/login.js';
+import {User} from "./model/User.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -54,21 +55,55 @@ app.get("/signup", authValidation, (req, res) => {
     res.render("signup");
 });
 
-app.post('/submitUser', (req, res) => {
-    register(req, res)
-        .catch(err => {
-            console.log("Internal Server Error by: " + err)
-            res.status(500).send("Internal Server Error");
-        });
+app.post('/submitUser', upload.none(), async (req, res) => {
+    try {
+        await register(req, res);
+    } catch (err) {
+        console.error('Internal Server Error by:', err);
+        if (!res.headersSent) {
+            res.status(500).json({success: false, message: 'Internal Server Error'});
+        }
+    }
+});
+
+app.get('/verify-email', async (req, res) => {
+    const {token} = req.query;
+
+    try {
+        const user = await User.findOne({verificationToken: token});
+
+        if (!user) {
+            return res.status(400).render('validationError', {
+                error: 'Invalid verification token.',
+                link: 'signup',
+                linkImage: 'images/validation-error.jpg',
+            });
+        }
+
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        await user.save();
+
+        req.session.userData = user;
+        res.redirect('/additional-info');
+    } catch (error) {
+        console.error("Error verifying email:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.get("/additional-info", (req, res) => {
+    if (!req.session.userData || !req.session.userData.isVerified) return res.redirect("/signup");
     res.render("additional-info");
 });
 
 app.post("/submitAdditionalInfo", (req, res) => {
-    AdditionalUserInfo(req, res)
-        .catch((err) => res.status(400).send("Invalid input: " + err));
+    AdditionalUserInfo(req, res).catch(err => {
+        console.error('Error submitting additional info:', err);
+        if (!res.headersSent) {
+            res.status(500).json({success: false, message: 'Internal Server Error'});
+        }
+    });
 });
 
 app.get("/login", (req, res) => {

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="./styles/signup.css">
 </head>
 
-<form action='/submitUser' method='post' class="form-container">
+<form id="signupForm" class="form-container">
     <h1>Create User</h1>
 
     <div class="mb-3">
@@ -27,7 +27,6 @@
     <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
         <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
-        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
@@ -36,5 +35,34 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<div id="notification" style="display: none; margin-top: 20px;" class="alert alert-info">
+    Verification email sent. Please check your inbox.
+</div>
+
+<script>
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        try {
+            const response = await fetch('/submitUser', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                document.getElementById('notification').style.display = 'block';
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || 'An error occurred. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+</script>
 
 <%- include("templates/footer") %>
