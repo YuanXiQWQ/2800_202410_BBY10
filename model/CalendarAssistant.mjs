@@ -1,4 +1,4 @@
-import {generatePrompt} from "./prompt.mjs"
+import {generatePrompt} from "../controller/prompt.mjs"
 import dotenv from "dotenv"
 
 dotenv.config({path: "../.env"});

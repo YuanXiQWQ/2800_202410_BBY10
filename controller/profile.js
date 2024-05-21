@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import {User} from '../model/user.js';
+import {User} from '../model/User.js';
 import crypto from 'crypto';
 import path from 'path';
 import {GridFSBucket} from 'mongodb';
