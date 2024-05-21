@@ -50,7 +50,7 @@
         submitButton.disabled = true;
         statusMessage.style.display = 'block';
         statusMessage.textContent = 'Sending the email, please wait...';
-        statusMessage.style.color = 'yellow';
+        statusMessage.style.color = 'blue';
 
         try {
             const response = await fetch('/submitUser', {

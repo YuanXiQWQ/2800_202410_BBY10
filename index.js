@@ -13,6 +13,7 @@ import {
 import {
     changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings, deleteAccount,
 } from "./controller/profile.js";
+import {forgetPassword, resetPassword} from "./controller/password.js";
 import {sendInformation} from "./controller/chatgptIntegration.js";
 import {getListOfExercises} from "./controller/exercises.js";
 import {authValidation, sessionValidation} from "./middleware/authorization.js";
@@ -111,6 +112,20 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/logging-in", logIn);
+
+app.get("/forget-password", (req, res) => {
+    res.render("forgetPassword");
+});
+
+app.post("/forget-password", forgetPassword);
+
+app.get("/reset-password", (req, res) => {
+    const token = req.query.token;
+    if (!token) return res.status(400).send("Invalid or expired token.");
+    res.render("resetPassword", {token});
+});
+
+app.post("/reset-password", resetPassword);
 
 /**
  * Render after login

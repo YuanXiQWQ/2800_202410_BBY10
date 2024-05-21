@@ -36,6 +36,14 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        resetPasswordToken: {
+            type: String,
+            required: false,
+        },
+        resetPasswordExpires: {
+            type: Date,
+            required: false,
+        },
         height: {
             type: Number,
             required: false,
@@ -81,7 +89,7 @@ const userSchema = new mongoose.Schema(
 userSchema.plugin(encrypt, {
     encryptionKey: process.env.SOME_32BYTE_BASE64_STRING,
     signingKey: process.env.SOME_64BYTE_BASE64_STRING,
-    excludeFromEncryption: ["verificationToken"]
+    excludeFromEncryption: ["verificationToken", "resetPasswordToken", "resetPasswordExpires"]
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

@@ -59,7 +59,7 @@ schedule.scheduleJob('0 0 * * *', async () => {
     }
 });
 
-const createTransporter = async () => {
+export const createTransporter = async () => {
     const oauth2Client = new OAuth2(
         process.env.CLIENT_ID,
         process.env.CLIENT_SECRET,
@@ -258,9 +258,4 @@ export function AdditionalUserInfo(req, res) {
             reject(error);
         }
     });
-}
-
-
-export function confirmEmail(req, res) {
-    // TODO Implementation for email confirmation can be added here
 }
