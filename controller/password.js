@@ -13,6 +13,7 @@ export async function forgetPassword(req, res) {
 
         const resetToken = crypto.randomBytes(32).toString("hex");
         user.verificationToken = resetToken;
+        const appUrl = process.env.NODE_ENV === 'development' ? process.env.APP_URL_LOCAL : process.env.APP_URL_PRODUCTION;
         await user.save();
 
         const transporter = await createTransporter();
@@ -21,7 +22,7 @@ export async function forgetPassword(req, res) {
             to: email,
             subject: "Password Reset",
             text: `Please reset your password by clicking the following link: 
-            http://${req.headers.host}/reset-password?token=${resetToken}`,
+            ${appUrl}/reset-password?token=${resetToken}`,
         };
 
         await transporter.sendMail(mailOptions);
