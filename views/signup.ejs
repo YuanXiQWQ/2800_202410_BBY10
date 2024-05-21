@@ -1,44 +1,79 @@
 <%- include("templates/header") %>
 
-  <head>
+<head>
+    <title>Signup</title>
     <link rel="stylesheet" href="./styles/signup.css">
-  </head>
+</head>
 
-
-
-
-
-  <form action='/submitUser' method='post' class="form-container">
+<form id="signupForm" class="form-container">
     <h1>Create User</h1>
-    
-        <div class="mb-3">
-          <class="form-label">User Name</label>
-            <input  name="username" type="text" class="form-control" id="userName" required>
-        </div>
-        <div class="mb-3">
-          <class="form-label">First Name</label>
-            <input required name="firstName" type="text" class="form-control" id="firstName" required>
-        </div>
-        <div class="mb-3">
-          <class="form-label">Last Name</label>
-            <input required name="lastName" type="text" class="form-control" id="lastName" required>
-        </div>
-        <div class="mb-3">
-          <class="form-label">Birthday</label>
-            <input required name="birthday" type="date" class="form-control" id="birthday" required>
-        </div>
-        <div class="mb-3">
-          <class="form-label">Email address</label>
-            <input required name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp" required>
-            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-        </div>
-        <div class="mb-3">
-          <class="form-label">Password</label>
-            <input required name="password" type="password" class="form-control" id="password" required>
-        </div>
 
+    <div class="mb-3">
+        <label for="userName" class="form-label">User Name</label>
+        <input name="username" type="text" class="form-control" id="userName" required>
+    </div>
+    <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input name="firstName" type="text" class="form-control" id="firstName" required>
+    </div>
+    <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input name="lastName" type="text" class="form-control" id="lastName" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthday" class="form-label">Birthday</label>
+        <input name="birthday" type="date" class="form-control" id="birthday" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input name="password" type="password" class="form-control" id="password" required>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+</form>
 
-  </form>
-  <%- include("templates/footer") %>
+<div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
+
+<script>
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const submitButton = document.getElementById('submitButton');
+        const statusMessage = document.getElementById('statusMessage');
+
+        submitButton.disabled = true;
+        statusMessage.style.display = 'block';
+        statusMessage.textContent = 'Sending the email, please wait...';
+        statusMessage.style.color = 'blue';
+
+        try {
+            const response = await fetch('/submitUser', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                statusMessage.textContent = 'Verification email sent. Please check your inbox.';
+                statusMessage.style.color = 'green';
+            } else {
+                const errorData = await response.json();
+                statusMessage.textContent = errorData.message || 'An error occurred. Please try again.';
+                statusMessage.style.color = 'red';
+                submitButton.disabled = false;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            statusMessage.textContent = 'An error occurred. Please try again.';
+            statusMessage.style.color = 'red';
+            submitButton.disabled = false;
+        }
+    });
+</script>
+
+<%- include("templates/footer") %>

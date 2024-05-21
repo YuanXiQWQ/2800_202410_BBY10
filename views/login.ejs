@@ -1,32 +1,22 @@
 <%- include("templates/header") %>
 <head>
     <title>Log In</title>
-    <!-- <style>
-        body {
-            display: flex;
-            justify-content: center;
-        }
-
-        form {
-            margin: auto;
-        }
-    </style> -->
-    <head>
-        <link rel="stylesheet" href="./styles/login.css">
-      </head>
+    <link rel="stylesheet" href="/styles/login.css">
 </head>
 <div class="form-container">
-<form id="login-form">
-    <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" required class="form-control" id="username" name="username" placeholder="Enter your username">
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input required type="password" class="form-control" id="password" name="password" placeholder="Password">
-    </div>
-    <button type="submit" class="btn-primary">Sign In</button>
-</form>
+    <form id="login-form">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" required class="form-control" id="username" name="username"
+                   placeholder="Enter your username">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input required type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+    <a href="/forget-password">forget your password?</a>
 </div>
 <div id="status-message"></div>
 <%- include("templates/footer") %>
