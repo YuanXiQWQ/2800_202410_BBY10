@@ -58,12 +58,14 @@ schedule.scheduleJob('0 0 * * *', async () => {
         console.error("Error during unverified users cleanup:", error);
     }
 });
+const appUrl = process.env.NODE_ENV === 'development' ? process.env.APP_URL_LOCAL : process.env.APP_URL_PRODUCTION;
+
 
 export const createTransporter = async () => {
     const oauth2Client = new OAuth2(
         process.env.CLIENT_ID,
         process.env.CLIENT_SECRET,
-        "https://developers.google.com/oauthplayground"
+        process.env.CLIENT_URL
     );
 
     oauth2Client.setCredentials({
@@ -163,7 +165,6 @@ export async function register(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const verificationToken = crypto.randomBytes(32).toString("hex");
-
         const newUser = new User({
             username,
             firstName,
@@ -183,7 +184,7 @@ export async function register(req, res) {
             to: email,
             subject: "Email Verification",
             text: `Please verify your email by clicking the following link: 
-            http://${req.headers.host}/verify-email?token=${verificationToken}`,
+            ${appUrl}/verify-email?token=${verificationToken}`,
         };
 
         await transporter.sendMail(mailOptions);
