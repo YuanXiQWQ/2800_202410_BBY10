@@ -179,6 +179,14 @@ export async function register(req, res) {
             });
         }
 
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            return res.status(409).json({
+                success: false,
+                message: "User already exists with this username.",
+            });
+        }
+
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const verificationToken = crypto.randomBytes(32).toString("hex");
         const newUser = new User({
