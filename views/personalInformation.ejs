@@ -2,10 +2,11 @@
 <head>
     <title>Edit Personal Information</title>
     <link rel="stylesheet" href="/styles/profile.css">
+    <script src="/controller/easterEgg.js"></script> <!-- 引入easterEgg.js -->
 </head>
 <%- include("templates/navbar") %>
 <div id="notification" class="alert notification hidden"></div>
-<div class="container mt-5"  style="padding-bottom: 8rem;">
+<div class="container mt-5" style="padding-bottom: 8rem;">
     <header class="d-flex align-items-center mb-4">
         <a id="btn-back" href="/profile" class="btn btn-outline-secondary me-3">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,6 +94,21 @@
             statusMessage.style.visibility = 'visible';
         }, 100);
 
+        const firstName = formData.get('firstName');
+        const lastName = formData.get('lastName');
+
+        // 检查是否为彩蛋触发条件
+        if (firstName === '龙一' && lastName === '成步堂') {
+            // 激活easterEgg.js中的彩蛋功能
+            activateEasterEgg('phoenixWright', firstName, lastName).then(() => {
+                submitForm(formData);
+            });
+        } else {
+            submitForm(formData);
+        }
+    });
+
+    function submitForm(formData) {
         const infoData = {
             firstName: formData.get('firstName') || undefined,
             lastName: formData.get('lastName') || undefined,
@@ -115,14 +131,16 @@
                     localStorage.setItem('successFlag', 'true');
                     location.reload();
                 } else {
+                    const statusMessage = document.getElementById('statusMessage');
                     statusMessage.textContent = data.message;
                     statusMessage.style.color = 'red';
                 }
             })
             .catch(err => {
+                const statusMessage = document.getElementById('statusMessage');
                 statusMessage.textContent = 'An error occurred. Please try again.';
                 statusMessage.style.color = 'red';
             });
-    });
+    }
 </script>
 <%- include("templates/footer") %>
