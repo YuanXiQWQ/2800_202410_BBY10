@@ -1,16 +1,11 @@
 function activateEasterEgg(type, firstName, lastName) {
     return new Promise((resolve) => {
         if (!window.inActivation) {
-            try {
-                clearTimeout(window.activationTimer);
-            } catch (e) {
-            }
-
             window.inActivation = true;
 
             // 创建并插入种类图片元素
             const img = document.createElement('img');
-            img.src = `/images/igiari.png`; // 确保路径正确
+            img.src = `/images/easterEgg/igiari.png`; // 确保路径正确
             img.id = 'activationImage';
             img.classList.add('easter-egg', 'hide');
             document.body.appendChild(img);
@@ -20,7 +15,7 @@ function activateEasterEgg(type, firstName, lastName) {
             bottomDiv.id = 'bottomElement';
             bottomDiv.classList.add('bottom-element');
             bottomDiv.innerHTML = `
-                <p>Are you sure you want to change the name to ${firstName} ${lastName}?</p>
+                <p>Are you sure you want to change the name to ${lastName} ${firstName}?</p>
                 <button id="yesButton" class="btn btn-primary">Yes</button>
                 <button id="noButton" class="btn btn-secondary">No</button>
             `;
@@ -34,9 +29,10 @@ function activateEasterEgg(type, firstName, lastName) {
             });
 
             document.getElementById('yesButton').addEventListener('click', () => {
+                img.src = `/images/easterEgg/matta.png`; // 切换到 matta 图片
                 playMP3(`/sounds/${type}/matta.mp3`);
                 bottomDiv.innerHTML = `
-                    <p>Is this your real name, or are you just trying to make me more famous?</p>
+                    <p>Hold it! Is this your real name, or are you just trying to make me more famous?</p>
                     <button id="realNameButton" class="btn btn-primary">My real name</button>
                     <button id="funButton" class="btn btn-secondary">Just for fun</button>
                 `;
@@ -48,21 +44,30 @@ function activateEasterEgg(type, firstName, lastName) {
                 document.getElementById('firstName').value = '';
                 document.getElementById('lastName').value = '';
                 document.body.removeChild(bottomDiv);
+                document.body.removeChild(img);
                 window.inActivation = false;
+                bgMusic.pause();
                 document.querySelectorAll('button, select').forEach(element => {
                     element.disabled = false;
                 });
             });
 
             function continueSubmission() {
+                img.src = `/images/easterEgg/kurae.png`; // 切换到 kurae 图片
                 playMP3(`/sounds/${type}/kurae.mp3`);
+                bgMusic.pause(); // 暂停当前背景音乐
+                const newBgMusic = new Audio(`/sounds/msc-pressingPursuit.mp3`);
+                newBgMusic.loop = true;
+                newBgMusic.play();
                 bottomDiv.innerHTML = `
-                    <p>Anyway, save your changes!</p>
+                    <p>Anyway, take that! Save your changes!</p>
                     <button id="okButton" class="btn btn-primary">OK</button>
                 `;
                 document.getElementById('okButton').addEventListener('click', () => {
                     document.body.removeChild(bottomDiv);
+                    document.body.removeChild(img);
                     window.inActivation = false;
+                    newBgMusic.pause(); // 暂停新的背景音乐
                     document.querySelectorAll('button, select').forEach(element => {
                         element.disabled = false;
                     });
@@ -79,32 +84,13 @@ function activateEasterEgg(type, firstName, lastName) {
                 shake(img.id);
             }, 200);
 
-            // 自动播放音乐
-            setTimeout(() => {
-                playMP3(`/sounds/msc-objection.mp3`);
-                playMP3(`/sounds/${type}/igiari.mp3`); // 确保路径正确
-            }, 200);
+            // 播放背景音乐
+            const bgMusic = new Audio(`/sounds/msc-objection.mp3`);
+            bgMusic.loop = true;
+            bgMusic.play();
 
-            // 设置计时器在一定时间后恢复初始状态
-            window.activationTimer = setTimeout(() => {
-                if (window.inActivation) {
-                    img.classList.add('hide');
-                    setTimeout(() => {
-                        img.remove();
-                    }, 400); // 给图片隐藏动画一些时间
-
-                    document.querySelectorAll('button, select').forEach(element => {
-                        element.disabled = false;
-                    });
-
-                    window.inActivation = false;
-                    resolve(); // 结束Promise
-                }
-                try {
-                    clearTimeout(window.activationTimer);
-                } catch (e) {
-                }
-            }, 17000);
+            // 播放 igiari 音效
+            playMP3(`/sounds/${type}/igiari.mp3`);
         }
     });
 }
