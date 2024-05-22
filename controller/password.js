@@ -3,13 +3,19 @@ import bcrypt from "bcrypt";
 import {User} from "../model/User.js";
 import {createTransporter} from "./auth.js";
 
+/**
+ * Function to handle forget password request.
+ * Generates a reset token, saves it to the user, and sends an email with the reset link.
+ *
+ * @param {Request} req - Express request object containing the email in the body
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the password reset email is sent
+ */
 export async function forgetPassword(req, res) {
     const {email} = req.body;
     try {
         const user = await User.findOne({email});
-        if (!user) {
-            return res.status(400).json({success: false, message: "User not found with this email."});
-        }
+        if (!user) return res.status(400).json({success: false, message: "User not found with this email."});
 
         const resetToken = crypto.randomBytes(32).toString("hex");
         user.verificationToken = resetToken;
@@ -34,24 +40,35 @@ export async function forgetPassword(req, res) {
     }
 }
 
+/**
+ * Function to handle password reset.
+ * Validates the reset token and updates the user's password.
+ *
+ * @param {Request} req - Express request object containing the new password in the body and token in the query
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the password is reset
+ */
 export async function resetPassword(req, res) {
     const {newPassword} = req.body;
     const {token} = req.query;
-    const saltRounds = 10;
+
+    if (!newPassword || !passwordRegex.test(newPassword)) {
+        return res.status(400).json({
+            success: false,
+            message: passwordInvalidMessage,
+        });
+    }
 
     try {
         const user = await User.findOne({verificationToken: token});
-        if (!user) {
-            return res.status(400).json({success: false, message: "Invalid or expired token."});
-        }
+        if (!user) return res.status(400).json({success: false, message: 'Invalid token'});
 
-        user.password = await bcrypt.hash(newPassword, saltRounds);
+        user.password = await bcrypt.hash(newPassword, 10);
         user.verificationToken = undefined;
         await user.save();
 
-        return res.status(200).json({success: true, message: "Password reset successfully"});
+        res.status(200).json({success: true, message: 'Password reset successfully'});
     } catch (error) {
-        console.error("Error:", error);
-        return res.status(500).json({success: false, message: "Internal Server Error"});
+        res.status(500).json({success: false, message: 'Server error', error});
     }
 }
