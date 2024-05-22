@@ -39,6 +39,9 @@
 <div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
 
 <script>
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+    const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+
     document.getElementById('signupForm').addEventListener('submit', async function (event) {
         event.preventDefault();
 
@@ -46,11 +49,24 @@
         const formData = new FormData(form);
         const submitButton = document.getElementById('submitButton');
         const statusMessage = document.getElementById('statusMessage');
+        const password = formData.get('password');
 
         submitButton.disabled = true;
         statusMessage.style.display = 'block';
         statusMessage.textContent = 'Sending the email, please wait...';
         statusMessage.style.color = 'blue';
+
+        if (!password) {
+            statusMessage.textContent = 'Please input your password.';
+            statusMessage.style.color = 'orange';
+            submitButton.disabled = false;
+            return;
+        } else if (!passwordRegex.test(password)) {
+            statusMessage.textContent = passwordInvalidMessage;
+            statusMessage.style.color = 'red';
+            submitButton.disabled = false;
+            return;
+        }
 
         try {
             const response = await fetch('/submitUser', {
@@ -74,6 +90,7 @@
             submitButton.disabled = false;
         }
     });
+
 </script>
 
 <%- include("templates/footer") %>

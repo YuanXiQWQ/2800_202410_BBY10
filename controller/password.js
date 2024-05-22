@@ -37,21 +37,24 @@ export async function forgetPassword(req, res) {
 export async function resetPassword(req, res) {
     const {newPassword} = req.body;
     const {token} = req.query;
-    const saltRounds = 10;
+
+    if (!newPassword || !passwordRegex.test(newPassword)) {
+        return res.status(400).json({
+            success: false,
+            message: passwordInvalidMessage,
+        });
+    }
 
     try {
         const user = await User.findOne({verificationToken: token});
-        if (!user) {
-            return res.status(400).json({success: false, message: "Invalid or expired token."});
-        }
+        if (!user) return res.status(400).json({success: false, message: 'Invalid token'});
 
-        user.password = await bcrypt.hash(newPassword, saltRounds);
+        user.password = await bcrypt.hash(newPassword, 10);
         user.verificationToken = undefined;
         await user.save();
 
-        return res.status(200).json({success: true, message: "Password reset successfully"});
+        res.status(200).json({success: true, message: 'Password reset successfully'});
     } catch (error) {
-        console.error("Error:", error);
-        return res.status(500).json({success: false, message: "Internal Server Error"});
+        res.status(500).json({success: false, message: 'Server error', error});
     }
 }

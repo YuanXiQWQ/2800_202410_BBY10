@@ -22,6 +22,9 @@
 <%- include("templates/footer") %>
 
 <script>
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+    const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+
     const loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -36,6 +39,10 @@
             statusMessage.textContent = 'Please enter a username and password';
             statusMessage.style.visibility = 'visible';
             statusMessage.style.color = 'orange';
+        } else if (!passwordRegex.test(password)) {
+            statusMessage.textContent = passwordInvalidMessage;
+            statusMessage.style.visibility = 'visible';
+            statusMessage.style.color = 'red';
         } else {
             const response = await fetch('/logging-in', {
                 method: 'POST',
@@ -60,4 +67,5 @@
             }
         }
     });
+
 </script>

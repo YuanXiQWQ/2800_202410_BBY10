@@ -33,6 +33,9 @@ const schemaLogin = Joi.object({
     password: Joi.string().max(20).required(),
 });
 
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+
 /**
  * Schedule a job to delete unverified users older than 24 hours.
  */
@@ -43,13 +46,13 @@ schedule.scheduleJob('0 0 * * *', async () => {
     try {
         const unverifiedUsers = await User.find({
             isVerified: false,
-            createdAt: { $lt: twentyFourHoursAgo }
+            createdAt: {$lt: twentyFourHoursAgo}
         });
 
         const usernames = unverifiedUsers.map(user => user.username);
         const deleteResult = await User.deleteMany({
             isVerified: false,
-            createdAt: { $lt: twentyFourHoursAgo }
+            createdAt: {$lt: twentyFourHoursAgo}
         });
 
         console.log(`Unverified users cleanup completed. Deleted ${deleteResult.deletedCount} users.`);
@@ -150,6 +153,13 @@ export async function register(req, res) {
         return res.status(400).json({
             success: false,
             message: validationResult.error.details[0].message,
+        });
+    }
+
+    if (!passwordRegex.test(password)) {
+        return res.status(400).json({
+            success: false,
+            message: passwordInvalidMessage,
         });
     }
 
