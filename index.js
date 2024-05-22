@@ -107,6 +107,10 @@ app.post("/submitAdditionalInfo", (req, res) => {
     });
 });
 
+app.get("/calendar", (req, res) => [
+    res.render('calendar')
+]);
+
 app.get("/login", (req, res) => {
     res.render("login");
 });
