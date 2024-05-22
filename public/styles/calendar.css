@@ -1,0 +1,54 @@
+.bodyCalendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar-container {
+    margin-top: 70px; /* Adjust as necessary to create space below the navbar */
+    width: 100%; /* Take full width to allow centering */
+    display: flex;
+    justify-content: center; /* Center the calendar container */
+}
+
+#calendar {
+    max-width: 900px; /* Adjust width as needed */
+    width: 100%; /* Take full width for better alignment */
+}
+
+.fc-toolbar {
+    display: flex;
+    justify-content: center; /* Center the toolbar */
+}
+
+.fc-toolbar-title {
+    flex-grow: 1;
+    text-align: center; /* Center the title within the toolbar */
+}
+
+.fc-toolbar .fc-button-group {
+    flex-grow: 0;
+}
+
+/* Media query to stack calendar days on smaller screens */
+@media (max-width: 600px) {
+    .fc-daygrid-day {
+        width: 100%;
+        display: block;
+    }
+    .fc-daygrid-day-frame {
+        display: block;
+        width: 100%;
+    }
+    .fc-daygrid-day-top {
+        display: block;
+        text-align: left;
+    }
+    .fc-daygrid-day-events {
+        display: block;
+    }
+    .fc-daygrid-day-number {
+        display: inline-block;
+        margin-right: 10px;
+    }
+}
