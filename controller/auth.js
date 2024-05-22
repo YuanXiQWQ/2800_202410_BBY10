@@ -64,6 +64,11 @@ schedule.scheduleJob('0 0 * * *', async () => {
 const appUrl = process.env.NODE_ENV === 'development' ? process.env.APP_URL_LOCAL : process.env.APP_URL_PRODUCTION;
 
 
+/**
+ * Function to create a transporter for sending emails using OAuth2.
+ *
+ * @returns {Promise<nodemailer.Transporter>} A promise that resolves to the transporter object.
+ */
 export const createTransporter = async () => {
     const oauth2Client = new OAuth2(
         process.env.CLIENT_ID,
@@ -131,6 +136,7 @@ export const validatePassword = (user, password) => bcrypt.compare(password, use
 
 /**
  * Function to register a new user.
+ * Validates the user data, hashes the password, and sends a verification email.
  *
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object
@@ -208,6 +214,7 @@ export async function register(req, res) {
 
 /**
  * Function to add additional user information.
+ * Updates the user's weight, height, time, goal, and fitness level.
  *
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object

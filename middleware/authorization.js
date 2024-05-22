@@ -9,11 +9,11 @@ const isValidSession = req => !!(req?.session?.userData?.username && req?.sessio
 
 /**
  * Middleware to handle authentication.
- * If not authenticated, proceed to the next middleware.
+ * If the user is not authenticated, proceed to the next middleware.
  * If authenticated, redirects to /exercises for root and signup paths.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
  * @param {Function} next - The next middleware function.
  */
 export function authValidation(req, res, next) {
@@ -31,8 +31,8 @@ export function authValidation(req, res, next) {
  * If the session is valid, proceed to the next middleware.
  * If not, redirect to the root path.
  *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
  * @param {Function} next - The next middleware function.
  */
 export function sessionValidation(req, res, next) {

@@ -3,13 +3,19 @@ import bcrypt from "bcrypt";
 import {User} from "../model/User.js";
 import {createTransporter} from "./auth.js";
 
+/**
+ * Function to handle forget password request.
+ * Generates a reset token, saves it to the user, and sends an email with the reset link.
+ *
+ * @param {Request} req - Express request object containing the email in the body
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the password reset email is sent
+ */
 export async function forgetPassword(req, res) {
     const {email} = req.body;
     try {
         const user = await User.findOne({email});
-        if (!user) {
-            return res.status(400).json({success: false, message: "User not found with this email."});
-        }
+        if (!user) return res.status(400).json({success: false, message: "User not found with this email."});
 
         const resetToken = crypto.randomBytes(32).toString("hex");
         user.verificationToken = resetToken;
@@ -34,6 +40,14 @@ export async function forgetPassword(req, res) {
     }
 }
 
+/**
+ * Function to handle password reset.
+ * Validates the reset token and updates the user's password.
+ *
+ * @param {Request} req - Express request object containing the new password in the body and token in the query
+ * @param {Response} res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the password is reset
+ */
 export async function resetPassword(req, res) {
     const {newPassword} = req.body;
     const {token} = req.query;
