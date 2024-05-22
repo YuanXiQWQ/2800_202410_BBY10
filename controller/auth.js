@@ -33,6 +33,9 @@ const schemaLogin = Joi.object({
     password: Joi.string().max(20).required(),
 });
 
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+
 /**
  * Schedule a job to delete unverified users older than 24 hours.
  */
@@ -43,13 +46,13 @@ schedule.scheduleJob('0 0 * * *', async () => {
     try {
         const unverifiedUsers = await User.find({
             isVerified: false,
-            createdAt: { $lt: twentyFourHoursAgo }
+            createdAt: {$lt: twentyFourHoursAgo}
         });
 
         const usernames = unverifiedUsers.map(user => user.username);
         const deleteResult = await User.deleteMany({
             isVerified: false,
-            createdAt: { $lt: twentyFourHoursAgo }
+            createdAt: {$lt: twentyFourHoursAgo}
         });
 
         console.log(`Unverified users cleanup completed. Deleted ${deleteResult.deletedCount} users.`);
@@ -61,6 +64,11 @@ schedule.scheduleJob('0 0 * * *', async () => {
 const appUrl = process.env.NODE_ENV === 'development' ? process.env.APP_URL_LOCAL : process.env.APP_URL_PRODUCTION;
 
 
+/**
+ * Function to create a transporter for sending emails using OAuth2.
+ *
+ * @returns {Promise<nodemailer.Transporter>} A promise that resolves to the transporter object.
+ */
 export const createTransporter = async () => {
     const oauth2Client = new OAuth2(
         process.env.CLIENT_ID,
@@ -128,6 +136,7 @@ export const validatePassword = (user, password) => bcrypt.compare(password, use
 
 /**
  * Function to register a new user.
+ * Validates the user data, hashes the password, and sends a verification email.
  *
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object
@@ -150,6 +159,13 @@ export async function register(req, res) {
         return res.status(400).json({
             success: false,
             message: validationResult.error.details[0].message,
+        });
+    }
+
+    if (!passwordRegex.test(password)) {
+        return res.status(400).json({
+            success: false,
+            message: passwordInvalidMessage,
         });
     }
 
@@ -198,6 +214,7 @@ export async function register(req, res) {
 
 /**
  * Function to add additional user information.
+ * Updates the user's weight, height, time, goal, and fitness level.
  *
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object

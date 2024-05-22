@@ -8,6 +8,7 @@ import {findByUsername, validatePassword} from './auth.js';
 
 /**
  * Function to change the user's password.
+ * Validates the old password and updates to the new password.
  *
  * @param {Request} req - Express request object containing the old and new passwords in the body
  * @param {Response} res - Express response object
@@ -38,6 +39,7 @@ export async function changePassword(req, res) {
 
 /**
  * Function to update the user's avatar and username.
+ * Uploads the new avatar to the server and updates the username.
  *
  * @param {Request} req - Express request object containing the new username and avatar file in the body
  * @param {Response} res - Express response object
@@ -101,6 +103,7 @@ export async function postUserAvatar(req, res) {
 
 /**
  * Function to update the user's personal information.
+ * Updates the user's first name, last name, email, birthday, height, and weight.
  *
  * @param {Request} req - Express request object containing the user's personal information in the body
  * @param {Response} res - Express response object
@@ -151,6 +154,7 @@ export async function postPersonalInformation(req, res) {
 
 /**
  * Function to update the user's workout settings.
+ * Updates the user's goal, fitness level, and workout time.
  *
  * @param {Request} req - Express request object containing the user's workout settings in the body
  * @param {Response} res - Express response object
