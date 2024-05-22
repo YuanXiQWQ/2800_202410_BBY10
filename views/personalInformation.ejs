@@ -98,7 +98,7 @@
         const lastName = formData.get('lastName');
 
         // 检查是否为彩蛋触发条件
-        if (firstName === '龙一' && lastName === '成步堂') {
+        if (isMatchingName(firstName, lastName)) {
             // 激活easterEgg.js中的彩蛋功能
             activateEasterEgg('phoenixWright', firstName, lastName).then(() => {
                 submitForm(formData);

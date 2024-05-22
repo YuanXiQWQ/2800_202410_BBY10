@@ -1,3 +1,10 @@
+const translations = {
+    en: {firstName: 'Phoenix', lastName: 'Wright'},
+    fr: {firstName: 'Phoenix', lastName: 'Wright'},
+    jp: {firstName: '龍一', lastName: '成歩堂'},
+    cn: {firstName: '龙一', lastName: '成步堂'}
+};
+
 function activateEasterEgg(type, firstName, lastName) {
     return new Promise((resolve) => {
         if (!window.inActivation) {
@@ -15,7 +22,7 @@ function activateEasterEgg(type, firstName, lastName) {
             bottomDiv.id = 'bottomElement';
             bottomDiv.classList.add('bottom-element');
             bottomDiv.innerHTML = `
-                <p>Are you sure you want to change the name to ${lastName} ${firstName}?</p>
+                <p>Are you sure you want to change the name to ${firstName} ${lastName}?</p>
                 <button id="yesButton" class="btn btn-primary">Yes</button>
                 <button id="noButton" class="btn btn-secondary">No</button>
             `;
@@ -108,4 +115,11 @@ function shake(elementId) {
     setTimeout(() => {
         element.classList.remove('shake');
     }, 400);
+}
+
+// 辅助函数：检查名字是否匹配
+function isMatchingName(firstName, lastName) {
+    return Object.values(translations).some(translation =>
+        translation.firstName === firstName && translation.lastName === lastName
+    );
 }
