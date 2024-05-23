@@ -56,8 +56,10 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             bottomDiv.classList.add('bottom-element');
             bottomDiv.innerHTML = `
                 <p>Are you sure you want to change the name to ${firstName} ${lastName}?</p>
-                <button id="yesButton" class="btn btn-primary">Yes</button>
-                <button id="noButton" class="btn btn-secondary">No</button>
+                <div>
+                  <button id="yesButton" class="btn btn-primary">Yes</button>
+                  <button id="noButton" class="btn btn-secondary">No</button>
+                </div>
             `;
             document.body.appendChild(bottomDiv);
 
@@ -72,8 +74,10 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 playMP3(`/sounds/${type}/${characterKey}/matta.mp3`);
                 bottomDiv.innerHTML = `
                     <p>Hold it! Is this your real name, or are you just trying to make me more famous?</p>
-                    <button id="realNameButton" class="btn btn-primary">My real name</button>
-                    <button id="funButton" class="btn btn-secondary">Just for fun</button>
+                    <div>
+                      <button id="realNameButton" class="btn btn-primary">My real name</button>
+                      <button id="funButton" class="btn btn-secondary">Just for fun</button>
+                    </div>
                 `;
                 document.getElementById('realNameButton').addEventListener('click', continueSubmission);
                 document.getElementById('funButton').addEventListener('click', continueSubmission);
@@ -100,7 +104,9 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 newBgMusic.play();
                 bottomDiv.innerHTML = `
                     <p>Anyway, take that! Save your changes!</p>
+                    <div>
                     <button id="okButton" class="btn btn-primary">OK</button>
+                    </div>
                 `;
                 document.getElementById('okButton').addEventListener('click', () => {
                     document.body.removeChild(bottomDiv);
