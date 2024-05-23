@@ -31,6 +31,15 @@ const translations = {
     }
 };
 
+/**
+ * Activate Easter Egg
+ *
+ * @param characterKey the key of the character
+ * @param type the type of the character
+ * @param firstName the first name of the character
+ * @param lastName the last name of the character
+ * @return {Promise<unknown>} a promise
+ */
 function activateEasterEgg(characterKey, type, firstName, lastName) {
     return new Promise((resolve) => {
         if (!window.inActivation) {
@@ -122,11 +131,21 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
     });
 }
 
+/**
+ * Function to play an MP3 file
+ *
+ * @param src the source of the MP3
+ */
 function playMP3(src) {
     const audio = new Audio(src);
     audio.play();
 }
 
+/**
+ * Function to shake an element
+ *
+ * @param elementId the id of the element
+ */
 function shake(elementId) {
     const element = document.getElementById(elementId);
     element.classList.add('shake');
@@ -135,6 +154,13 @@ function shake(elementId) {
     }, 400);
 }
 
+/**
+ * Function to get the matching character from the translations object
+ *
+ * @param firstName the first name of the character
+ * @param lastName the last name of the character
+ * @return {{characterKey: string, type: string | *}|null} the matching character or null
+ */
 function getMatchingCharacter(firstName, lastName) {
     console.log(`Checking for character match: ${firstName} ${lastName}`);
     for (const [key, value] of Object.entries(translations)) {
