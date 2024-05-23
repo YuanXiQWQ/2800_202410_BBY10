@@ -72,6 +72,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
 
             document.getElementById('yesButton').addEventListener('click', () => {
                 img.src = `/images/easterEgg/matta.png`;
+                shake(img.id);
                 playMP3(`/sounds/${type}/${characterKey}/matta.mp3`);
                 bottomDiv.innerHTML = `
                     <p>Hold it! Is this your real name, or are you just trying to make me more famous?</p>
@@ -98,6 +99,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
 
             function continueSubmission() {
                 img.src = `/images/easterEgg/kurae.png`;
+                shake(img.id);
                 playMP3(`/sounds/${type}/${characterKey}/kurae.mp3`);
                 bgMusic.pause();
                 const newBgMusic = new Audio(`/sounds/${type}/msc-pressingPursuit.mp3`);
