@@ -97,10 +97,8 @@
         const firstName = formData.get('firstName');
         const lastName = formData.get('lastName');
 
-        // 检查是否为彩蛋触发条件
         const character = getMatchingCharacter(firstName, lastName);
         if (character) {
-            // 激活easterEgg.js中的彩蛋功能
             activateEasterEgg(character.characterKey, character.type, firstName, lastName).then(() => {
                 submitForm(formData);
             });
@@ -143,5 +141,6 @@
                 statusMessage.style.color = 'red';
             });
     }
+
 </script>
 <%- include("templates/footer") %>

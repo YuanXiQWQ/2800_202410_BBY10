@@ -1,5 +1,4 @@
 .container {
-    /* height: 100%; */
     overflow: hidden;
 }
 
@@ -74,6 +73,6 @@ header {
     border-top: 2px solid black;
     padding: 1rem;
     text-align: center;
-    z-index: 1001; /* 确保在其他元素之上 */
+    z-index: 1001;
 }
 
