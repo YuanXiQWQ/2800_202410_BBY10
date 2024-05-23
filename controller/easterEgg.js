@@ -104,7 +104,10 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 bgMusic.pause();
                 const newBgMusic = new Audio(`/sounds/${type}/msc-pressingPursuit.mp3`);
                 newBgMusic.loop = true;
-                newBgMusic.play();
+                newBgMusic.play()
+                    .catch(err => {
+                        console.error(err);
+                    });
                 bottomDiv.innerHTML = `
                     <p>Anyway, take that! Save your changes!</p>
                     <div>
@@ -131,8 +134,10 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
 
             const bgMusic = new Audio(`/sounds/${type}/msc-objection.mp3`);
             bgMusic.loop = true;
-            bgMusic.play();
-
+            bgMusic.play()
+                .catch(err => {
+                    console.error(err);
+                });
             playMP3(`/sounds/${type}/${characterKey}/igiari.mp3`);
         }
     });
@@ -155,7 +160,10 @@ function shake(elemId) {
  */
 function playMP3(src) {
     const audio = new Audio(src);
-    audio.play();
+    audio.play()
+        .catch(err => {
+            console.error(err);
+        });
 }
 
 /**
