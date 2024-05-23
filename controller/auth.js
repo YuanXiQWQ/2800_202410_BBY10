@@ -110,6 +110,9 @@ export const createTransporter = async () => {
  */
 export const findByUsername = (username) => User.findOne({username});
 
+export const findByEmail = (email) => User.findOne({email});
+
+
 /**
  * Middleware to ensure the user is authenticated.
  * Redirects to login page if user is not authenticated.

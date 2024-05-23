@@ -5,7 +5,7 @@
  * @param {Object} req - The request object.
  * @returns {boolean} True if the session is valid, otherwise false.
  */
-const isValidSession = req => !!(req?.session?.userData?.username && req?.session?.userData?.goal);
+const isValidSession = req => !!(req?.session?.userData?.username);
 
 /**
  * Middleware to handle authentication.
@@ -36,5 +36,6 @@ export function authValidation(req, res, next) {
  * @param {Function} next - The next middleware function.
  */
 export function sessionValidation(req, res, next) {
+    console.log(isValidSession(req))
     isValidSession(req) ? next() : res.redirect("/");
 }
