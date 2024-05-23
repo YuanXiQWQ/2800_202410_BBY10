@@ -41,6 +41,32 @@ header {
     z-index: 1000;
 }
 
+.bottom-element {
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(12, 41, 56, 0.8) !important;
+    color: #FFF;
+    border-top: 1px solid #2688BA;
+    border-bottom: 1px solid #FFF;
+}
+
+.bottom-element > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3vw;
+}
+
+.bottom-element button {
+    background-color: #2688BA;
+    width: 10rem;
+    text-align: center;
+    align-items: center;
+}
+
 .hide {
     display: none;
 }
