@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import {User} from "../model/User.js";
 import {createTransporter} from "./auth.js";
 
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+
 /**
  * Function to handle forget password request.
  * Generates a reset token, saves it to the user, and sends an email with the reset link.
@@ -11,6 +13,7 @@ import {createTransporter} from "./auth.js";
  * @param {Response} res - Express response object
  * @returns {Promise<void>} A promise that resolves when the password reset email is sent
  */
+
 export async function forgetPassword(req, res) {
     const {email} = req.body;
     try {

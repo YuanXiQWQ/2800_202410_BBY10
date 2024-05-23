@@ -6,9 +6,9 @@
 <div class="form-container">
     <form id="login-form">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" required class="form-control" id="username" name="username"
-                   placeholder="Enter your username">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" required class="form-control" id="email" name="email"
+                   placeholder="Enter your email">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
@@ -28,15 +28,15 @@
     const loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const statusMessage = document.getElementById('status-message');
 
         statusMessage.style.visibility = 'hidden';
         statusMessage.textContent = '';
 
-        if (!username || !password) {
-            statusMessage.textContent = 'Please enter a username and password';
+        if (!email || !password) {
+            statusMessage.textContent = 'Please enter a email and password';
             statusMessage.style.visibility = 'visible';
             statusMessage.style.color = 'orange';
         } else if (!passwordRegex.test(password)) {
@@ -49,11 +49,12 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username, password})
+                body: JSON.stringify({email, password})
             });
             try {
                 const data = await response.json();
                 if (data.success) {
+                    console.log('kakakakaS')
                     window.location.href = '/exercises';
                 } else {
                     statusMessage.style.visibility = 'visible';
