@@ -45,11 +45,12 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
         if (!window.inActivation) {
             window.inActivation = true;
 
+            const container = document.getElementById('easter-egg-container')
             const img = document.createElement('img');
             img.src = `/images/easterEgg/igiari.png`;
             img.id = 'activationImage';
             img.classList.add('easter-egg', 'hide');
-            document.body.appendChild(img);
+            container.appendChild(img);
 
             const bottomDiv = document.createElement('div');
             bottomDiv.id = 'bottomElement';
@@ -87,7 +88,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 document.getElementById('firstName').value = '';
                 document.getElementById('lastName').value = '';
                 document.body.removeChild(bottomDiv);
-                document.body.removeChild(img);
+                container.removeChild(img);
                 window.inActivation = false;
                 bgMusic.pause();
                 document.querySelectorAll('button, select').forEach(element => {
@@ -110,7 +111,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 `;
                 document.getElementById('okButton').addEventListener('click', () => {
                     document.body.removeChild(bottomDiv);
-                    document.body.removeChild(img);
+                    container.removeChild(img);
                     window.inActivation = false;
                     newBgMusic.pause();
                     document.querySelectorAll('button, select').forEach(element => {
@@ -121,10 +122,8 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             }
 
             setTimeout(() => {
+                container.classList.remove('hide');
                 img.classList.remove('hide');
-                if (!device.ios()) {
-                    window.navigator.vibrate(400);
-                }
                 shake(img.id);
             }, 200);
 
@@ -137,6 +136,16 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
     });
 }
 
+function shake(elemId) {
+    let elem = document.getElementById(elemId);
+    if (elem) {
+        elem.classList.add("shake");
+        setTimeout(() => {
+            elem.classList.remove("shake");
+        }, 800);
+    }
+}
+
 /**
  * Function to play an MP3 file
  *
@@ -145,19 +154,6 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
 function playMP3(src) {
     const audio = new Audio(src);
     audio.play();
-}
-
-/**
- * Function to shake an element
- *
- * @param elementId the id of the element
- */
-function shake(elementId) {
-    const element = document.getElementById(elementId);
-    element.classList.add('shake');
-    setTimeout(() => {
-        element.classList.remove('shake');
-    }, 400);
 }
 
 /**
