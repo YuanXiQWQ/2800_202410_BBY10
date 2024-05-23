@@ -1,0 +1,62 @@
+<%- include("templates/header") %>
+    <%- include("templates/navbar") %>
+
+        <head>
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.12/index.global.min.js'></script>
+            <link rel="stylesheet" href="./styles/calendar.css">
+        </head>
+
+        <body id="calendarBody">
+            <div id="calendar-container">
+                <div id="calendar"></div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        windowResize: function (arg) {
+                            ;
+                        },
+                        events: [
+                            {
+                                title: 'event1',
+                                start: '2010-01-01'
+                            },
+                            {
+                                title: 'event2',
+                                start: '2024-05-05',
+                                end: '2024-05-06'
+                            },
+                            {
+                                title: 'event2',
+                                start: '2024-05-05',
+                                end: '2024-05-06'
+                            },
+                            {
+                                title: 'event2',
+                                start: '2024-05-05',
+                                end: '2024-05-06'
+                            },
+                            {
+                                title: 'event3',
+                                start: '2010-01-09T12:30:00',
+                                allDay: false // will make the time show
+                            }
+                        ],
+                        initialView: 'dayGridMonth',
+
+                        headerToolbar: {
+                            start: 'title',    // No buttons on the left
+                            center: '',  // Title in the center
+                            end: 'today prev,next'  // Buttons on the right
+                        }
+                    });
+                    calendar.render();
+                });
+            </script>
+
+
+        </body>
+
+        <%- include("templates/footer") %>
