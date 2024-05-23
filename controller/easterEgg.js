@@ -21,13 +21,13 @@ const translations = {
         en: {firstName: 'Miles', lastName: 'Edgeworth'},
         jp: {firstName: '御剣', lastName: '怜侍'},
         cn: {firstName: '御剑', lastName: '怜侍'},
-        type: 'type1'
+        type: 'type4'
     },
     miaFey: {
         en: {firstName: 'Mia', lastName: 'Fey'},
         jp: {firstName: '綾里', lastName: '千尋'},
         cn: {firstName: '绫里', lastName: '千寻'},
-        type: 'type1'
+        type: 'type5'
     }
 };
 
@@ -136,7 +136,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             bgMusic.loop = true;
             bgMusic.play()
                 .catch(err => {
-                    console.error(err);
+                    console.error(err + 'src: ' + bgMusic.src);
                 });
             playMP3(`/sounds/${type}/${characterKey}/igiari.mp3`);
         }
@@ -185,7 +185,7 @@ function getMatchingCharacter(firstName, lastName) {
                     (firstName.toLowerCase() === firstNameCheck && lastName.toLowerCase() === lastNameCheck) ||
                     (firstName.toLowerCase() === lastNameCheck && lastName.toLowerCase() === firstNameCheck)
                 ) {
-                    console.log(`Match found: ${key} (${lang})`);
+                    console.log(`Match found: ${key} (${lang}), type: ${value.type}`);
                     return {characterKey: key, type: value.type};
                 }
             }
