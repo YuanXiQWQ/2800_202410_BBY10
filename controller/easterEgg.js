@@ -1,11 +1,37 @@
 const translations = {
-    en: {firstName: 'Phoenix', lastName: 'Wright'},
-    fr: {firstName: 'Phoenix', lastName: 'Wright'},
-    jp: {firstName: '龍一', lastName: '成歩堂'},
-    cn: {firstName: '龙一', lastName: '成步堂'}
+    phoenixWright: {
+        en: {firstName: 'Phoenix', lastName: 'Wright'},
+        jp: {firstName: '成歩堂', lastName: '龍一'},
+        cn: {firstName: '成步堂', lastName: '龙一'},
+        type: 'type1'
+    },
+    apolloJustice: {
+        en: {firstName: 'Apollo', lastName: 'Justice'},
+        jp: {firstName: '王泥喜', lastName: '法介'},
+        cn: {firstName: '王泥喜', lastName: '法介'},
+        type: 'type2'
+    },
+    athenaCykes: {
+        en: {firstName: 'Athena', lastName: 'Cykes'},
+        jp: {firstName: '希月', lastName: '心音'},
+        cn: {firstName: '希月', lastName: '心音'},
+        type: 'type3'
+    },
+    milesEdgeworth: {
+        en: {firstName: 'Miles', lastName: 'Edgeworth'},
+        jp: {firstName: '御剣', lastName: '怜侍'},
+        cn: {firstName: '御剑', lastName: '怜侍'},
+        type: 'type1'
+    },
+    miaFey: {
+        en: {firstName: 'Mia', lastName: 'Fey'},
+        jp: {firstName: '綾里', lastName: '千尋'},
+        cn: {firstName: '绫里', lastName: '千寻'},
+        type: 'type1'
+    }
 };
 
-function activateEasterEgg(type, firstName, lastName) {
+function activateEasterEgg(characterKey, type, firstName, lastName) {
     return new Promise((resolve) => {
         if (!window.inActivation) {
             window.inActivation = true;
@@ -22,7 +48,7 @@ function activateEasterEgg(type, firstName, lastName) {
             bottomDiv.id = 'bottomElement';
             bottomDiv.classList.add('bottom-element');
             bottomDiv.innerHTML = `
-                <p>Are you sure you want to change the name to ${firstName} ${lastName}?</p>
+                <p>Are you sure you want to change the name to ${lastName} ${firstName}?</p>
                 <button id="yesButton" class="btn btn-primary">Yes</button>
                 <button id="noButton" class="btn btn-secondary">No</button>
             `;
@@ -37,7 +63,7 @@ function activateEasterEgg(type, firstName, lastName) {
 
             document.getElementById('yesButton').addEventListener('click', () => {
                 img.src = `/images/easterEgg/matta.png`; // 切换到 matta 图片
-                playMP3(`/sounds/${type}/matta.mp3`);
+                playMP3(`/sounds/${type}/${characterKey}/matta.mp3`);
                 bottomDiv.innerHTML = `
                     <p>Hold it! Is this your real name, or are you just trying to make me more famous?</p>
                     <button id="realNameButton" class="btn btn-primary">My real name</button>
@@ -61,9 +87,9 @@ function activateEasterEgg(type, firstName, lastName) {
 
             function continueSubmission() {
                 img.src = `/images/easterEgg/kurae.png`; // 切换到 kurae 图片
-                playMP3(`/sounds/${type}/kurae.mp3`);
+                playMP3(`/sounds/${type}/${characterKey}/kurae.mp3`);
                 bgMusic.pause(); // 暂停当前背景音乐
-                const newBgMusic = new Audio(`/sounds/msc-pressingPursuit.mp3`);
+                const newBgMusic = new Audio(`/sounds/${type}/msc-pressingPursuit.mp3`);
                 newBgMusic.loop = true;
                 newBgMusic.play();
                 bottomDiv.innerHTML = `
@@ -92,12 +118,12 @@ function activateEasterEgg(type, firstName, lastName) {
             }, 200);
 
             // 播放背景音乐
-            const bgMusic = new Audio(`/sounds/msc-objection.mp3`);
+            const bgMusic = new Audio(`/sounds/${type}/msc-objection.mp3`);
             bgMusic.loop = true;
             bgMusic.play();
 
             // 播放 igiari 音效
-            playMP3(`/sounds/${type}/igiari.mp3`);
+            playMP3(`/sounds/${type}/${characterKey}/igiari.mp3`);
         }
     });
 }
@@ -118,8 +144,14 @@ function shake(elementId) {
 }
 
 // 辅助函数：检查名字是否匹配
-function isMatchingName(firstName, lastName) {
-    return Object.values(translations).some(translation =>
-        translation.firstName === firstName && translation.lastName === lastName
-    );
+function getMatchingCharacter(firstName, lastName) {
+    for (const [key, value] of Object.entries(translations)) {
+        for (const [lang, name] of Object.entries(value)) {
+            if ((name.firstName === firstName && name.lastName === lastName) ||
+                (name.firstName === lastName && name.lastName === firstName)) {
+                return {characterKey: key, type: value.type};
+            }
+        }
+    }
+    return null;
 }

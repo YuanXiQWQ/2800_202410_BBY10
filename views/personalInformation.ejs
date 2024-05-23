@@ -2,7 +2,7 @@
 <head>
     <title>Edit Personal Information</title>
     <link rel="stylesheet" href="/styles/profile.css">
-    <script src="/controller/easterEgg.js"></script> <!-- 引入easterEgg.js -->
+    <script src="/controller/easterEgg.js"></script>
 </head>
 <%- include("templates/navbar") %>
 <div id="notification" class="alert notification hidden"></div>
@@ -98,9 +98,10 @@
         const lastName = formData.get('lastName');
 
         // 检查是否为彩蛋触发条件
-        if (isMatchingName(firstName, lastName)) {
+        const character = getMatchingCharacter(firstName, lastName);
+        if (character) {
             // 激活easterEgg.js中的彩蛋功能
-            activateEasterEgg('phoenixWright', firstName, lastName).then(() => {
+            activateEasterEgg(character.characterKey, character.type, firstName, lastName).then(() => {
                 submitForm(formData);
             });
         } else {
