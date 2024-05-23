@@ -33,6 +33,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Static files
 app.use(express.static(__dirname + "/public"));
+app.use('/controller', express.static(path.join(__dirname, 'controller')));
 
 app.use(express.urlencoded({extended: true}));
 
