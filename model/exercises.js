@@ -17,10 +17,10 @@ const exerciseSchema = new mongoose.Schema(
   }
 );
 
-exerciseSchema.plugin(encrypt, {
-  encryptionKey: process.env.SOME_32BYTE_BASE64_STRING,
-  signingKey: process.env.SOME_64BYTE_BASE64_STRING,
-  excludeFromEncryption: ['user', 'exercises']
-});
+// exerciseSchema.plugin(encrypt, {
+//   encryptionKey: process.env.SOME_32BYTE_BASE64_STRING,
+//   signingKey: process.env.SOME_64BYTE_BASE64_STRING,
+//   excludeFromEncryption: ['user', 'exercises']
+// });
 
 export const exercises = mongoose.model("exercises", exerciseSchema);
