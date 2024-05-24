@@ -1,14 +1,118 @@
-/**
- * style.css for global
- */
+:root {
+  --background-color: #fff;
+  --text-color: #000000;
+  --color-primary: #3d4bcd;
+  --color-secondary: #3d4bcd;
+}
+
+[data-theme="dark"] {
+  --background-color: #000;
+  --text-color: #fff;
+  --color-primary: #3d4bcd;
+  --color-secondary: #3d4bcd;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+@font-face {
+  font-family: regular;
+  src: url("../fonts/RedditMono-Regular.ttf");
+}
+
+.label {
+  width: 115px;
+  height: 50px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 200px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.label:after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 50px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+.input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.input:checked + .label {
+  background: #242424;
+}
+.input:checked + .label:after {
+  left: 110px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+.label,
+.label:after {
+  transition: 0.3s;
+}
+
+.label:active:after {
+  width: 50px;
+}
+
+.label svg {
+  position: absolute;
+  width: 30px;
+  top: 10px;
+  z-index: 100;
+}
+.label svg.sun {
+  left: 14px;
+  fill: #fff;
+  transition: 0.3s;
+}
+
+.label svg.sun > g path {
+  fill: #fff;
+}
+
+.label svg.moon {
+  left: 75px;
+  fill: #7e7e7e;
+  transition: 0.3s;
+}
+
+.label svg.moon > g path {
+  fill: #7e7e7e;
+}
+
+.input:checked + .label svg.sun > g path {
+  fill: #7e7e7e;
+}
+.input:checked + .label svg.moon > g path {
+  fill: #fff;
+}
+
+.abs-left-13 {
+  position: absolute;
+  right: 30px;
+  top: 0;
+}
 
 /* Global */
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .undecorated {
-
   /* box */
   padding: 0;
   margin: 0;
@@ -18,100 +122,97 @@
   /* style */
   background-color: transparent;
   border: none;
-  }
-  
-
+}
 
 html,
 body {
-    width: 100vw;
-    height: 100%;
-    overflow-x: hidden;
-    margin: 0px;
-    padding: 0px;
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+  margin: 0px;
+  padding: 0px;
+  font-family: regular !important;
 }
 
-
 form {
-    width: min(90%, 40em);
-    margin: auto;
+  width: min(90%, 40em);
+  margin: auto;
 }
 
 form > .btn {
-    width: 100%;
+  width: 100%;
 }
 
 #topNavbar {
-    top: 0;
-    padding: .5rem 0;
-    width: 100vw;
-    z-index: 1000;
-    position: fixed;
-    font-size: 1rem;
+  top: 0;
+  padding: 0.5rem 0;
+  width: 100vw;
+  z-index: 1000;
+  position: fixed;
+  font-size: 1rem;
 }
 
 .primary-color {
-    background-color: #6D36EC;
-    color: #FFF;
+  background-color: #3d4bcd;
+  color: #fff;
 }
 
 .primary-color-hover:hover {
-    background-color: #4A25A0;
-    color: #FFF;
+  background-color: #3d4bcd;
+  color: #fff;
 }
 
 .primary-color-hover:active {
-    background-color: #5B2DC6
+  background-color: #3d4bcd;
 }
 
 .secondary-color {
-    background-color: #F8D262;
-    color: #000;
+  background-color: #ff9262;
+  color: #000;
 }
 
 #bottomNavbar {
-    display: none;
+  display: none;
 }
 
 #bottomNavbarPlaceholder {
-    display: none;
+  display: none;
 }
 
 @media (max-width: 701px) {
-    #topNavbar {
-        display: none;
-    }
+  #topNavbar {
+    display: none;
+  }
 
-    #bottomNavbar {
-        bottom: 0;
-        padding: 0;
-        width: 100vw;
-        z-index: 1000;
-        display: grid;
-        position: fixed;
-        font-size: .8rem;
-        grid-template-columns: repeat(3, 1fr);
-        background-color: #DAD4EB;
-    }
+  #bottomNavbar {
+    bottom: 0;
+    padding: 0;
+    width: 100vw;
+    z-index: 1000;
+    display: grid;
+    position: fixed;
+    font-size: 0.8rem;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #dad4eb;
+  }
 
-    .nav-item {
-        width: auto;
-        padding: 5px 0;
-        text-align: center;
-        align-content: center;
-    }
+  .nav-item {
+    width: auto;
+    padding: 5px 0;
+    text-align: center;
+    align-content: center;
+  }
 
-    .nav-item:hover {
-        background-color: rgba(170, 165, 183, 20%);
-    }
+  .nav-item:hover {
+    background-color: rgba(170, 165, 183, 20%);
+  }
 
-    .nav-item > svg {
-        height: min(80%, 35px);
-    }
+  .nav-item > svg {
+    height: min(80%, 35px);
+  }
 
-    #bottomNavbarPlaceholder {
-        display: block;
-        height: 80px;
-    }
+  #bottomNavbarPlaceholder {
+    display: block;
+    height: 80px;
+  }
 }
-

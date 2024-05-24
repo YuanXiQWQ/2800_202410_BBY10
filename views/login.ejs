@@ -3,7 +3,13 @@
     <title>Log In</title>
     <link rel="stylesheet" href="/styles/login.css">
 </head>
-<div class="form-container">
+<div class="container mt-5 px-5 pt-3">
+
+    <div>
+        <h1 class="black border-bottom-1px">Sign In</h1>
+    </div>
+
+
     <form id="login-form">
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -17,6 +23,7 @@
         <button type="submit" class="btn-primary">Sign In</button>
     </form>
     <a href="/forget-password">forget your password?</a>
+
 </div>
 <div id="status-message"></div>
 <%- include("templates/footer") %>

@@ -73,7 +73,7 @@ app.get('/verify-email', async (req, res) => {
 
     try {
         const user = await User.findOne({verificationToken: token});
-
+        
         if (!user) {
             return res.status(400).render('validationError', {
                 error: 'Invalid verification token.',
