@@ -1,95 +1,95 @@
 <%- include("templates/header") %>
+
 <head>
-    <title><%= language.resetPasswordTitle %></title>
-    <link rel="stylesheet" href="/styles/profile.css">
+    <title><%= language.signupTitle %></title>
+    <link rel="stylesheet" href="./styles/signup.css">
 </head>
-<%- include("templates/navbar") %>
-<div class="container mt-5">
-    <header class="d-flex align-items-center mb-4">
-        <a id="btn-back" href="/login" class="btn btn-outline-secondary me-3">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.65419 7.95837H17.3334V10.0417H4.65419L10.2417 15.6292L8.76877 17.1021L0.666687 9.00003L8.76877 0.897949L10.2417 2.37087L4.65419 7.95837Z"
-                      fill="black"/>
-            </svg>
-        </a>
-        <%= language.resetYourPassword %>
-    </header>
-    <main>
-        <form id="resetPasswordForm" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="newPassword" class="form-label"><%= language.newPassword %>:</label>
-                <input name="newPassword" id="newPassword" type="password" class="form-control" required>
-                <div class="invalid-feedback">
-                    <%= language.pleaseEnterNewPassword %>
-                </div>
-            </div>
-            <button type="submit" id="submitButton" class="btn btn-primary">
-                <%= language.submit %>
-            </button>
-        </form>
-        <div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
-    </main>
-</div>
-<%- include("templates/footer") %>
+
+<form id="signupForm" class="form-container">
+    <h1><%= language.createUser %></h1>
+
+    <div class="mb-3">
+        <label for="userName" class="form-label"><%= language.userName %>:</label>
+        <input name="username" type="text" class="form-control" id="userName" required>
+    </div>
+    <div class="mb-3">
+        <label for="firstName" class="form-label"><%= language.firstName %>:</label>
+        <input name="firstName" type="text" class="form-control" id="firstName" required>
+    </div>
+    <div class="mb-3">
+        <label for="lastName" class="form-label"><%= language.lastName %>:</label>
+        <input name="lastName" type="text" class="form-control" id="lastName" required>
+    </div>
+    <div class="mb-3">
+        <label for="birthday" class="form-label"><%= language.birthday %>:</label>
+        <input name="birthday" type="date" class="form-control" id="birthday" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label"><%= language.emailAddress %>:</label>
+        <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label"><%= language.password %>:</label>
+        <input name="password" type="password" class="form-control" id="password" required>
+    </div>
+
+    <button type="submit" id="submitButton" class="btn btn-primary"><%= language.submit %></button>
+</form>
+
+<div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
 
 <script>
-    document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+    const passwordInvalidMessage = '<%= language.passwordInvalidMessage %>';
+
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
         event.preventDefault();
 
         const form = event.target;
-        const newPassword = document.getElementById('newPassword').value;
-        const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-        const passwordInvalid = language.passwordInvalidMessage;
-        const statusMessage = document.getElementById('statusMessage');
+        const formData = new FormData(form);
         const submitButton = document.getElementById('submitButton');
+        const statusMessage = document.getElementById('statusMessage');
+        const password = formData.get('password');
 
-        statusMessage.textContent = '';
-        statusMessage.style.visibility = 'hidden';
         submitButton.disabled = true;
+        statusMessage.style.display = 'block';
+        statusMessage.textContent = '<%= language.sendingEmail %>';
+        statusMessage.style.color = 'blue';
 
-        setTimeout(() => {
-            statusMessage.style.visibility = 'visible';
-        }, 100);
-
-        if (!newPassword) {
-            statusMessage.innerHTML = language.inputNewPassword;
+        if (!password) {
+            statusMessage.textContent = '<%= language.inputNewPassword %>';
             statusMessage.style.color = 'orange';
-            statusMessage.style.display = 'block';
             submitButton.disabled = false;
-        } else if (!regex.test(newPassword)) {
-            statusMessage.innerHTML = passwordInvalid;
+            return;
+        } else if (!passwordRegex.test(password)) {
+            statusMessage.textContent = passwordInvalidMessage;
             statusMessage.style.color = 'red';
-            statusMessage.style.display = 'block';
             submitButton.disabled = false;
-        } else {
-            try {
-                const response = await fetch('/reset-password?token=<%= token %>', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({newPassword})
-                });
+            return;
+        }
 
-                const data = await response.json();
-                if (data.success) {
-                    statusMessage.innerHTML = language.passwordResetSuccess;
-                    statusMessage.style.color = 'green';
-                    statusMessage.style.display = 'block';
-                } else {
-                    statusMessage.innerHTML = data.message || language.errorOccurred;
-                    statusMessage.style.color = 'red';
-                    statusMessage.style.display = 'block';
-                    document.getElementById('newPassword').value = '';
-                    submitButton.disabled = false;
-                }
-            } catch (err) {
-                statusMessage.innerHTML = language.errorOccurred;
+        try {
+            const response = await fetch('/submitUser', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                statusMessage.textContent = '<%= language.verificationEmailSent %>';
+                statusMessage.style.color = 'green';
+            } else {
+                const errorData = await response.json();
+                statusMessage.textContent = errorData.message || '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';
-                statusMessage.style.display = 'block';
-                document.getElementById('newPassword').value = '';
                 submitButton.disabled = false;
             }
+        } catch (error) {
+            console.error('Error:', error);
+            statusMessage.textContent = '<%= language.errorOccurred %>';
+            statusMessage.style.color = 'red';
+            submitButton.disabled = false;
         }
     });
 </script>
+
+<%- include("templates/footer") %>

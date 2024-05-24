@@ -27,15 +27,14 @@
     </header>
     <main>
         <div class="alert secondary-color">
-            <%= language.deleteAccountWarning.replace('<%=  userData.username  %>', userData.username)
-            %>
+            <%= language.deleteAccountWarning.replace('%{userData.username}', userData.username) %>
         </div>
         <div id="confirmBtn">
             <button id="deleteBtn" class="btn btn-primary btn-danger">
-                <%=  language.delete  %>
+                <%= language.delete %>
             </button>
             <button id="cancelBtn" class="btn btn-primary primary-color primary-color-hover">
-                <%=  language.cancel  %>
+                <%= language.cancel %>
             </button>
         </div>
         <div id="statusMessage"></div>
@@ -65,7 +64,7 @@
                 statusMessage.style.color = 'red';
             }
         } catch (error) {
-            statusMessage.textContent = language.errorOccurred;
+            statusMessage.textContent = '<%= language.errorOccurred %>';
             statusMessage.style.color = 'red';
         }
     });

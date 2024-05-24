@@ -5,6 +5,7 @@ import path from 'path';
 import {GridFSBucket} from 'mongodb';
 import mongoose from 'mongoose';
 import {findByUsername, validatePassword} from './auth.js';
+import fs from "fs";
 
 /**
  * Function to change the user's password.
@@ -216,23 +217,18 @@ export async function deleteAccount(req, res) {
     }
 }
 
-export const changeLanguage = async (req, res) => {
-    try {
-        const {language} = req.body;
-        const user = await User.findById(req.session.userData._id);
+export const changeLanguage = (req, res) => {
+    const {language} = req.session;
 
-        if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
+    const languageFilePath = path.join(process.cwd(), 'public', 'languages', `${language}.json`);
+    fs.readFile(languageFilePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error(`Could not read language file: ${err.message}`);
+            return res.json({success: false, message: 'Failed to change language.'});
+        } else {
+            req.session.userData.preferredLanguage = language;
+            res.locals.language = JSON.parse(data);
+            return res.json({success: true, message: 'Language changed successfully.'});
         }
-
-        user.language = language;
-        await user.save();
-
-        req.session.userData.language = language;
-
-        res.json({success: true, message: 'Language changed successfully'});
-    } catch (err) {
-        console.error('Error changing language:', err);
-        res.status(500).json({success: false, message: 'Internal Server Error'});
-    }
+    });
 };

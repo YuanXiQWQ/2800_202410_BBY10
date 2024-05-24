@@ -28,10 +28,9 @@
 
 <script>
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-    const passwordInvalidMessage = language.passwordInvalidMessage;
+    const passwordInvalidMessage = '<%= language.passwordInvalidMessage %>';
 
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', async (e) => {
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -41,7 +40,7 @@
         statusMessage.textContent = '';
 
         if (!email || !password) {
-            statusMessage.innerHTML = language.enterEmailAndPassword;
+            statusMessage.innerHTML = '<%= language.enterEmailAndPassword %>';
             statusMessage.style.visibility = 'visible';
             statusMessage.style.color = 'orange';
         } else if (!passwordRegex.test(password)) {
@@ -49,14 +48,14 @@
             statusMessage.style.visibility = 'visible';
             statusMessage.style.color = 'red';
         } else {
-            const response = await fetch('/logging-in', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({email, password})
-            });
             try {
+                const response = await fetch('/logging-in', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({email, password})
+                });
                 const data = await response.json();
                 if (data.success) {
                     window.location.href = '/exercises';
@@ -68,7 +67,7 @@
             } catch (err) {
                 statusMessage.style.visibility = 'visible';
                 statusMessage.style.color = 'red';
-                statusMessage.innerHTML = language.errorOccurred + err;
+                statusMessage.innerHTML = '<%= language.errorOccurred %>' + err;
             }
         }
     });

@@ -18,12 +18,12 @@
         <div class="alert secondary-color">
             <%= language.changeLanguageTips %>
         </div>
-        <form id="changeLanguageForm" class="needs-validation" novalidate>
+        <form id="changeLanguageForm" action="/postChangeLanguage" method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="language" class="form-label"><%= language.language %>:</label>
                 <select name="language" id="language" class="form-control">
-                    <option value="en"><%= language.english %></option>
-                    <option value="zh"><%= language.chinese %></option>
+                    <option value="en-uk"><%= language.english %></option>
+                    <option value="zh-cn"><%= language.chinese %></option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary primary-color primary-color-hover">
@@ -44,9 +44,9 @@
         const statusMessage = document.getElementById('statusMessage');
 
         statusMessage.textContent = '';
-        statusMessage.style.visibility = 'hidden';
+        statusMessage.style.display = 'none';
         setTimeout(() => {
-            statusMessage.style.visibility = 'visible';
+            statusMessage.style.display = 'block';
         }, 100);
 
         try {
@@ -60,14 +60,17 @@
 
             const data = await response.json();
             if (data.success) {
-                statusMessage.textContent = language.languageChangedSuccess;
+                statusMessage.textContent = '<%= language.changingLanguage %>';
                 statusMessage.style.color = 'green';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             } else {
                 statusMessage.textContent = data.message;
                 statusMessage.style.color = 'red';
             }
         } catch (err) {
-            statusMessage.textContent = language.errorOccurred;
+            statusMessage.textContent = '<%= language.errorOccurred %>';
             statusMessage.style.color = 'red';
         }
     });

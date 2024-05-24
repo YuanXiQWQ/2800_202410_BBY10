@@ -27,15 +27,9 @@
             <div class="mb-3">
                 <label for="fitnessLevel" class="form-label"><%= language.fitnessLevel %>:</label>
                 <select name="fitnessLevel" id="fitnessLevel" class="form-control">
-                    <option value="beginner" <%= userData.fitnessLevel === 'beginner' ? 'selected' : '' %>>
-                        <%= language.beginner %>
-                    </option>
-                    <option value="intermediate" <%= userData.fitnessLevel === 'intermediate' ? 'selected' : '' %>>
-                        <%= language.intermediate %>
-                    </option>
-                    <option value="advanced" <%= userData.fitnessLevel === 'advanced' ? 'selected' : '' %>>
-                        <%= language.advanced %>
-                    </option>
+                    <option value="beginner" <%= userData.fitnessLevel === 'beginner' ? 'selected' : '' %>><%= language.beginner %></option>
+                    <option value="intermediate" <%= userData.fitnessLevel === 'intermediate' ? 'selected' : '' %>><%= language.intermediate %></option>
+                    <option value="advanced" <%= userData.fitnessLevel === 'advanced' ? 'selected' : '' %>><%= language.advanced %></option>
                 </select>
             </div>
             <div class="mb-3">
@@ -53,7 +47,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const statusMessage = document.getElementById('statusMessage');
         if (localStorage.getItem('workoutSuccessFlag')) {
-            statusMessage.innerHTML = language.workoutSettingsSuccess;
+            statusMessage.innerHTML = '<%= language.workoutSettingsSuccess %>';
             statusMessage.style.color = 'green';
             localStorage.removeItem('workoutSuccessFlag');
         }
@@ -96,7 +90,7 @@
                 }
             })
             .catch(err => {
-                statusMessage.textContent = language.errorOccurred;
+                statusMessage.textContent = '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';
             });
     });

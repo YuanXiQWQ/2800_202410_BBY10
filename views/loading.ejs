@@ -1,5 +1,6 @@
 <%- include("templates/header") %>
 <head>
+    <title><%= language.loading %></title>
     <link rel="stylesheet" href="/styles/loading.css"/>
 </head>
 <div class="d-flex align-items-center justify-content-center h-100 flex-column">
@@ -67,11 +68,11 @@
 
         // After 3 seconds, change text to "Loading..."
         setTimeout(() => {
-            document.getElementById("loadingText").innerText = language.loading;
+            document.getElementById("loadingText").innerText = '<%= language.loading %>';
 
             // After additional 5 seconds, change text to "Almost there!"
             setTimeout(() => {
-                document.getElementById("loadingText").innerText = language.almostThere;
+                document.getElementById("loadingText").innerText = '<%= language.almostThere %>';
             }, 5000);
         }, delayTime);
     </script>

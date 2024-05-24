@@ -71,7 +71,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const statusMessage = document.getElementById('statusMessage');
         if (localStorage.getItem('successFlag')) {
-            statusMessage.innerHTML = language.informationEditSuccess;
+            statusMessage.innerHTML = '<%= language.informationEditSuccess %>';
             statusMessage.style.color = 'green';
             localStorage.removeItem('successFlag');
         }
@@ -97,7 +97,7 @@
         }
 
         if (!formData.get('avatar') && !formData.get('username')) {
-            statusMessage.innerHTML = language.noChangesDetected;
+            statusMessage.innerHTML = '<%= language.noChangesDetected %>';
             statusMessage.style.color = 'orange';
             return;
         }
@@ -117,7 +117,7 @@
                 }
             })
             .catch(err => {
-                statusMessage.innerHTML = language.errorOccurred;
+                statusMessage.innerHTML = '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';
             });
     });
