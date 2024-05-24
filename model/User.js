@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema(
         fitnessLevel: {
             type: String,
             required: false,
-            enum: ["beginner", "intermediate", "advanced"],
+            enum: ["Beginner", "Intermediate", "Advanced"],
         },
         avatar: {
             type: String,

@@ -14,7 +14,7 @@ export async function getListOfExercises(req, res) {
 
   return {
     ...data,
-    exercises: data.exercises.map((ele) => ({
+    exercises: data?.exercises.map((ele) => ({
       ...ele,
       start: formatDate(ele?.start),
     })),
