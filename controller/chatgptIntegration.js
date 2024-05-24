@@ -9,6 +9,7 @@ async function getUserId(username) {
 }
 
 function saveExercises(userId, exercise) {
+
   const filter = { user: userId };
   const update = { exercises: exercise };
   const options = { new: true, upsert: true }; // 'new: true' returns the modified document, 'upsert: true' creates it if it doesn't exist

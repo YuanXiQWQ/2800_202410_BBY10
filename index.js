@@ -238,6 +238,15 @@ app.get("/exercises", ensureAuthenticated, (req, res) => {
         });
 });
 
+app.get("/process-info", ensureAuthenticated, sessionValidation, (req, res) => {
+    sendInformation(req, res)
+        .catch(err => {
+            console.log("Internal Server Error by: " + err)
+            res.status(500).send("Internal Server Error");
+        });
+});
+
+
 app.post("/sendInformation", ensureAuthenticated, (req, res) => {
     sendInformation(req, res)
         .catch(err => {
