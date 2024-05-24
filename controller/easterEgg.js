@@ -21,13 +21,13 @@ const translations = {
         en: {firstName: 'Miles', lastName: 'Edgeworth'},
         jp: {firstName: '御剣', lastName: '怜侍'},
         cn: {firstName: '御剑', lastName: '怜侍'},
-        type: 'type1'
+        type: 'type4'
     },
     miaFey: {
         en: {firstName: 'Mia', lastName: 'Fey'},
         jp: {firstName: '綾里', lastName: '千尋'},
         cn: {firstName: '绫里', lastName: '千寻'},
-        type: 'type1'
+        type: 'type5'
     }
 };
 
