@@ -89,8 +89,14 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             const bottomDiv = document.createElement('div');
             bottomDiv.id = 'bottomElement';
             bottomDiv.classList.add('bottom-element');
+
+            let nameDisplay = `${firstName} ${lastName}`;
+            if (['zh', 'ja', 'ko'].includes(langPath)) {
+                nameDisplay = `${lastName} ${firstName}`;
+            }
+
             bottomDiv.innerHTML = `
-                <p>${languageData.areYouSureYouWantToChangeName || 'Are you sure you want to change the name to'} ${firstName} ${lastName}?</p>
+                <p>${languageData.areYouSureYouWantToChangeName} ${nameDisplay}?</p>
                 <div>
                   <button id="yesButton" class="btn btn-primary">${languageData.yes || 'Yes'}</button>
                   <button id="noButton" class="btn btn-secondary">${languageData.no || 'No'}</button>
@@ -109,7 +115,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 shake(img.id);
                 playMP3(`/sounds/${type}/${characterKey}/${langPath}/matta.mp3`);
                 bottomDiv.innerHTML = `
-                    <p>${languageData.holdItIsThisYourRealName || 'Hold it! Is this your real name, or are you just trying to make me more famous?'} ${firstName} ${lastName}?</p>
+                    <p>${languageData.holdItIsThisYourRealName}</p>
                     <div>
                       <button id="realNameButton" class="btn btn-primary">${languageData.myRealName || 'My real name'}</button>
                       <button id="funButton" class="btn btn-secondary">${languageData.justForFun || 'Just for fun'}</button>
@@ -143,7 +149,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                         console.error(err);
                     });
                 bottomDiv.innerHTML = `
-                    <p>${languageData.anywayTakeThatSaveYourChanges || 'Anyway, take that! Save your changes!'}</p>
+                    <p>${languageData.anywayTakeThatSaveYourChanges}</p>
                     <div>
                     <button id="okButton" class="btn btn-primary">${languageData.ok || 'OK'}</button>
                     </div>
