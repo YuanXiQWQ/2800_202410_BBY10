@@ -1,6 +1,6 @@
-# Project Title
+# NexGenFit
 
-## 1. Project Description
+## 1. About the Project
 
 Our project, BBY-10, is developing an AI-powered fitness app to help individuals who struggle with planning or
 maintaining proper form during their fitness journey. Our solution offers personalised workout plans, goal setting, and
@@ -27,8 +27,8 @@ were used.
 * HTML, CSS, JavaScript
 * Bootstrap v5.0 (Frontend library)
 * Firebase v10.9.0 (BAAS - Backend as a Service)
-* Node.js v20.11.1, npm v10.2.4, CommonJS model, ECMAScript (JS in Server)
-* OpenAI (AI API), MoveNet (Move Track API)
+* Node.js v20.11.1, npm v10.2.4, ECMAScript model, EJS view template (JS in Server)
+* OpenAI (AI API), MoveNet (Move Track API), FullCalendar (Calendar API)
 * Microsoft Edge, Google Chrome (Browser)
 * Git v2.44.0.windows.1, GitHub, GitKraken v9.13.0 (Version control)
 * Adobe Photoshop 2023 (For Icons and Logo)
