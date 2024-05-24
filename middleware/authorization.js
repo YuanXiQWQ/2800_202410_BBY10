@@ -20,7 +20,7 @@ export function authValidation(req, res, next) {
     if (!isValidSession(req)) {
         next();
     } else if (req.path === "/" || req.path === "/signup") {
-        res.redirect("/exercises");
+        res.redirect("/calendar");
     } else {
         next();
     }
