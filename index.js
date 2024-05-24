@@ -137,6 +137,7 @@ app.post("/reset-password", resetPassword);
  * Render after login
  */
 app.get("/profile", ensureAuthenticated, (req, res) => {
+    
     res.render("profile", {userData: req.session.userData});
 });
 

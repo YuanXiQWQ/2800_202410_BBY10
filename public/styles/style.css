@@ -211,9 +211,15 @@ form > .btn {
     position: fixed;
     font-size: 0.8rem;
     grid-template-columns: repeat(3, 1fr);
-    background-color: #dad4eb;
+    background-color: var(--color-primary);
   }
 
+  .icon {
+    fill: white;
+ 
+  }
+
+  
   .nav-item {
     width: auto;
     padding: 5px 0;

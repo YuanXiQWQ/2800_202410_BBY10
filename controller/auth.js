@@ -23,7 +23,11 @@ const schemaSignin = Joi.object({
 const schemaInfo = Joi.object({
     weight: Joi.number().positive().required(),
     height: Joi.number().positive().required(),
-    time: Joi.number().valid(0, 1, 2, 3, 4, 5, 6).required(),
+    time: Joi.array()
+            .items(Joi.number().valid(0, 1, 2, 3, 4, 5, 6).required())
+            .unique()  // Ensures all items in the array are unique
+            .min(1)     // Optional: Validates that at least one day is selected
+            .required(),
     goal: Joi.string().min(3).max(200).required(),
     fitnessLevel: Joi.string().valid("beginner", "intermediate", "advanced").required(),
 });
@@ -236,10 +240,12 @@ export function AdditionalUserInfo(req, res) {
         if (!req.session.userData) return res.redirect("/login");
 
         const {weight, height, time, goal, fitnessLevel} = req.body;
+        const arrayTime = time.split(',').map(Number);
+        console.log(arrayTime)
         const validationResult2 = schemaInfo.validate({
             weight,
             height,
-            time,
+            time: arrayTime,
             goal,
             fitnessLevel,
         });
@@ -272,7 +278,7 @@ export function AdditionalUserInfo(req, res) {
 
             user.weight = weight;
             user.height = height;
-            user.time = time;
+            user.time = arrayTime;
             user.goal = goal;
             user.fitnessLevel = fitnessLevel;
 
