@@ -20,7 +20,7 @@ export function generatePrompt(
   }
 
   return `Create a fitness plan for the current month, starting from today (${currentDay}-${currentMonth}-${currentYear}) until the end of the month (${daysInMonth}-${currentMonth}-${currentYear}). This plan should be based on the following parameters:
-    Workout Days: ${workoutDays.join(', ')}
+    Workout Days: ${workoutDays}
     Fitness Level: "Beginner"
     Weight: "100kg"
     Goal: "losewright"
@@ -36,5 +36,5 @@ export function generatePrompt(
         { "title": "Strength Training", "time": 45, "start": "${currentYear}-${currentMonth}-${currentDay+2}" }  // Assuming today is Monday and the day after next is Wednesday
       ]
   
-  Each JSON object corresponds to a specific workout session. The response should strictly be an array of JSON objects, with no additional text or unnecessary symbols. The time format should be YYYY-MM-DD. MAKE SURE THE MONTH IS 2 DIGITS PLEASE`
+  Each JSON object corresponds to a specific workout session. The response should strictly be an array of JSON objects, with no additional text or unnecessary symbols. The time format should be YYYY-MM-DD. MAKE SURE THE MONTH IS 2 DIGITS PLEASE, RESPONSE ONLY WITH THE ARRAY PLEASE`
 }

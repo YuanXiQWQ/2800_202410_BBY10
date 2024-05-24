@@ -1,143 +1,112 @@
 .index-container {
-    display: flex;
+  /* display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: #FFF;
-    box-sizing: border-box;
+    
+    box-sizing: border-box; */
+
+  background-image: url("/images/la.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
-.login-box {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 440px;
-    height: 480px;
-    padding: 30px;
+h1 {
+  font-size: 3rem;
 }
 
-.login-header {
-    text-align: center;
-    margin: 20px 0 0;
+/* Basic Button Styling */
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1.5;
+  font: 700 1.2rem;
+  padding: 1em 4em;
+  letter-spacing: 0.05rem;
+  background-color: #ff9262;
+  color: white; /* Text color */
+  box-shadow: inset 0 0 0 4px #ff9262; /* Initial border color */
+  position: relative;
+  transition: color 0.25s 0.08s, background-color 0.25s; /* Added transition for background-color */
 }
 
-.login-header header {
-    color: #333;
-    font-size: 30px;
-    font-weight: 600;
+.btn:focus {
+  outline: 2px dotted #ff9262;
 }
 
-.logo {
-    max-width: 300px; /* Adjust the size as needed */
-    max-height: 300px; /* Adjust the size as needed */
-    display: block; /* Centers the image horizontally */
-    margin: 0 auto; /* Centers the image horizontally */
-
+/* Dynamic border drawing effect */
+.btn::before,
+.btn::after {
+  border: 0 solid transparent;
+  box-sizing: border-box;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 
-.title {
-    margin-bottom: 100px; /* Adjust the margin as needed */
-    text-align: center;
-    color: #E4A542;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Adjust the shadow values as needed */
-
+.btn::before {
+  top: 0;
+  right: 0;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
 }
 
-
-.input-box .input-field {
-    width: 100%;
-    height: 60px;
-    font-size: 17px;
-    padding: 0 25px;
-    margin-bottom: 50px;
-    border-radius: 30px;
-    border: none;
-    box-shadow: 0 5px 10px 1px rgba(138, 136, 136, 0.5);
-    outline: none;
-    transition: 0.3s;
+.btn::after {
+  bottom: 0;
+  right: 0;
+  border-top-width: 4px;
+  border-right-width: 4px;
 }
 
-::placeholder {
-    font-weight: 500;
+.btn:hover {
+  color: white; /* Text color on hover */
+  background-color: #3d4bcd; /* Background color on hover */
 }
 
-/* .input-field:focus {
-    width: 105%;
-} */
-
-.forgot {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
+.btn:hover::before,
+.btn:hover::after {
+  border-color: #3d4bcd; /* Border color on hover */
+  transition: border-color 0s, width 0.25s, height 0.25s;
+  width: 100%;
+  height: 100%;
 }
 
-section {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
-
+.btn:hover::before {
+  transition-delay: 0s, 0s, 0.25s;
 }
 
-#check {
-    margin-right: 10px;
+.btn:hover::after {
+  transition-delay: 0s, 0.25s, 0s;
 }
+
+/* .wrapper{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } */
 
 a {
-    text-decoration: none;
+  display: block;
+  font-size: 16px;
+  text-decoration: none;
+  color: #3d4bcd;
+  /* border-top: 2px solid #3d4bcd; */
+  border-bottom: 2px solid #3d4bcd;
+  padding: 10px;
+  letter-spacing: 2px;
+  transition: all 0.25s;
 }
 
 a:hover {
-    text-decoration: underline;
+  letter-spacing: 15px;
 }
 
-section a {
-    color: #555;
-}
 
-.input-submit {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: auto;
-
-
-}
-
-.submit-btn {
-    width: 100%;
-    height: 60px;
-    background-color: #D2CBCB;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-
-
-}
-
-.input-submit label {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    color: #FFF;
-    -webkit-transform: translate(-50%, -50%);
-    cursor: pointer;
-
-}
-
-.submit-btn:hover {
-    background: rgb(194, 189, 189);
-    transform: scale(1.05, 1);
-
-}
-
-.sign-up-link {
-    text-align: center;
-    font-size: 15px;
-    margin-top: 20px;
-}
-
-.sign-up-link a {
-    color: black;
-    font-weight: 600;
+.text-decoration-none {
+    text-decoration: none;
 }

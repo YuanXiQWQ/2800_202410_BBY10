@@ -1,8 +1,8 @@
-.form-container {
+/* .form-container {
     width: 400px;
     margin: 0 auto;
     padding: 30px;
-    background-color: rgba(128, 123, 137, 0.8); /* Purple color with 80% opacity */
+    background-color: rgba(128, 123, 137, 0.8); 
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
@@ -55,4 +55,91 @@
 
 .btn-primary:hover {
     background-color: #0056b3; 
+} */
+
+form {
+  width: 100% !important;
+  margin: 1.6rem 0rem 0rem 0rem !important;
 }
+
+#regForm {
+  padding: 0rem 3rem;
+}
+
+/* Style the input fields */
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #3d4bcd;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #ff9262;
+}
+
+.btn-width {
+    width: 7em;
+}
+
+.alert {
+    padding: 15px;
+    color: #fff;
+    border-radius: 4px;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .alert.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .alert.green {
+    background-color: #04AA6D;
+  }
+
+  .alert.red {
+    background-color: #f44336;
+  }
+
+  .alert.blue {
+    background-color: #2196F3;
+  }
+
+  /* Animation for fading out the alert */
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }

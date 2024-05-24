@@ -1,27 +1,27 @@
 <%- include("templates/header") %>
 <head>
     <link rel="stylesheet" href="./styles/index.css">
-</head>
+  </head>
+      
+  <div class="w-100 h-100 index-container">
 
-<div class="wrapper">
-    <div class="index-container">
-        <div class="login-box">
-            <div class="login-header">
-                <img src="./images/icon.png" alt="" class="logo">
-            </div>
-            <div>
-                <h1 class="title"><%= language.nexGenFit %></h1>
-            </div>
+    <div class="d-flex align-items-center justify-content-center flex-column position-absolute bottom-0 mb-2 pb-5 w-100">
+        <h1 class="text-center ">Welcome to <span class="d-block black">NexGenFit</span></h1>
 
-            <div class="input-submit">
-                <a href="/signup">
-                    <button type="button" class="submit-btn"><%= language.getStarted %></button>
-                </a>
-                <a href="/login">
-                    <button type="button" class="submit-btn"><%= language.login %></button>
-                </a>
-            </div>
-        </div>
+        <a href="/signup" class="text-decoration-none border-0">
+            <button class="btn draw-border">Get Started</button>
+
+        </a>
+        <div class="wrapper ">
+            <a href="/login" class="semiBold">Login?</a>
+          </div>
+
     </div>
-</div>
-<%- include("templates/footer") %>
+      </div>
+
+
+
+    </div>
+ <%- include("templates/footer") %>
+
+

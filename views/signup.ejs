@@ -1,95 +1,236 @@
 <%- include("templates/header") %>
 
 <head>
-    <title><%= language.signupTitle %></title>
-    <link rel="stylesheet" href="./styles/signup.css">
+  <title>Signup</title>
+  <link rel="stylesheet" href="./styles/signup.css" />
 </head>
 
-<form id="signupForm" class="form-container">
-    <h1><%= language.createUser %></h1>
+<div class="container mt-5 px-5">
+    <div id="statusMessage" class="alert" id="statusMessage"></div>
+
+
+  <div class="my-3">
+    <h1 class="black d-inline-block border-bottom-2px py-1"><i>Register</i></h1>
+  </div>
+
+  <form id="signupForm" class="form-container">
+    <p class="font-size-16 semiBold">Account Information</p>
 
     <div class="mb-3">
-        <label for="userName" class="form-label"><%= language.userName %>:</label>
-        <input name="username" type="text" class="form-control" id="userName" required>
+      <label for="userName" class="form-label font-size-14">Username</label>
+      <input
+        name="username"
+        type="text"
+        class="form-control"
+        id="userName"
+        required
+      />
+      <div class="invalid-feedback" style="display: none">
+        Username is required.
+      </div>
     </div>
     <div class="mb-3">
-        <label for="firstName" class="form-label"><%= language.firstName %>:</label>
-        <input name="firstName" type="text" class="form-control" id="firstName" required>
+      <label for="firstName" class="form-label font-size-14">First Name</label>
+      <input
+        name="firstName"
+        type="text"
+        class="form-control"
+        id="firstName"
+        required
+      />
+      <div class="invalid-feedback" style="display: none">
+        First name is required.
+      </div>
     </div>
     <div class="mb-3">
-        <label for="lastName" class="form-label"><%= language.lastName %>:</label>
-        <input name="lastName" type="text" class="form-control" id="lastName" required>
+      <label for="lastName" class="form-label font-size-14">Last Name</label>
+      <input
+        name="lastName"
+        type="text"
+        class="form-control"
+        id="lastName"
+        required
+      />
+      <div class="invalid-feedback" style="display: none">
+        Last name is required.
+      </div>
     </div>
     <div class="mb-3">
-        <label for="birthday" class="form-label"><%= language.birthday %>:</label>
-        <input name="birthday" type="date" class="form-control" id="birthday" required>
+      <label for="birthday" class="form-label font-size-14">Birthday</label>
+      <input
+        name="birthday"
+        type="date"
+        class="form-control"
+        id="birthday"
+        required
+      />
+      <div class="invalid-feedback" style="display: none">
+        You must be at least 18 years old.
+      </div>
     </div>
     <div class="mb-3">
-        <label for="email" class="form-label"><%= language.emailAddress %>:</label>
-        <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+      <label for="email" class="form-label font-size-14">Email address</label>
+      <input
+        name="email"
+        type="email"
+        class="form-control"
+        id="email"
+        aria-describedby="emailHelp"
+        required
+      />
+      <div class="invalid-feedback" style="display: none">
+        Please enter a valid email address.
+      </div>
     </div>
     <div class="mb-3">
-        <label for="password" class="form-label"><%= language.password %>:</label>
-        <input name="password" type="password" class="form-control" id="password" required>
+      <label for="password" class="form-label font-size-14">Password</label>
+      <input
+        name="password"
+        type="password"
+        class="form-control"
+        id="password"
+        required
+      />
+      <div class="invalid-feedback" style="display: none">
+        Password does not meet the criteria.
+      </div>
     </div>
 
-    <button type="submit" id="submitButton" class="btn btn-primary"><%= language.submit %></button>
-</form>
-
-<div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
-
+    <button type="submit" id="submitButton" class="btn primary-color">
+      Submit
+    </button>
+  </form>
+</div>
 <script>
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-    const passwordInvalidMessage = '<%= language.passwordInvalidMessage %>';
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+  const passwordInvalidMessage =
+    "Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.";
 
-    document.getElementById('signupForm').addEventListener('submit', async function (event) {
-        event.preventDefault();
+  function showStatus(message, colorClass) {
+    const statusMessage = document.getElementById("statusMessage");
+    console.log(statusMessage)
+    statusMessage.textContent = message;
+    statusMessage.className = `alert ${colorClass} show`;
 
-        const form = event.target;
-        const formData = new FormData(form);
-        const submitButton = document.getElementById('submitButton');
-        const statusMessage = document.getElementById('statusMessage');
-        const password = formData.get('password');
+    // Automatically hide the alert after 4 seconds
+    setTimeout(() => {
+      statusMessage.style.animation = "fadeOut 0.5s forwards";
+      setTimeout(() => {
+        statusMessage.className = "alert"; // Reset the alert class
+        statusMessage.style.animation = ""; // Reset the animation property
+      }, 500); // Matches the duration of the fadeOut animation
+    }, 4000); // Time the alert is visible before beginning to fade
+  }
 
-        submitButton.disabled = true;
-        statusMessage.style.display = 'block';
-        statusMessage.textContent = '<%= language.sendingEmail %>';
-        statusMessage.style.color = 'blue';
-
-        if (!password) {
-            statusMessage.textContent = '<%= language.inputNewPassword %>';
-            statusMessage.style.color = 'orange';
-            submitButton.disabled = false;
-            return;
-        } else if (!passwordRegex.test(password)) {
-            statusMessage.textContent = passwordInvalidMessage;
-            statusMessage.style.color = 'red';
-            submitButton.disabled = false;
-            return;
-        }
-
-        try {
-            const response = await fetch('/submitUser', {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                statusMessage.textContent = '<%= language.verificationEmailSent %>';
-                statusMessage.style.color = 'green';
-            } else {
-                const errorData = await response.json();
-                statusMessage.textContent = errorData.message || '<%= language.errorOccurred %>';
-                statusMessage.style.color = 'red';
-                submitButton.disabled = false;
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            statusMessage.textContent = '<%= language.errorOccurred %>';
-            statusMessage.style.color = 'red';
-            submitButton.disabled = false;
-        }
+  document
+    .getElementById("signupForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+      clearValidationMessages();
+      if (validateForm()) {
+        submitForm(event);
+      } 
     });
+
+  function validateForm() {
+    let valid = true;
+    const formData = new FormData(document.getElementById("signupForm"));
+    formData.forEach((value, key) => {
+      if (!value.trim()) {
+        showErrorMessage(key, "This field is required");
+        valid = false;
+      }
+    });
+
+    const email = formData.get("email");
+    if (!validateEmail(email)) {
+      showErrorMessage("email", "Please enter a valid email address");
+      valid = false;
+    }
+
+    const password = formData.get("password");
+    if (!passwordRegex.test(password)) {
+      showErrorMessage("password", passwordInvalidMessage);
+      valid = false;
+    }
+
+    const birthday = formData.get("birthday");
+    if (!isEighteenOrOlder(birthday)) {
+      showErrorMessage("birthday", "You must be at least 18 years old");
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  function clearValidationMessages() {
+    document.querySelectorAll(".invalid-feedback").forEach((element) => {
+      element.style.display = "none";
+    });
+  }
+
+  function showErrorMessage(inputName, message) {
+    const element = document.querySelector(`#${inputName} + .invalid-feedback`);
+    element.textContent = message;
+    element.style.display = "block";
+  }
+
+  function validateEmail(email) {
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  function isEighteenOrOlder(birthday) {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age >= 18;
+  }
+
+  async function submitForm(event) {
+    const form = event.target;
+    const formData = new FormData(form);
+    const submitButton = document.getElementById("submitButton");
+    // const statusMessage = document.getElementById("statusMessage");
+
+    submitButton.disabled = true;
+    // statusMessage.style.display = "block";
+    // statusMessage.textContent = ;
+    // statusMessage.style.color = "blue";
+
+    showStatus("Sending the email, please wait...", "blue")
+
+    try {
+      const response = await fetch("/submitUser", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        showStatus("Verification email sent. Please check your inbox.", "green")
+
+        // statusMessage.textContent =
+          
+        // statusMessage.style.color = "green";
+      } else {
+        const errorData = await response.json();
+        showStatus( errorData.message || "An error occurred. Please try again.", "red")
+
+        submitButton.disabled = false;
+      }
+    } catch (error) {
+      showStatus("An error occurred. Please try again." + error?.message, "red")
+
+    //   statusMessage.textContent = "An error occurred. Please try again.";
+    //   statusMessage.style.color = "red";
+      submitButton.disabled = false;
+    }
+  }
 </script>
 
 <%- include("templates/footer") %>

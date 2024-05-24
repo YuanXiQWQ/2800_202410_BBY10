@@ -73,7 +73,7 @@ app.get('/verify-email', async (req, res) => {
 
     try {
         const user = await User.findOne({verificationToken: token});
-
+        
         if (!user) {
             return res.status(400).render('validationError', {
                 error: 'Invalid verification token.',
@@ -101,6 +101,7 @@ app.get("/additional-info", (req, res) => {
 });
 
 app.post("/submitAdditionalInfo", (req, res) => {
+    console.log(req?.body)
     AdditionalUserInfo(req, res).catch(err => {
         console.error('Error submitting additional info:', err);
         if (!res.headersSent) {
@@ -135,7 +136,8 @@ app.get("/reset-password", (req, res) => {
 app.post("/reset-password", resetPassword);
 
 app.get("/profile", ensureAuthenticated, (req, res) => {
-    res.render("profile", {userData: req.session.userData, language: res.locals.language});
+    
+    res.render("profile", {userData: req.session.userData});
 });
 
 app.get("/editUserAvatar", ensureAuthenticated, sessionValidation, (req, res) => {
@@ -235,6 +237,15 @@ app.get("/exercises", ensureAuthenticated, (req, res) => {
             res.status(500).send("Internal Server Error");
         });
 });
+
+app.get("/process-info", ensureAuthenticated, sessionValidation, (req, res) => {
+    sendInformation(req, res)
+        .catch(err => {
+            console.log("Internal Server Error by: " + err)
+            res.status(500).send("Internal Server Error");
+        });
+});
+
 
 app.post("/sendInformation", ensureAuthenticated, (req, res) => {
     sendInformation(req, res)

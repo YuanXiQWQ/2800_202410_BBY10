@@ -1,46 +1,41 @@
 <%- include("templates/header") %>
-    <%- include("templates/navbar") %>
+<%- include("templates/navbar") %>
 
-        <head>
-            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.12/index.global.min.js'></script>
-            <link rel="stylesheet" href="./styles/calendar.css">
-        </head>
+<head>
+    <link rel="stylesheet" href="./styles/calendar.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.12/index.global.min.js'></script>
+</head>
 
-        <body id="calendarBody">
-            <div id="calendar-container">
-                <div id="calendar"></div>
-            </div>
+<body id="calendarBody">
+    <div id="calendar-container">
+        <div id="calendar"></div>
+    </div>
 
-            <script>
-                // Ensure your data is properly passed to the script if needed
-                const data2 = <%- JSON.stringify(data) %>;
-                 console.log(data2);
-            
-                document.addEventListener('DOMContentLoaded', function () {
-                    var calendarEl = document.getElementById('calendar');
-                    if (calendarEl) {  // Check if the calendar element exists
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                            windowResize: function (arg) {
-                                // Add any functionality you need during window resize
-                            },
-                            events: data2?.exercises
-                            ,
-                            initialView: 'dayGridMonth',
-                            headerToolbar: {
-                                start: 'title',  // No buttons on the left
-                                center: '',      // Title in the center
-                                end: 'today prev,next'  // Buttons on the right
-                            }
-                        });
-                        calendar.render();
-                    } else {
-                        console.error('Calendar element not found');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const data2 = <%- JSON.stringify(data) %>;
+            console.log(data2);
+
+            var calendarEl = document.getElementById('calendar');
+            if (calendarEl) {  // Check if the calendar element exists
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    windowResize: function (arg) {
+                        // Add any functionality you need during window resize
+                    },
+                    events: data2?.exercises,
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        start: 'title',  // No buttons on the left
+                        center: '',      // Title in the center
+                        end: 'today prev,next'  // Buttons on the right
                     }
                 });
-            </script>
-            
+                calendar.render();
+            } else {
+                console.error('Calendar element not found');
+            }
+        });
+    </script>
+</body>
 
-
-        </body>
-
-        <%- include("templates/footer") %>
+<%- include("templates/footer") %>

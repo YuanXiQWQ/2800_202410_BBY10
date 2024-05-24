@@ -1,49 +1,111 @@
-#additional-info {
-    width: 400px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: rgba(128, 123, 137, 0.8);
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-    /* height: 100%; */
-}
-
-#additional-info h1 {
-    text-align: center;
-    color: #333;
-    
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-#additional-info label {
-    font-size: 15px;
-   
-}
-
-/* #additional-info input[type="text"],
-#additional-info select {
-    width: 100%;
-    height: 40px;
-    padding: 8px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    
-} */
-
-
-#additional-info .btn-primary {
-    width: 100%;
-    height: 60px;
-    background-color: #d2cbcb;
+  
+  /* Mark input boxes that gets an error on validation: */
+  input.invalid {
+    background-color: #ffdddd;
+  }
+  
+  /* Hide all steps by default: */
+  .tab {
+    display: none;
+  }
+  
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #3d4bcd;
     border: none;
-    border-radius: 30px;
-    cursor: pointer;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+  
+  /* Mark the active step: */
+  .step.active {
+    opacity: 1;
+  }
+  
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #ff9262;
+  }
+  
+  .btn-width {
+      width: 7em;
+  }
+
+.input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3),
+.input-group:not(.has-validation)
+  > .form-floating:not(:last-child)
+  > .form-control,
+.input-group:not(.has-validation)
+  > .form-floating:not(:last-child)
+  > .form-select,
+.input-group:not(.has-validation)
+  > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(
+    .form-floating
+  ) {
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-group .btn {
+  border: none;
+  border-radius: 20px;
+  z-index: 100;
+}
+
+.input-group-append {
+    position: absolute;
+    right: 6px;
+    top: 0;
+
 }
 
 
-#additional-info .btn-primary:hover {
-    background-color: #0056b3; /* Darker shade of blue on hover */
+.active-unit {
+    color: #3d4bcd;
+    font-weight: 900;
 }
+
+.btn-exper {
+    border-radius: 10px;
+    background-color: #b6b8cb;
+    color: black;
+    border: none;
+    margin: 10px 0rem;
+    padding: 1rem;
+}
+
+.btn-exper:hover {
+    border-radius: 10px;
+    background-color: #ff9262;
+    color: white;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.btn.active {
+    border-radius: 10px;
+    background-color: #ff9262;
+    color: white;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+  .day-btn {
+    width: 48%;
+    padding: .5rem 1rem !important;
+  }

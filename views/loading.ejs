@@ -56,7 +56,7 @@
         function checkStatus() {
             fetch("/process-info")
                 .then((response) => {
-                    window.location.href = "/exercises"
+                    window.location.href = "/calendar"
                 })
                 .catch((error) => console.error("Failed to fetch:", error));
         }
