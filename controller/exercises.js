@@ -4,7 +4,7 @@ import { User } from "../model/User.js";
 async function getUserId(username) {
   const user = await User.findOne({ username }).select("_id");
 
-  return user._id;
+  return user?._id;
 }
 
 export async function getListOfExercises(req, res) {

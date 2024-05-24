@@ -204,13 +204,15 @@ export async function deleteAccount(req, res) {
             return res.status(404).json({success: false, message: 'User not found'});
         }
 
-        await User.deleteOne({_id: user._id});
-        req.session.destroy(err => {
+        req.session.destroy(async err => {
             if (err) {
                 return res.status(500).json({success: false, message: 'Failed to delete account'});
             }
+            await User.deleteOne({_id: user?._id});
+
             res.status(200).json({success: true, message: 'Account deleted successfully'});
         });
+       
     } catch (error) {
         console.error('Error deleting account:', error);
         res.status(500).json({success: false, message: 'Internal Server Error'});
