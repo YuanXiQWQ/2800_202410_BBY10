@@ -98,6 +98,8 @@
   "workoutSettingsTips": "ここでトレーニング設定を調整します。",
   "fitnessGoal": "フィットネス目標",
   "fitnessLevel": "フィットネスレベル",
+  "saturday":"Saturday",
+
   "workoutDuration": "トレーニングの期間",
   "workoutSettingsSuccess": "トレーニング設定が正常に更新されました。",
   "editUserPersonalInfoTitle": "個人情報を編集",
