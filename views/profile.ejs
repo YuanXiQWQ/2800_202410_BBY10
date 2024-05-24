@@ -251,14 +251,17 @@
 
           <span class="list-group-content">
             <% 
-              const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-              if (userData.time && userData.time.length > 0) {
-                let dayNamesList = userData.time.map(index => dayNames[index]).join(', ');
-                %><%= dayNamesList %><%
-              } else {
-                
-              }
-            %>
+            if (userData.time && userData.time.length > 0) {
+              let dayNamesList = userData.time.map(index => dayNames[index]).join(', ');
+          %>
+              <%= dayNamesList %>
+          <% 
+            } else { 
+          %>
+              -
+          <% 
+            } 
+          %>
           </span>
                     <svg
                             width="9"
