@@ -72,8 +72,7 @@
             try {
                 const data = await response.json();
                 if (data.success) {
-                    console.log("kakakakaS");
-                    window.location.href = "/exercises";
+                    window.location.href = "/calendar";
                 } else {
                     statusMessage.style.visibility = "visible";
                     statusMessage.style.color = "red";
