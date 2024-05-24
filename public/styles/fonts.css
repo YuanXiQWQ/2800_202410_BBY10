@@ -1,0 +1,71 @@
+@font-face {
+  font-family: regular;
+  src: url("../fonts/RedditMono-Regular.ttf");
+}
+
+@font-face {
+  font-family: bold;
+  src: url("../fonts/RedditMono-Bold.ttf");
+}
+
+@font-face {
+  font-family: black;
+  src: url("../fonts/RedditMono-Black.ttf");
+}
+
+@font-face {
+  font-family: extraBold;
+  src: url("../fonts/RedditMono-ExtraBold.ttf");
+}
+
+@font-face {
+  font-family: extraLight;
+  src: url("../fonts/RedditMono-ExtraLight.ttf");
+}
+
+@font-face {
+  font-family: light;
+  src: url("../fonts/RedditMono-Light.ttf");
+}
+
+@font-face {
+  font-family: medium;
+  src: url("../fonts/RedditMono-Medium.ttf");
+}
+
+@font-face {
+  font-family: semiBold;
+  src: url("../fonts/RedditMono-SemiBold.ttf");
+}
+
+.regular {
+  font-family: regular;
+}
+
+.black {
+  font-family: black;
+}
+
+.bold {
+  font-family: bold;
+}
+
+.semiBold {
+  font-family: semiBold;
+}
+
+.medium {
+  font-family: medium;
+}
+
+.light {
+  font-family: light;
+}
+
+.extraLight {
+  font-family: extraLight;
+}
+
+.extraBold {
+  font-family: extraBold;
+}

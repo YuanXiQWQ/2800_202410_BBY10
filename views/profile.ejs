@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/styles/profile.css"/>
     <style>
         #userInfo {
-            color: #000;
+            color: var(--text-color);
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -38,7 +38,7 @@
         "title icon"
         "content icon";
             text-decoration: none;
-            color: #000;
+            color: var(--text-color);
             padding: 10px 0;
             border-bottom: 1px solid #dadada;
         }
@@ -248,9 +248,18 @@
             <li>
                 <a href="/workoutSettings">
                     <span class="lang-text list-group-title"><%= language.workoutDuration %></span>
-                    <span class="list-group-content">
-                        <%= userData.time ? userData.time : '-' %>
-                    </span>
+
+          <span class="list-group-content">
+            <% 
+              const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+              if (userData.time && userData.time.length > 0) {
+                let dayNamesList = userData.time.map(index => dayNames[index]).join(', ');
+                %><%= dayNamesList %><%
+              } else {
+                
+              }
+            %>
+          </span>
                     <svg
                             width="9"
                             height="11"
