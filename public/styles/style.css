@@ -154,8 +154,17 @@ form > .btn {
 
 .primary-color {
   background-color: #3d4bcd;
-  color: #fff;
+  color:var(--background-color);
+  border-radius: 20px;
 }
+
+.primary-color:hover {
+  background-color: var(--background-color);
+  color: #3d4bcd;
+  border: 2px solid #3d4bcd;
+  border-radius: 20px; 
+}
+
 
 .primary-color-hover:hover {
   background-color: #3d4bcd;
@@ -168,7 +177,16 @@ form > .btn {
 
 .secondary-color {
   background-color: #ff9262;
-  color: #000;
+  color: var(--background-color);;
+  border-radius: 20px;
+
+}
+
+.secondary-color:hover {
+  background-color: #fff;
+  color: #ff9262;
+  border: 2px solid #ff9262;
+  border-radius: 20px;
 }
 
 #bottomNavbar {
@@ -216,3 +234,4 @@ form > .btn {
     height: 80px;
   }
 }
+
