@@ -95,7 +95,7 @@ export async function sendMessageToChatGPT(messageToSend) {
         const result = await response.json();
 
         const message = result.choices[0].message.content;
-        // console.log("ChatGPT: " + message);
+        console.log("ChatGPT: " + message);
 
         // Add response to conversation history
         conversationHistory.push({

@@ -9,11 +9,17 @@ async function getUserId(username) {
 }
 
 function saveExercises(userId, exercise) {
+  const filter = { user: userId };
+  const update = { exercises: exercise };
+  const options = { new: true, upsert: true }; // 'new: true' returns the modified document, 'upsert: true' creates it if it doesn't exist
 
-  new exercises({ exercises: exercise, user: userId })
-    .save()
-    .then((doc) => console.log("Exercise saved successfully:"))
-    .catch((err) => console.error("Error saving exercise:", err));
+  exercises.findOneAndUpdate(filter, update, options)
+    .then(result => {
+      console.log("Exercise saved or updated successfully:", result);
+    })
+    .catch(err => {
+      console.error("Error during save or update operation:", err);
+    });
 }
 
 export async function sendInformation(req, res) {
@@ -21,9 +27,10 @@ export async function sendInformation(req, res) {
   const message = generatePrompt(user);
 
   const response = await sendMessageToChatGPT(message);
+ 
   const userId = await getUserId(user?.username);
 
-  await saveExercises(userId, response);
+   await saveExercises(userId, response);
   req.session.userData = { ...req.session.userData, id: userId };
   console.log(response);
   res.status(200).send("success")

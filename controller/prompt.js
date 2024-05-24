@@ -2,40 +2,39 @@ export function generatePrompt(
   time,
   fitnessLevel,
   weight,
-  goal,
-
+  goal
 ) {
-  return `Create a fitness plan based on the following parameters:
-    days where 0=Only Monday, 1=Monday and Tuesday... and 6=all days of the week;the days are =${time}
-        Generate a fitness plan in JSON format that covers each day from the start date to the end date,
-        adjusting the content according to the level: "${fitnessLevel}", weight: "${weight}kg", and 
-        goal: "${goal}". Include different types of workouts and their durations (with time in minutes) 
-        that fit the specified difficulty category. 
-    For example, if the start date is Monday, and the end date is Wednesday, and the total time is 180, 
-    your JSON format should be like this:
-    {
-      "Monday": [
-        { "name": "Training 1", "time": "timeA(<=180)" },
-        { "name": "Training 2", "time": "timeB(<=180)" },
-        { "name": "...", "time": "..." },
-        { "name": "Training n", "time": "timeN(180-timeA-timeB-...)" }
-      ],
-      "Tuesday": [
-        { "name": "...", "time": "..." },
-        { "name": "...", "time": "..." },
-        { "name": "...", "time": "..." }
-      ],
-      "Wednesday": [
-        ...
-      ]
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1; // JavaScript months are 0-indexed, add 1 for human-readable format
+  const currentDay = today.getDate();
+  const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+
+  // Interpret the 'time' parameter to determine workout days
+  const workoutDays = [];
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  for (let i = 0; i < 7; i++) {
+    if (time & (1 << i)) { // Check each bit in the 'time' bitmask
+      workoutDays.push(days[i]);
     }
-    Following this format, if you want to express that on Monday, there are two workouts: yoga for 
-    one hour and pull-ups for 15 minutes, then your value for the key "Monday" should be:
-      "Monday": [
-        { "name": "Yoga", "time": "60" },
-        { "name": "Pull-ups", "time": "15" }
+  }
+
+  return `Create a fitness plan for the current month, starting from today (${currentDay}-${currentMonth}-${currentYear}) until the end of the month (${daysInMonth}-${currentMonth}-${currentYear}). This plan should be based on the following parameters:
+    Workout Days: ${workoutDays.join(', ')}
+    Fitness Level: "Beginner"
+    Weight: "100kg"
+    Goal: "losewright"
+    The plan should be a JSON formatted array, where each object represents a workout session that includes:
+    - The name of the workout
+    - The duration of the workout in minutes
+    - The start date in the format 'day-month-year', adjusted for the days you have chosen to workout.
+  
+  For example, if workouts are scheduled for Monday and Wednesday, and the first Monday of this month falls on the ${currentDay}, the JSON should look like this:
+      
+       [
+        { "title": "Cardio", "time": 30, "start": "${currentYear}-${currentMonth}-${currentDay}" },
+        { "title": "Strength Training", "time": 45, "start": "${currentYear}-${currentMonth}-${currentDay+2}" }  // Assuming today is Monday and the day after next is Wednesday
       ]
-    and so on. Please note: your response should only contain the JSON itself, without any additional 
-    text or unnecessary symbols, e.g., no content like "Okay, I will create a fitness plan" or attempts 
-    to enclose JSON within special symbols.`;
+  
+  Each JSON object corresponds to a specific workout session. The response should strictly be an array of JSON objects, with no additional text or unnecessary symbols. The time format should be YYYY-MM-DD. MAKE SURE THE MONTH IS 2 DIGITS PLEASE`
 }
