@@ -1,6 +1,6 @@
 <%- include("templates/header") %>
 <head>
-    <title>Edit User Avatar</title>
+    <title><%= language.editUserAvatarTitle %></title>
     <link rel="stylesheet" href="/styles/profile.css">
     <style>
         .avatar {
@@ -32,12 +32,12 @@
                       fill="black"/>
             </svg>
         </a>
-        Edit Your Username and Avatar
+        <%= language.editYourUsernameAndAvatar %>
     </header>
     <main>
         <form id="userAvatarForm" method="POST" action="/postUserAvatar" enctype="multipart/form-data">
             <div class="avatar">
-                <span class="lang-text" data-key="yourKawaiiAvatar">Your Kawaii Avatar</span>
+                <%= language.yourKawaiiAvatar %>
                 <div id="userAvatar">
                     <% if (userData.avatar) { %>
                         <img src="/avatar/<%= userData.avatar %>" alt="User Avatar" class="user-avatar">
@@ -47,15 +47,21 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="username" class="form-label">Username:</label>
+                <label for="username" class="form-label">
+                    <%= language.username %>:
+                </label>
                 <input name="username" id="username" type="text" class="form-control"
                        placeholder="<%= userData.username %>">
             </div>
             <div class="mb-3">
-                <label for="avatar" class="form-label">Avatar:</label>
+                <label for="avatar" class="form-label">
+                    <%= language.avatar %>:
+                </label>
                 <input name="avatar" id="avatar" type="file" class="form-control">
             </div>
-            <button type="submit" class="btn primary-color primary-color-hover">Submit</button>
+            <button type="submit" class="btn primary-color primary-color-hover">
+                <%= language.submit %>
+            </button>
         </form>
         <div id="statusMessage"></div>
     </main>
@@ -65,7 +71,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const statusMessage = document.getElementById('statusMessage');
         if (localStorage.getItem('successFlag')) {
-            statusMessage.textContent = 'Information edit successfully.';
+            statusMessage.innerHTML = language.informationEditSuccess;
             statusMessage.style.color = 'green';
             localStorage.removeItem('successFlag');
         }
@@ -78,7 +84,6 @@
         const formData = new FormData(form);
         const statusMessage = document.getElementById('statusMessage');
 
-        // This to show the user that this page is still alive and responsive
         statusMessage.textContent = '';
         statusMessage.style.visibility = 'hidden';
         setTimeout(() => {
@@ -92,7 +97,7 @@
         }
 
         if (!formData.get('avatar') && !formData.get('username')) {
-            statusMessage.textContent = 'No changes detected.';
+            statusMessage.innerHTML = language.noChangesDetected;
             statusMessage.style.color = 'orange';
             return;
         }
@@ -112,7 +117,7 @@
                 }
             })
             .catch(err => {
-                statusMessage.textContent = 'An error occurred. Please try again.';
+                statusMessage.innerHTML = language.errorOccurred;
                 statusMessage.style.color = 'red';
             });
     });

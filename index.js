@@ -19,6 +19,8 @@ import {getListOfExercises} from "./controller/exercises.js";
 import {authValidation, sessionValidation} from "./middleware/authorization.js";
 import {logIn} from './controller/login.js';
 import {User} from "./model/User.js";
+import {changeLanguage} from "./controller/profile.js";
+import { loadLanguage } from './middleware/loadLanguage.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +32,7 @@ connectDB();
 app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(loadLanguage);
 
 // Static files
 app.use(express.static(__dirname + "/public"));
@@ -202,13 +205,22 @@ app.get("/deleteAccount", ensureAuthenticated, (req, res) => {
 
 app.post("/postDeletingAccount", ensureAuthenticated, deleteAccount);
 
+app.get("/changeLanguage", ensureAuthenticated, (req, res) => {
+    res.render("changeLanguage");
+});
+
+app.post("/postChangeLanguage", ensureAuthenticated, (req, res) => {
+    changeLanguage(req, res).catch(err => {
+        console.error('Error changing language:', err);
+        if (!res.headersSent) res.status(500).json({success: false, message: 'Internal Server Error'});
+    });
+});
+
 app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => {
     res.render("loading");
 });
 
-app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
 
 app.get("/exercises", ensureAuthenticated, sessionValidation, (req, res) => {
     getListOfExercises(req, res)

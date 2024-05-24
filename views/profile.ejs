@@ -1,6 +1,6 @@
 <%- include("templates/header") %>
 <head>
-    <title>change password</title>
+    <title><%= language.profileTitle %></title>
     <link rel="stylesheet" href="/styles/profile.css"/>
     <style>
         #userInfo {
@@ -66,44 +66,28 @@
 </head>
 <%- include("templates/navbar") %>
 <div class="container " style="padding-bottom: 8rem;">
-  <header class="d-flex align-items-center mb-4">
-    <a
-      href="/editUserAvatar"
-      class="d-flex align-items-center undecorated"
-      id="userInfo"
-    >
-      <span class="lang-text" data-key="helloUser"
-      >Hello, <%= userData.username %></span
-      >
+    <header class="d-flex align-items-center mb-4">
+        <a href="/editUserAvatar" class="d-flex align-items-center undecorated" id="userInfo">
+            <%= language.helloUser %>, <%= userData.username %>
             <div id="userAvatar">
                 <% if (userData.avatar) { %>
-                    <img
-                            src="/avatar/<%= userData.avatar %>"
-                            alt="User Avatar"
-                            class="user-avatar"
-                    />
+                    <img src="/avatar/<%= userData.avatar %>" alt="User Avatar" class="user-avatar" />
                 <% } else { %>
-                    <img
-                            src="/images/userAvatar_default.png"
-                            alt="Default Avatar"
-                            class="user-avatar"
-                    />
+                    <img src="/images/userAvatar_default.png" alt="Default Avatar" class="user-avatar" />
                 <% } %>
             </div>
         </a>
     </header>
 
-  <div class="mx-2">
-    <p class="lang-text" style="font-weight: 900" data-key="personalInformation"
-      >Personal information</p
-    >
-    <ul class="undecorated" id="personalInformation">
-      <li>
-        <a href="/personalInformation">
-          <span class="lang-text list-group-title" data-key="name">Name</span>
-          <span class="list-group-content">
-            <%= userData.username ? userData.username : '-' %>
-          </span>
+    <div class="mx-2">
+        <p class="lang-text" style="font-weight: 900"><%= language.personalInformation %></p>
+        <ul class="undecorated" id="personalInformation">
+            <li>
+                <a href="/personalInformation">
+                    <span class="lang-text list-group-title"><%= language.name %></span>
+                    <span class="list-group-content">
+                        <%= userData.username ? userData.username : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -120,10 +104,10 @@
             </li>
             <li>
                 <a href="/personalInformation">
-                    <span class="lang-text list-group-title" data-key="email">Email</span>
+                    <span class="lang-text list-group-title"><%= language.email %></span>
                     <span class="list-group-content">
-            <%= userData.email ? userData.email : '-' %>
-          </span>
+                        <%= userData.email ? userData.email : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -140,13 +124,10 @@
             </li>
             <li>
                 <a href="/personalInformation">
-          <span class="lang-text list-group-title" data-key="birthday"
-          >Birthday</span
-          >
+                    <span class="lang-text list-group-title"><%= language.birthday %></span>
                     <span class="list-group-content">
-            <%= userData.birthday ? new
-            Date(userData.birthday).toISOString().substring(0, 10) : '-' %>
-          </span>
+                        <%= userData.birthday ? new Date(userData.birthday).toISOString().substring(0, 10) : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -163,12 +144,10 @@
             </li>
             <li>
                 <a href="/personalInformation">
-          <span class="lang-text list-group-title" data-key="height"
-          >Height</span
-          >
+                    <span class="lang-text list-group-title"><%= language.height %></span>
                     <span class="list-group-content">
-            <%= userData.height ? userData.height : '-' %>
-          </span>
+                        <%= userData.height ? userData.height : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -185,12 +164,10 @@
             </li>
             <li>
                 <a href="/personalInformation">
-          <span class="lang-text list-group-title" data-key="weight"
-          >Weight</span
-          >
+                    <span class="lang-text list-group-title"><%= language.weight %></span>
                     <span class="list-group-content">
-            <%= userData.weight ? userData.weight : '-' %>
-          </span>
+                        <%= userData.weight ? userData.weight : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -207,9 +184,7 @@
             </li>
             <li>
                 <a href="/changePassword">
-          <span class="lang-text list-group-title" data-key="changePassword"
-          >Change Password</span
-          >
+                    <span class="lang-text list-group-title"><%= language.changePassword %></span>
                     <svg
                             width="9"
                             height="11"
@@ -227,17 +202,15 @@
         </ul>
     </div>
 
-  <div class="mt-4 mx-2">
-    <p class="lang-text" style="font-weight: 900" data-key="workoutSettings">Workout Settings</p>
-    <ul class="undecorated" id="workoutSettings">
-      <li>
-        <a href="/workoutSettings">
-          <span class="lang-text list-group-title" data-key="fitnessGoal"
-          >Fitness Goal</span
-          >
+    <div class="mt-4 mx-2">
+        <p class="lang-text" style="font-weight: 900"><%= language.workoutSettings %></p>
+        <ul class="undecorated" id="workoutSettings">
+            <li>
+                <a href="/workoutSettings">
+                    <span class="lang-text list-group-title"><%= language.fitnessGoal %></span>
                     <span class="list-group-content">
-            <%= userData.goal ? userData.goal : '-' %>
-          </span>
+                        <%= userData.goal ? userData.goal : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -254,12 +227,10 @@
             </li>
             <li>
                 <a href="/workoutSettings">
-          <span class="lang-text list-group-title" data-key="fitnessExperience"
-          >Fitness Experience</span
-          >
+                    <span class="lang-text list-group-title"><%= language.fitnessExperience %></span>
                     <span class="list-group-content">
-            <%= userData.fitnessLevel ? userData.fitnessLevel : '-' %>
-          </span>
+                        <%= userData.fitnessLevel ? userData.fitnessLevel : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -276,12 +247,10 @@
             </li>
             <li>
                 <a href="/workoutSettings">
-          <span class="lang-text list-group-title" data-key="workoutDuration"
-          >Workout Duration</span
-          >
+                    <span class="lang-text list-group-title"><%= language.workoutDuration %></span>
                     <span class="list-group-content">
-            <%= userData.time ? userData.time : '-' %>
-          </span>
+                        <%= userData.time ? userData.time : '-' %>
+                    </span>
                     <svg
                             width="9"
                             height="11"
@@ -299,12 +268,12 @@
         </ul>
     </div>
 
-    <div class="mt-4">
-        <p class="lang-text" data-key="accountSettings">Account</p>
+    <div class="mt-4 mx-2">
+        <p class="lang-text" style="font-weight: 900"><%= language.accountSettings %></p>
         <ul class="undecorated" id="accountSettings">
             <li>
                 <a href="/logout">
-                    <span class="lang-text list-group-title" data-key="logout">Logout</span>
+                    <span class="lang-text list-group-title"><%= language.logout %></span>
                     <svg
                             width="9"
                             height="11"
@@ -321,7 +290,24 @@
             </li>
             <li>
                 <a href="/deleteAccount">
-                    <span class="lang-text list-group-title" data-key="deleteAccount">Delete Account</span>
+                    <span class="lang-text list-group-title"><%= language.deleteAccount %></span>
+                    <svg
+                            width="9"
+                            height="11"
+                            viewBox="0 0 9 11"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M4.72934 5.49997L0.957336 2.20064L2.84267 0.549805L8.5 5.49997L2.84267 10.4501L0.957336 8.7993L4.72934 5.49997Z"
+                                fill="black"
+                        />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/changeLanguage">
+                    <span class="lang-text list-group-title"><%= language.changeLanguage %></span>
                     <svg
                             width="9"
                             height="11"

@@ -215,3 +215,24 @@ export async function deleteAccount(req, res) {
         res.status(500).json({success: false, message: 'Internal Server Error'});
     }
 }
+
+export const changeLanguage = async (req, res) => {
+    try {
+        const {language} = req.body;
+        const user = await User.findById(req.session.userData._id);
+
+        if (!user) {
+            return res.status(404).json({success: false, message: 'User not found'});
+        }
+
+        user.language = language;
+        await user.save();
+
+        req.session.userData.language = language;
+
+        res.json({success: true, message: 'Language changed successfully'});
+    } catch (err) {
+        console.error('Error changing language:', err);
+        res.status(500).json({success: false, message: 'Internal Server Error'});
+    }
+};

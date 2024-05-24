@@ -1,29 +1,34 @@
 <%- include("templates/header") %>
 <head>
-    <title>Log In</title>
+    <title><%= language.logInTitle %></title>
     <link rel="stylesheet" href="/styles/login.css">
 </head>
 <div class="form-container">
     <form id="login-form">
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" required class="form-control" id="email" name="email"
-                   placeholder="Enter your email">
+            <label for="email" class="form-label">
+                <%= language.email %>:
+            </label>
+            <input type="email" required class="form-control" id="email" name="email" placeholder="Enter your email">
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">
+                <%= language.password %>:
+            </label>
             <input required type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
-        <button type="submit" class="btn-primary">Sign In</button>
+        <button type="submit" class="btn-primary">
+            <%= language.signIn %>
+        </button>
     </form>
-    <a href="/forget-password">forget your password?</a>
+    <a href="/forget-password"><%= language.forgetYourPassword %></a>
 </div>
 <div id="status-message"></div>
 <%- include("templates/footer") %>
 
 <script>
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-    const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+    const passwordInvalidMessage = language.passwordInvalidMessage;
 
     const loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', async (e) => {
@@ -36,11 +41,11 @@
         statusMessage.textContent = '';
 
         if (!email || !password) {
-            statusMessage.textContent = 'Please enter a email and password';
+            statusMessage.innerHTML = language.enterEmailAndPassword;
             statusMessage.style.visibility = 'visible';
             statusMessage.style.color = 'orange';
         } else if (!passwordRegex.test(password)) {
-            statusMessage.textContent = passwordInvalidMessage;
+            statusMessage.innerHTML = passwordInvalidMessage;
             statusMessage.style.visibility = 'visible';
             statusMessage.style.color = 'red';
         } else {
@@ -54,19 +59,17 @@
             try {
                 const data = await response.json();
                 if (data.success) {
-                    console.log('kakakakaS')
                     window.location.href = '/exercises';
                 } else {
                     statusMessage.style.visibility = 'visible';
                     statusMessage.style.color = 'red';
-                    statusMessage.textContent = data.message;
+                    statusMessage.innerHTML = data.message;
                 }
             } catch (err) {
                 statusMessage.style.visibility = 'visible';
                 statusMessage.style.color = 'red';
-                statusMessage.textContent = 'An error occurred. Please try again.' + err;
+                statusMessage.innerHTML = language.errorOccurred + err;
             }
         }
     });
-
 </script>
