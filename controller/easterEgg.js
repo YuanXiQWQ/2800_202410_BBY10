@@ -4,26 +4,22 @@ const translations = {
         jp: {firstName: '成歩堂', lastName: '龍一'},
         cn: {firstName: '成步堂', lastName: '龙一'},
         type: 'type1'
-    },
-    apolloJustice: {
+    }, apolloJustice: {
         en: {firstName: 'Apollo', lastName: 'Justice'},
         jp: {firstName: '王泥喜', lastName: '法介'},
         cn: {firstName: '王泥喜', lastName: '法介'},
         type: 'type2'
-    },
-    athenaCykes: {
+    }, athenaCykes: {
         en: {firstName: 'Athena', lastName: 'Cykes'},
         jp: {firstName: '希月', lastName: '心音'},
         cn: {firstName: '希月', lastName: '心音'},
         type: 'type3'
-    },
-    milesEdgeworth: {
+    }, milesEdgeworth: {
         en: {firstName: 'Miles', lastName: 'Edgeworth'},
         jp: {firstName: '御剣', lastName: '怜侍'},
         cn: {firstName: '御剑', lastName: '怜侍'},
         type: 'type4'
-    },
-    miaFey: {
+    }, miaFey: {
         en: {firstName: 'Mia', lastName: 'Fey'},
         jp: {firstName: '綾里', lastName: '千尋'},
         cn: {firstName: '绫里', lastName: '千寻'},
@@ -32,12 +28,7 @@ const translations = {
 };
 
 const languagePaths = {
-    'en': 'en',
-    'zh': 'zh',
-    'zh-cn': 'zh',
-    'zh-tw': 'zh',
-    'ja': 'jp',
-    'default': 'jp'
+    'en': 'en', 'zh': 'zh', 'zh-cn': 'zh', 'zh-tw': 'zh', 'ja': 'jp', 'default': 'jp'
 };
 
 /**
@@ -142,7 +133,13 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 shake(img.id);
                 playMP3(`/sounds/${type}/${characterKey}/${langPath}/kurae.mp3`);
                 bgMusic.pause();
-                const newBgMusic = new Audio(`/sounds/${type}/msc-pressingPursuit.mp3`);
+
+                let bgMusicPath = `/sounds/${type}/msc-pressingPursuit.mp3`;
+                if (document.documentElement.lang === 'en' && type === 'type1') {
+                    bgMusicPath = `/sounds/${type}/en/msc-pressingPursuit.mp3`;
+                }
+
+                const newBgMusic = new Audio(bgMusicPath);
                 newBgMusic.loop = true;
                 newBgMusic.play()
                     .catch(err => {
@@ -172,7 +169,12 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 shake(img.id);
             }, 200);
 
-            const bgMusic = new Audio(`/sounds/${type}/msc-objection.mp3`);
+            let objectionMusicPath = `/sounds/${type}/msc-objection.mp3`;
+            if (document.documentElement.lang === 'en' && type === 'type1') {
+                objectionMusicPath = `/sounds/${type}/en/msc-objection.mp3`;
+            }
+
+            const bgMusic = new Audio(objectionMusicPath);
             bgMusic.loop = true;
             bgMusic.play()
                 .catch(err => {
@@ -221,10 +223,7 @@ function getMatchingCharacter(firstName, lastName) {
                 const firstNameCheck = name.firstName.toLowerCase();
                 const lastNameCheck = name.lastName.toLowerCase();
                 console.log(`Checking against: ${name.firstName} ${name.lastName} in ${lang}`);
-                if (
-                    (firstName.toLowerCase() === firstNameCheck && lastName.toLowerCase() === lastNameCheck) ||
-                    (firstName.toLowerCase() === lastNameCheck && lastName.toLowerCase() === firstNameCheck)
-                ) {
+                if ((firstName.toLowerCase() === firstNameCheck && lastName.toLowerCase() === lastNameCheck) || (firstName.toLowerCase() === lastNameCheck && lastName.toLowerCase() === firstNameCheck)) {
                     console.log(`Match found: ${key} (${lang})`);
                     return {characterKey: key, type: value.type};
                 }
