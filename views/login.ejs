@@ -1,79 +1,92 @@
 <%- include("templates/header") %>
 <head>
-    <title>Log In</title>
-    <link rel="stylesheet" href="/styles/login.css">
+  <title>Log In</title>
+  <link rel="stylesheet" href="/styles/login.css" />
 </head>
-<div class="container mt-5 px-5 pt-3">
+<div class="container mt-5 px-5">
+  <div class="my-3">
+    <h1 class="black border-bottom-2px py-1">Sign In</h1>
+  </div>
 
-    <div>
-        <h1 class="black border-bottom-1px">Sign In</h1>
+  <form id="login-form">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        required
+        class="form-control"
+        id="email"
+        name="email"
+        placeholder="Enter your email"
+      />
     </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        required
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Password"
+      />
+    </div>
+    <button type="submit" class=" btn btn-primary">Sign In</button>
+    <a class="d-block mt-3 " href="/forget-password">forget your password?</a>
 
-
-    <form id="login-form">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" required class="form-control" id="email" name="email"
-                   placeholder="Enter your email">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input required type="password" class="form-control" id="password" name="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn-primary">Sign In</button>
-    </form>
-    <a href="/forget-password">forget your password?</a>
-
+  </form>
+  <img src="/images/login.png" height="280" class="w-100 mt-1"/>
 </div>
 <div id="status-message"></div>
 <%- include("templates/footer") %>
 
 <script>
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-    const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
+  const passwordInvalidMessage =
+    "Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.";
 
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const statusMessage = document.getElementById('status-message');
+  const loginForm = document.getElementById("login-form");
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const statusMessage = document.getElementById("status-message");
 
-        statusMessage.style.visibility = 'hidden';
-        statusMessage.textContent = '';
+    statusMessage.style.visibility = "hidden";
+    statusMessage.textContent = "";
 
-        if (!email || !password) {
-            statusMessage.textContent = 'Please enter a email and password';
-            statusMessage.style.visibility = 'visible';
-            statusMessage.style.color = 'orange';
-        } else if (!passwordRegex.test(password)) {
-            statusMessage.textContent = passwordInvalidMessage;
-            statusMessage.style.visibility = 'visible';
-            statusMessage.style.color = 'red';
+    if (!email || !password) {
+      statusMessage.textContent = "Please enter a email and password";
+      statusMessage.style.visibility = "visible";
+      statusMessage.style.color = "orange";
+    } else if (!passwordRegex.test(password)) {
+      statusMessage.textContent = passwordInvalidMessage;
+      statusMessage.style.visibility = "visible";
+      statusMessage.style.color = "red";
+    } else {
+      const response = await fetch("/logging-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      try {
+        const data = await response.json();
+        if (data.success) {
+          console.log("kakakakaS");
+          window.location.href = "/exercises";
         } else {
-            const response = await fetch('/logging-in', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({email, password})
-            });
-            try {
-                const data = await response.json();
-                if (data.success) {
-                    console.log('kakakakaS')
-                    window.location.href = '/exercises';
-                } else {
-                    statusMessage.style.visibility = 'visible';
-                    statusMessage.style.color = 'red';
-                    statusMessage.textContent = data.message;
-                }
-            } catch (err) {
-                statusMessage.style.visibility = 'visible';
-                statusMessage.style.color = 'red';
-                statusMessage.textContent = 'An error occurred. Please try again.' + err;
-            }
+          statusMessage.style.visibility = "visible";
+          statusMessage.style.color = "red";
+          statusMessage.textContent = data.message;
         }
-    });
-
+      } catch (err) {
+        statusMessage.style.visibility = "visible";
+        statusMessage.style.color = "red";
+        statusMessage.textContent =
+          "An error occurred. Please try again." + err;
+      }
+    }
+  });
 </script>
