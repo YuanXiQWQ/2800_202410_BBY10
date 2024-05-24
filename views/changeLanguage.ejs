@@ -24,12 +24,24 @@
                 <select name="language" id="language" class="form-control">
                     <option value="en-uk"><%= language.english %></option>
                     <option value="zh-cn"><%= language.chinese %></option>
+                    <option value="zh-tw"><%= language.traditionalChinese %></option>
+                    <option value="ar"><%= language.arabic %></option>
+                    <option value="fa"><%= language.persian %></option>
+                    <option value="fr"><%= language.french %></option>
+                    <option value="ru"><%= language.russian %></option>
+                    <option value="de"><%= language.german %></option>
+                    <option value="ja"><%= language.japanese %></option>
+                    <option value="it"><%= language.italian %></option>
+                    <option value="ko"><%= language.korean %></option>
+                    <option value="es"><%= language.spanish %></option>
+                    <option value="pt"><%= language.portuguese %></option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary primary-color primary-color-hover">
                 <%= language.submit %>
             </button>
         </form>
+
         <div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
     </main>
 </div>
