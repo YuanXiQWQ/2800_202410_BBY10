@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="<%= language.code %>">
 <head>
     <!--    =====Website Title=====    -->
-    <title>NexGenFit</title>
+    <title><%= language.websiteTitle %></title>
 
     <!--    =====Required meta tags=====     -->
     <meta name="NexGenFit" content="2800_202410_BBY10">
@@ -44,9 +43,10 @@
     <!--    *****Libraries*****   -->
 
     <!--    Script    -->
-
+    <script src="/scripts/loadLanguageScript.js"></script>
+    <script id="languageData" type="application/json">
+    <%- JSON.stringify(language) %>
+    </script>
 </head>
 <body>
-        <div class="h-100">
-
-     
+<div class="h-100">

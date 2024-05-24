@@ -1,6 +1,6 @@
 <%- include("templates/header") %>
 <head>
-    <title>Workout Settings</title>
+    <title><%= language.workoutSettingsTitle %></title>
     <link rel="stylesheet" href="/styles/profile.css">
 </head>
 <%- include("templates/navbar") %>
@@ -13,38 +13,32 @@
                       fill="black"/>
             </svg>
         </a>
-        <span class="lang-text" data-key="workoutSettings">Workout Settings</span>
+        <%= language.workoutSettings %>
     </header>
     <main>
         <div class="alert secondary-color">
-            <span class="lang-text" data-key="workoutSettingsTips">
-                Adjust your workout settings here.
-            </span>
+            <%= language.workoutSettingsTips %>
         </div>
         <form method="POST" action="/postWorkoutSettings" class="needs-validation" id="workoutSettingsForm" novalidate>
             <div class="mb-3">
-                <label for="goal" class="form-label"><span class="lang-text" data-key="fitnessGoal">
-                    Fitness Goal
-                </span>:</label>
+                <label for="goal" class="form-label"><%= language.fitnessGoal %>:</label>
                 <input name="goal" id="goal" type="text" class="form-control" placeholder="<%= userData.goal %>">
             </div>
             <div class="mb-3">
-                <label for="fitnessLevel" class="form-label"><span class="lang-text" data-key="fitnessLevel">
-                    Fitness Level
-                </span>:</label>
+                <label for="fitnessLevel" class="form-label"><%= language.fitnessLevel %>:</label>
                 <select name="fitnessLevel" id="fitnessLevel" class="form-control">
-                    <option value="beginner" <%= userData.fitnessLevel === 'beginner' ? 'selected' : '' %>>Beginner</option>
-                    <option value="intermediate" <%= userData.fitnessLevel === 'intermediate' ? 'selected' : '' %>>Intermediate</option>
-                    <option value="advanced" <%= userData.fitnessLevel === 'advanced' ? 'selected' : '' %>>Advanced</option>
+                    <option value="beginner" <%= userData.fitnessLevel === 'beginner' ? 'selected' : '' %>><%= language.beginner %></option>
+                    <option value="intermediate" <%= userData.fitnessLevel === 'intermediate' ? 'selected' : '' %>><%= language.intermediate %></option>
+                    <option value="advanced" <%= userData.fitnessLevel === 'advanced' ? 'selected' : '' %>><%= language.advanced %></option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="time" class="form-label"><span class="lang-text" data-key="workoutDuration">
-                    Workout Duration (minutes)
-                </span>:</label>
+                <label for="time" class="form-label"><%= language.workoutDuration %>:</label>
                 <input name="time" id="time" type="number" class="form-control" placeholder="<%= userData.time %>">
             </div>
-            <button type="submit" class="btn btn-primary primary-color primary-color-hover">Submit</button>
+            <button type="submit" class="btn btn-primary primary-color primary-color-hover">
+                <%= language.submit %>
+            </button>
         </form>
         <div id="statusMessage"></div>
     </main>
@@ -53,7 +47,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const statusMessage = document.getElementById('statusMessage');
         if (localStorage.getItem('workoutSuccessFlag')) {
-            statusMessage.textContent = 'Workout settings updated successfully.';
+            statusMessage.innerHTML = '<%= language.workoutSettingsSuccess %>';
             statusMessage.style.color = 'green';
             localStorage.removeItem('workoutSuccessFlag');
         }
@@ -66,7 +60,6 @@
         const formData = new FormData(form);
         const statusMessage = document.getElementById('statusMessage');
 
-        // This to show the user that this page is still alive and responsive
         statusMessage.textContent = '';
         statusMessage.style.visibility = 'hidden';
         setTimeout(() => {
@@ -89,9 +82,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Set success flag in localStorage
                     localStorage.setItem('workoutSuccessFlag', 'true');
-                    // Refresh the page to update placeholders
                     location.reload();
                 } else {
                     statusMessage.textContent = data.message;
@@ -99,7 +90,7 @@
                 }
             })
             .catch(err => {
-                statusMessage.textContent = 'An error occurred. Please try again.';
+                statusMessage.textContent = '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';
             });
     });
