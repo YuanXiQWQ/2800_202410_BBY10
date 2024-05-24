@@ -1,4 +1,5 @@
 {
+  "code": "ru",
   "websiteTitle": "NexGenFit",
   "home": "Главная",
   "fitness": "Фитнес",
@@ -114,5 +115,13 @@
   "workoutDetailsTitle": "Детали тренировки",
   "helloUser": "Здравствуйте",
   "noData": "Нет данных",
-  "changingLanguage": "Изменение языка..."
+  "changingLanguage": "Изменение языка...",
+  "areYouSureYouWantToChangeName": "Вы уверены, что хотите изменить имя на",
+  "yes": "Да",
+  "no": "Нет",
+  "holdItIsThisYourRealName": "Подождите! Это ваше настоящее имя или вы просто пытаетесь сделать меня более знаменитым?",
+  "myRealName": "Мое настоящее имя",
+  "justForFun": "Просто ради веселья",
+  "anywayTakeThatSaveYourChanges": "Как бы то ни было, возьмите это! Сохраните свои изменения!",
+  "ok": "Хорошо"
 }

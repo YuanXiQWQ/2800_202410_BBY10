@@ -31,6 +31,38 @@ const translations = {
     }
 };
 
+const languagePaths = {
+    'en': 'en',
+    'zh': 'zh',
+    'zh-cn': 'zh',
+    'zh-tw': 'zh',
+    'ja': 'jp',
+    'default': 'jp'
+};
+
+/**
+ * Function to get the language data from the HTML element
+ *
+ * @return {{}|any} the language data from the HTML element or an empty object
+ */
+function getLanguageData() {
+    try {
+        const languageDataElement = document.getElementById('languageData');
+        if (languageDataElement) {
+            console.log("Raw language data:", languageDataElement.textContent); // 调试信息
+            const data = JSON.parse(languageDataElement.textContent);
+            console.log("Parsed language data:", data); // 调试信息
+            return data;
+        } else {
+            console.error('Language data element not found');
+            return {};
+        }
+    } catch (error) {
+        console.error('Error parsing language data:', error);
+        return {};
+    }
+}
+
 /**
  * Activate Easter Egg
  *
@@ -45,9 +77,11 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
         if (!window.inActivation) {
             window.inActivation = true;
 
-            const container = document.getElementById('easter-egg-container')
+            const languageData = getLanguageData();
+            const container = document.getElementById('easter-egg-container');
             const img = document.createElement('img');
-            img.src = `/images/easterEgg/igiari.png`;
+            const langPath = languagePaths[document.documentElement.lang] || languagePaths['default'];
+            img.src = `/images/easterEgg/${langPath}/igiari.png`;
             img.id = 'activationImage';
             img.classList.add('easter-egg', 'hide');
             container.appendChild(img);
@@ -56,10 +90,10 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             bottomDiv.id = 'bottomElement';
             bottomDiv.classList.add('bottom-element');
             bottomDiv.innerHTML = `
-                <p>Are you sure you want to change the name to ${firstName} ${lastName}?</p>
+                <p>${languageData.areYouSureYouWantToChangeName || 'Are you sure you want to change the name to'} ${firstName} ${lastName}?</p>
                 <div>
-                  <button id="yesButton" class="btn btn-primary">Yes</button>
-                  <button id="noButton" class="btn btn-secondary">No</button>
+                  <button id="yesButton" class="btn btn-primary">${languageData.yes || 'Yes'}</button>
+                  <button id="noButton" class="btn btn-secondary">${languageData.no || 'No'}</button>
                 </div>
             `;
             document.body.appendChild(bottomDiv);
@@ -71,14 +105,14 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             });
 
             document.getElementById('yesButton').addEventListener('click', () => {
-                img.src = `/images/easterEgg/matta.png`;
+                img.src = `/images/easterEgg/${langPath}/matta.png`;
                 shake(img.id);
-                playMP3(`/sounds/${type}/${characterKey}/matta.mp3`);
+                playMP3(`/sounds/${type}/${characterKey}/${langPath}/matta.mp3`);
                 bottomDiv.innerHTML = `
-                    <p>Hold it! Is this your real name, or are you just trying to make me more famous?</p>
+                    <p>${languageData.holdItIsThisYourRealName || 'Hold it! Is this your real name, or are you just trying to make me more famous?'} ${firstName} ${lastName}?</p>
                     <div>
-                      <button id="realNameButton" class="btn btn-primary">My real name</button>
-                      <button id="funButton" class="btn btn-secondary">Just for fun</button>
+                      <button id="realNameButton" class="btn btn-primary">${languageData.myRealName || 'My real name'}</button>
+                      <button id="funButton" class="btn btn-secondary">${languageData.justForFun || 'Just for fun'}</button>
                     </div>
                 `;
                 document.getElementById('realNameButton').addEventListener('click', continueSubmission);
@@ -98,9 +132,9 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
             });
 
             function continueSubmission() {
-                img.src = `/images/easterEgg/kurae.png`;
+                img.src = `/images/easterEgg/${langPath}/kurae.png`;
                 shake(img.id);
-                playMP3(`/sounds/${type}/${characterKey}/kurae.mp3`);
+                playMP3(`/sounds/${type}/${characterKey}/${langPath}/kurae.mp3`);
                 bgMusic.pause();
                 const newBgMusic = new Audio(`/sounds/${type}/msc-pressingPursuit.mp3`);
                 newBgMusic.loop = true;
@@ -109,9 +143,9 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                         console.error(err);
                     });
                 bottomDiv.innerHTML = `
-                    <p>Anyway, take that! Save your changes!</p>
+                    <p>${languageData.anywayTakeThatSaveYourChanges || 'Anyway, take that! Save your changes!'}</p>
                     <div>
-                    <button id="okButton" class="btn btn-primary">OK</button>
+                    <button id="okButton" class="btn btn-primary">${languageData.ok || 'OK'}</button>
                     </div>
                 `;
                 document.getElementById('okButton').addEventListener('click', () => {
@@ -138,7 +172,7 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 .catch(err => {
                     console.error(err);
                 });
-            playMP3(`/sounds/${type}/${characterKey}/igiari.mp3`);
+            playMP3(`/sounds/${type}/${characterKey}/${langPath}/igiari.mp3`);
         }
     });
 }

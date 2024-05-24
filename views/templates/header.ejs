@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= language.code %>">
 <head>
     <!--    =====Website Title=====    -->
     <title><%= language.websiteTitle %></title>
@@ -45,8 +45,7 @@
     <!--    Script    -->
     <script src="/scripts/loadLanguageScript.js"></script>
     <script id="languageData" type="application/json">
-    <%= JSON.stringify(language) %>
-
+    <%- JSON.stringify(language) %>
     </script>
 </head>
 <body>

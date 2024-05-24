@@ -1,4 +1,5 @@
 {
+  "code": "zh",
   "websiteTitle": "NexGenFit",
   "home": "首頁",
   "fitness": "健身",
@@ -114,5 +115,13 @@
   "workoutDetailsTitle": "鍛煉細節",
   "helloUser": "您好",
   "noData": "沒有數據",
-  "changingLanguage": "更改語言..."
+  "changingLanguage": "更改語言...",
+  "areYouSureYouWantToChangeName": "你確定要將名字改為",
+  "yes": "是",
+  "no": "否",
+  "holdItIsThisYourRealName": "等等！這是你的真名，還是只是想讓我更出名？",
+  "myRealName": "我的真名",
+  "justForFun": "只是玩玩",
+  "anywayTakeThatSaveYourChanges": "無論如何，看招！保存你的變更！",
+  "ok": "好的"
 }

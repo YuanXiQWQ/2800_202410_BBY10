@@ -2,6 +2,10 @@
 <head>
     <title><%= language.editUserPersonalInfoTitle %></title>
     <link rel="stylesheet" href="/styles/profile.css">
+    <script>
+        const currentLanguage = '<%= language.code %>';
+        console.log("Language object:", <%= JSON.stringify(language) %>);
+    </script>
     <script src="/controller/easterEgg.js"></script>
 </head>
 <%- include("templates/navbar") %>
