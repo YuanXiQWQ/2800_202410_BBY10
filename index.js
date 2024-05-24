@@ -109,8 +109,9 @@ app.post("/submitAdditionalInfo", (req, res) => {
     });
 });
 
-app.get("/calendar", (req, res) => {
-    res.render('calendar', {language: res.locals.language})
+app.get("/calendar", async (req, res) => {
+    const data = await getListOfExercises(req,res);
+    res.render('calendar', {data})
 });
 
 app.get("/login", (req, res) => {
@@ -226,6 +227,9 @@ app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => {
 
 app.get("/exercises", ensureAuthenticated, (req, res) => {
     getListOfExercises(req, res)
+        .then((data ) => {
+            return res.render("exercises", { data : data?.exercises});
+        })
         .catch(err => {
             console.log("Internal Server Error by: " + err)
             res.status(500).send("Internal Server Error");

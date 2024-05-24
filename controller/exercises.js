@@ -12,7 +12,10 @@ export async function getListOfExercises(req, res) {
 
   const data = await exercises
     .findOne({ user: userid })
-    .sort({ createdAt: -1 });
+    
 
-  return res.render("exercises", { data : data?.exercises});
+    
+
+    return data;
+  
 }
