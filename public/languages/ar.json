@@ -1,4 +1,5 @@
 {
+  "code": "ar",
   "websiteTitle": "NexGenFit",
   "home": "الرئيسية",
   "fitness": "اللياقة البدنية",
@@ -114,5 +115,13 @@
   "workoutDetailsTitle": "تفاصيل التمرين",
   "helloUser": "مرحبًا",
   "noData": "لا توجد بيانات",
-  "changingLanguage": "تغيير اللغة..."
+  "changingLanguage": "تغيير اللغة...",
+  "areYouSureYouWantToChangeName": "هل أنت متأكد أنك تريد تغيير الاسم إلى",
+  "yes": "نعم",
+  "no": "لا",
+  "holdItIsThisYourRealName": "انتظر! هل هذا هو اسمك الحقيقي، أم أنك تحاول فقط أن تجعلني أكثر شهرة؟",
+  "myRealName": "اسمي الحقيقي",
+  "justForFun": "فقط للمتعة",
+  "anywayTakeThatSaveYourChanges": "على أي حال، خذ ذلك! احفظ تغييراتك!",
+  "ok": "حسناً"
 }

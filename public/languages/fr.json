@@ -1,4 +1,5 @@
 {
+  "code": "fr",
   "websiteTitle": "NexGenFit",
   "home": "Accueil",
   "fitness": "Fitness",
@@ -114,5 +115,13 @@
   "workoutDetailsTitle": "Détails de l'entraînement",
   "helloUser": "Bonjour",
   "noData": "Aucune donnée",
-  "changingLanguage": "Changement de langue..."
+  "changingLanguage": "Changement de langue...",
+  "areYouSureYouWantToChangeName": "Êtes-vous sûr de vouloir changer le nom en",
+  "yes": "Oui",
+  "no": "Non",
+  "holdItIsThisYourRealName": "Attendez ! Est-ce votre vrai nom ou essayez-vous juste de me rendre plus célèbre ?",
+  "myRealName": "Mon vrai nom",
+  "justForFun": "Juste pour le plaisir",
+  "anywayTakeThatSaveYourChanges": "Quoi qu'il en soit, prenez ça ! Enregistrez vos modifications !",
+  "ok": "D'accord"
 }

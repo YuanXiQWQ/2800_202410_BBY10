@@ -1,4 +1,5 @@
 {
+  "code": "fa",
   "websiteTitle": "NexGenFit",
   "home": "خانه",
   "fitness": "تناسب اندام",
@@ -114,5 +115,13 @@
   "workoutDetailsTitle": "جزئیات تمرین",
   "helloUser": "سلام",
   "noData": "داده‌ای موجود نیست",
-  "changingLanguage": "تغییر زبان..."
+  "changingLanguage": "تغییر زبان...",
+  "areYouSureYouWantToChangeName": "آیا مطمئن هستید که می‌خواهید نام را تغییر دهید به",
+  "yes": "بله",
+  "no": "خیر",
+  "holdItIsThisYourRealName": "صبر کن! آیا این نام واقعی شماست یا فقط می‌خواهید من را معروف‌تر کنید؟",
+  "myRealName": "نام واقعی من",
+  "justForFun": "فقط برای تفریح",
+  "anywayTakeThatSaveYourChanges": "به هر حال، این را بگیرید! تغییرات خود را ذخیره کنید!",
+  "ok": "باشه"
 }
