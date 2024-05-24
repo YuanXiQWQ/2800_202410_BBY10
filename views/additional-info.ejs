@@ -337,7 +337,11 @@
                 ".btn-group-1 button"
             );
             experienceButtons.forEach((button) => {
-                if (button.textContent.toLowerCase().includes(level)) {
+              console.log(button.textContent.toLowerCase().includes(level.toLowerCase()))
+              console.log(level,'lls' )
+
+
+                if (button.textContent.toLowerCase().includes(level.toLowerCase())) {
                     button.classList.add("active"); // Highlight the active button
                 } else {
                     button.classList.remove("active"); // Remove highlight from other buttons

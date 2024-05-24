@@ -99,6 +99,8 @@
   "fitnessGoal": "Objectif de remise en forme",
   "fitnessLevel": "Niveau de forme physique",
   "workoutDuration": "Durée de l'entraînement",
+  "saturday":"Saturday",
+
   "workoutSettingsSuccess": "Paramètres d'entraînement mis à jour avec succès.",
   "editUserPersonalInfoTitle": "Modifier les informations personnelles",
   "editYourPersonalInformation": "Modifiez vos informations personnelles",
