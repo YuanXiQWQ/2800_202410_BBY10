@@ -1,66 +1,51 @@
 <%- include("templates/header") %>
 <head>
-  <link rel="stylesheet" href="./styles/additional-info.css" />
+    <title><%= language.workoutDetailsTitle %></title>
+    <link rel="stylesheet" href="./styles/additional-info.css"/>
 </head>
 
-<form
-  action="/submitAdditionalInfo"
-  class="form-group"
-  method="POST"
-  id="additional-info"
->
-  <h1>Workout Details</h1>
+<form action="/submitAdditionalInfo" class="form-group" method="POST" id="additional-info">
+    <h1><%= language.workoutDetails %></h1>
 
-  <div class="my-4">
-    <label for="weight">Weight:</label>
-    <input class="form-control" id="weight" placeholder="in KG" name="weight" required />
-  </div>
+    <div class="my-4">
+        <label for="weight"><%= language.weight %>:</label>
+        <input class="form-control" id="weight" placeholder="in KG" name="weight" required/>
+    </div>
 
-  <div class="my-4">
-    <label for="height">Height:</label>
-    <input class="form-control" placeholder="in cm" id="height" name="height" required />
-  </div>
+    <div class="my-4">
+        <label for="height"><%= language.height %>:</label>
+        <input class="form-control" placeholder="in cm" id="height" name="height" required/>
+    </div>
 
-  <div class="my-4">
-    <label for="time">Workout Plan Duration:</label>
-    <select
-      class="form-select"
-      id="workout_duration"
-      name="time"
-      aria-label="Default select example"
-    >
-      <option selected>Select a day</option>
-      <option value="0">Monday</option>
-      <option value="1">Tuesday</option>
-      <option value="2">Wednesday</option>
-      <option value="3">Thursday</option>
-      <option value="4">Friday</option>
-      <option value="5">Sunday</option>
-    </select>
-  </div>
+    <div class="my-4">
+        <label for="time"><%= language.workoutPlanDuration %>:</label>
+        <select class="form-select" id="workout_duration" name="time" aria-label="Default select example">
+            <option selected><%= language.selectDay %></option>
+            <option value="0"><%= language.monday %></option>
+            <option value="1"><%= language.tuesday %></option>
+            <option value="2"><%= language.wednesday %></option>
+            <option value="3"><%= language.thursday %></option>
+            <option value="4"><%= language.friday %></option>
+            <option value="5"><%= language.sunday %></option>
+        </select>
+    </div>
 
-  <div class="my-4">
-    <label for="goal">Goal:</label>
-    <textarea class="form-control"  id="goal" name="goal" required rows="3"></textarea>
-  </div>
+    <div class="my-4">
+        <label for="goal"><%= language.goal %>:</label>
+        <textarea class="form-control" id="goal" name="goal" required rows="3"></textarea>
+    </div>
 
-  <div class="my-4">
-    <label for="workoutLevel">Workout Level:</label>
-    <select
-      class="form-control"
-      required
-      id="workoutLevel"
-      name="fitnessLevel"
-      required
-    >
-      <option selected>Select level</option>
-      <option value="beginner">Beginner</option>
-      <option value="intermediate">Intermediate</option>
-      <option value="advanced">Advanced</option>
-    </select>
-  </div>
-  <button type="submit" class="btn primary-color primary-color-hover">
-    Submit
-  </button>
+    <div class="my-4">
+        <label for="workoutLevel"><%= language.workoutLevel %>:</label>
+        <select class="form-control" required id="workoutLevel" name="fitnessLevel" required>
+            <option selected><%= language.selectLevel %></option>
+            <option value="beginner"><%= language.beginner %></option>
+            <option value="intermediate"><%= language.intermediate %></option>
+            <option value="advanced"><%= language.advanced %></option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary primary-color primary-color-hover">
+        <%= language.submit %>
+    </button>
 </form>
 <%- include("templates/footer") %>

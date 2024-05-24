@@ -11,7 +11,7 @@ import {
     register, findByUsername, AdditionalUserInfo, ensureAuthenticated
 } from "./controller/auth.js";
 import {
-    changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings, deleteAccount,
+    changePassword, postUserAvatar, postPersonalInformation, updateWorkoutSettings, deleteAccount, changeLanguage
 } from "./controller/profile.js";
 import {forgetPassword, resetPassword} from "./controller/password.js";
 import {sendInformation} from "./controller/chatgptIntegration.js";
@@ -19,6 +19,7 @@ import {getListOfExercises} from "./controller/exercises.js";
 import {authValidation, sessionValidation} from "./middleware/authorization.js";
 import {logIn} from './controller/login.js';
 import {User} from "./model/User.js";
+import {loadLanguage} from './middleware/loadLanguage.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -37,24 +38,23 @@ app.use('/controller', express.static(path.join(__dirname, 'controller')));
 
 app.use(express.urlencoded({extended: true}));
 
+const storage = multer.memoryStorage();
+const upload = multer({storage});
+
 app.use(session({
     secret: process.env.NODE_SESSION_SECRET, resave: false, saveUninitialized: false, store: MongoStore.create({
         mongoUrl: mongoUri,
     }),
 }));
 
-const storage = multer.memoryStorage();
-const upload = multer({storage});
+app.use(loadLanguage);
 
-/**
- * Render before login
- */
 app.get("/", authValidation, (req, res) => {
-    res.render("index");
+    res.render("index", {language: res.locals.language});
 });
 
 app.get("/signup", authValidation, (req, res) => {
-    res.render("signup");
+    res.render("signup", {language: res.locals.language});
 });
 
 app.post('/submitUser', upload.none(), async (req, res) => {
@@ -79,6 +79,7 @@ app.get('/verify-email', async (req, res) => {
                 error: 'Invalid verification token.',
                 link: 'signup',
                 linkImage: 'images/validation-error.jpg',
+                language: res.locals.language
             });
         }
 
@@ -96,7 +97,7 @@ app.get('/verify-email', async (req, res) => {
 
 app.get("/additional-info", (req, res) => {
     if (!req.session.userData || !req.session.userData.isVerified) return res.redirect("/signup");
-    res.render("additional-info");
+    res.render("additional-info", {language: res.locals.language});
 });
 
 app.post("/submitAdditionalInfo", (req, res) => {
@@ -109,17 +110,17 @@ app.post("/submitAdditionalInfo", (req, res) => {
 });
 
 app.get("/calendar", (req, res) => {
-    res.render('calendar')
+    res.render('calendar', {language: res.locals.language})
 });
 
 app.get("/login", (req, res) => {
-    res.render("login");
+    res.render("login", {language: res.locals.language});
 });
 
 app.post("/logging-in", logIn);
 
 app.get("/forget-password", (req, res) => {
-    res.render("forgetPassword");
+    res.render("forgetPassword", {language: res.locals.language});
 });
 
 app.post("/forget-password", forgetPassword);
@@ -127,20 +128,17 @@ app.post("/forget-password", forgetPassword);
 app.get("/reset-password", (req, res) => {
     const token = req.query.token;
     if (!token) return res.status(400).send("Invalid or expired token.");
-    res.render("resetPassword", {token});
+    res.render("resetPassword", {token, language: res.locals.language});
 });
 
 app.post("/reset-password", resetPassword);
 
-/**
- * Render after login
- */
 app.get("/profile", ensureAuthenticated, (req, res) => {
-    res.render("profile", {userData: req.session.userData});
+    res.render("profile", {userData: req.session.userData, language: res.locals.language});
 });
 
 app.get("/editUserAvatar", ensureAuthenticated, sessionValidation, (req, res) => {
-    res.render("editUserAvatar", {userData: req.session.userData});
+    res.render("editUserAvatar", {userData: req.session.userData, language: res.locals.language});
 });
 
 app.post("/postUserAvatar", ensureAuthenticated, sessionValidation, upload.single("avatar"), postUserAvatar);
@@ -159,7 +157,7 @@ app.get("/avatar/:filename", ensureAuthenticated, sessionValidation, (req, res) 
 });
 
 app.get("/changePassword", ensureAuthenticated, (req, res) => {
-    res.render("changePassword");
+    res.render("changePassword", {language: res.locals.language});
 });
 
 app.post("/postPassword", ensureAuthenticated, changePassword);
@@ -170,7 +168,7 @@ app.get("/personalInformation", ensureAuthenticated, sessionValidation, (req, re
             if (!user) {
                 return res.status(404).send("User not found");
             }
-            res.render("personalInformation", {userData: user});
+            res.render("personalInformation", {userData: user, language: res.locals.language});
         })
         .catch(err => {
             console.log("Internal Server Error by: " + err)
@@ -186,7 +184,7 @@ app.get("/workoutSettings", ensureAuthenticated, sessionValidation, (req, res) =
             if (!user) {
                 return res.status(404).send("User not found");
             }
-            res.render("workoutSettings", {userData: user});
+            res.render("workoutSettings", {userData: user, language: res.locals.language});
         })
         .catch(err => {
             console.log("Internal Server Error by: " + err)
@@ -196,21 +194,37 @@ app.get("/workoutSettings", ensureAuthenticated, sessionValidation, (req, res) =
 
 app.post("/postWorkoutSettings", ensureAuthenticated, sessionValidation, updateWorkoutSettings);
 
-app.get("/deleteAccount", ensureAuthenticated, (req, res) => {
-    res.render("deleteAccount", {userData: req.session.userData});
+app.get("/deleteAccount", ensureAuthenticated, sessionValidation, (req, res) => {
+    findByUsername(req.session.userData.username)
+        .then((user) => {
+            if (!user) {
+                return res.status(404).send("User not found");
+            }
+            res.render("deleteAccount", {userData: user, language: res.locals.language});
+        })
+        .catch(err => {
+            console.log("Internal Server Error by: " + err)
+            res.status(500).send("Internal Server Error");
+        });
 });
 
-app.post("/postDeletingAccount", ensureAuthenticated, deleteAccount);
+app.post("/postDeletingAccount", ensureAuthenticated, sessionValidation, deleteAccount);
+
+app.get("/changeLanguage", ensureAuthenticated, sessionValidation, (req, res) => {
+    res.render("changeLanguage", {language: res.locals.language});
+});
+
+app.post('/postChangeLanguage', (req, res) => {
+    req.session.language = req.body.language;
+    changeLanguage(req, res);
+});
+
 
 app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => {
     res.render("loading");
 });
 
-app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
-});
-
-app.get("/exercises", ensureAuthenticated, sessionValidation, (req, res) => {
+app.get("/exercises", ensureAuthenticated, (req, res) => {
     getListOfExercises(req, res)
         .catch(err => {
             console.log("Internal Server Error by: " + err)
@@ -218,7 +232,7 @@ app.get("/exercises", ensureAuthenticated, sessionValidation, (req, res) => {
         });
 });
 
-app.get("/process-info", ensureAuthenticated, sessionValidation, (req, res) => {
+app.post("/sendInformation", ensureAuthenticated, (req, res) => {
     sendInformation(req, res)
         .catch(err => {
             console.log("Internal Server Error by: " + err)
@@ -233,4 +247,8 @@ app.get("/logout", ensureAuthenticated, (req, res) => {
         }
         res.redirect("/");
     });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
 });

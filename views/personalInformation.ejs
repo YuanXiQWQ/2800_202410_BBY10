@@ -1,6 +1,6 @@
 <%- include("templates/header") %>
 <head>
-    <title>Edit Personal Information</title>
+    <title><%= language.editUserPersonalInfoTitle %></title>
     <link rel="stylesheet" href="/styles/profile.css">
     <script src="/controller/easterEgg.js"></script>
 </head>
@@ -14,58 +14,45 @@
                       fill="black"/>
             </svg>
         </a>
-        <span class="lang-text" data-key="editYourPersonalInformation">Edit Your Personal Information</span>
+        <%= language.editYourPersonalInformation %>
     </header>
     <main>
         <div class="alert secondary-color">
-            <span class="lang-text" data-key="changeYourPersonalInformationTips">
-                Edit your personal information here.
-            </span>
+            <%= language.changeYourPersonalInformationTips %>
         </div>
         <form method="POST" action="/postPersonalInformation" class="needs-validation" id="personalInformationForm"
               novalidate>
             <div class="mb-3">
-                <label for="firstName" class="form-label"><span class="lang-text" data-key="firstName">
-                    First Name
-                </span>:</label>
+                <label for="firstName" class="form-label"><%= language.firstName %>:</label>
                 <input name="firstName" id="firstName" type="text" class="form-control"
                        placeholder="<%= userData.firstName %>">
             </div>
             <div class="mb-3">
-                <label for="lastName" class="form-label"><span class="lang-text" data-key="lastName">
-                    Last Name
-                </span>:</label>
+                <label for="lastName" class="form-label"><%= language.lastName %>:</label>
                 <input name="lastName" id="lastName" type="text" class="form-control"
                        placeholder="<%= userData.lastName %>">
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label"><span class="lang-text" data-key="email">
-                    Email
-                </span>:</label>
+                <label for="email" class="form-label"><%= language.email %>:</label>
                 <input name="email" id="email" type="email" class="form-control" placeholder="<%= userData.email %>">
             </div>
             <div class="mb-3">
-                <label for="birthday" class="form-label"><span class="lang-text" data-key="birthday">
-                    Birthday
-                </span>:</label>
+                <label for="birthday" class="form-label"><%= language.birthday %>:</label>
                 <input name="birthday" id="birthday" type="date" class="form-control"
                        value="<%= userData.birthday ? userData.birthday.toISOString().substring(0, 10) : '' %>">
             </div>
             <div class="mb-3">
-                <label for="height" class="form-label"><span class="lang-text" data-key="height">
-                    Height
-                </span>(cm):</label>
+                <label for="height" class="form-label"><%= language.height %>(cm):</label>
                 <input name="height" id="height" type="number" class="form-control"
                        placeholder="<%= userData.height %>">
             </div>
             <div class="mb-3">
-                <label for="weight" class="form-label"><span class="lang-text" data-key="weight">
-                    Weight
-                </span>(kg):</label>
+                <label for="weight" class="form-label"><%= language.weight %>(kg):</label>
                 <input name="weight" id="weight" type="number" class="form-control"
                        placeholder="<%= userData.weight %>">
             </div>
-            <button type="submit" class="btn btn-primary primary-color primary-color-hover">Submit</button>
+            <button type="submit"
+                    class="btn btn-primary primary-color primary-color-hover"><%= language.submit %></button>
         </form>
         <div id="statusMessage"></div>
         <div id="easter-egg-container" class="hide"></div>
@@ -75,7 +62,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const statusMessage = document.getElementById('statusMessage');
         if (localStorage.getItem('successFlag')) {
-            statusMessage.textContent = 'Information edit successfully.';
+            statusMessage.textContent = '<%= language.informationEditSuccess %>';
             statusMessage.style.color = 'green';
             localStorage.removeItem('successFlag');
         }
@@ -88,7 +75,6 @@
         const formData = new FormData(form);
         const statusMessage = document.getElementById('statusMessage');
 
-        // This to show the user that this page is still alive and responsive
         statusMessage.textContent = '';
         statusMessage.style.visibility = 'hidden';
         setTimeout(() => {
@@ -131,17 +117,15 @@
                     localStorage.setItem('successFlag', 'true');
                     location.reload();
                 } else {
-                    const statusMessage = document.getElementById('statusMessage');
                     statusMessage.textContent = data.message;
                     statusMessage.style.color = 'red';
                 }
             })
             .catch(err => {
                 const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = 'An error occurred. Please try again.';
+                statusMessage.textContent = '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';
             });
     }
-
 </script>
 <%- include("templates/footer") %>

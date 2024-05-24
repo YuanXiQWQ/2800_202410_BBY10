@@ -1,6 +1,6 @@
 <%- include("templates/header") %>
 <head>
-    <title>Delete Account</title>
+    <title><%= language.deleteAccountTitle %></title>
     <link rel="stylesheet" href="/styles/profile.css">
     <style>
         #confirmBtn {
@@ -23,20 +23,18 @@
                       fill="black"/>
             </svg>
         </a>
-        <span class="lang-text" data-key="changeYourPassword">Are you sure you want to delete this account?</span>
+        <%= language.deleteAccountConfirmation %>
     </header>
     <main>
         <div class="alert secondary-color">
-            <span class="lang-text" data-key="changeYourPasswordTips">
-                '<%= userData.username %>' will be lost forever! (A long time!)
-            </span>
+            <%= language.deleteAccountWarning.replace('%{userData.username}', userData.username) %>
         </div>
         <div id="confirmBtn">
             <button id="deleteBtn" class="btn btn-primary btn-danger">
-                Delete
+                <%= language.delete %>
             </button>
             <button id="cancelBtn" class="btn btn-primary primary-color primary-color-hover">
-                Cancel
+                <%= language.cancel %>
             </button>
         </div>
         <div id="statusMessage"></div>
@@ -66,7 +64,7 @@
                 statusMessage.style.color = 'red';
             }
         } catch (error) {
-            statusMessage.textContent = "An error occurred. Please try again.";
+            statusMessage.textContent = '<%= language.errorOccurred %>';
             statusMessage.style.color = 'red';
         }
     });

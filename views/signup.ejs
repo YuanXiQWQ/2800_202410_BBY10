@@ -1,46 +1,46 @@
 <%- include("templates/header") %>
 
 <head>
-    <title>Signup</title>
+    <title><%= language.signupTitle %></title>
     <link rel="stylesheet" href="./styles/signup.css">
 </head>
 
 <form id="signupForm" class="form-container">
-    <h1>Create User</h1>
+    <h1><%= language.createUser %></h1>
 
     <div class="mb-3">
-        <label for="userName" class="form-label">User Name</label>
+        <label for="userName" class="form-label"><%= language.userName %>:</label>
         <input name="username" type="text" class="form-control" id="userName" required>
     </div>
     <div class="mb-3">
-        <label for="firstName" class="form-label">First Name</label>
+        <label for="firstName" class="form-label"><%= language.firstName %>:</label>
         <input name="firstName" type="text" class="form-control" id="firstName" required>
     </div>
     <div class="mb-3">
-        <label for="lastName" class="form-label">Last Name</label>
+        <label for="lastName" class="form-label"><%= language.lastName %>:</label>
         <input name="lastName" type="text" class="form-control" id="lastName" required>
     </div>
     <div class="mb-3">
-        <label for="birthday" class="form-label">Birthday</label>
+        <label for="birthday" class="form-label"><%= language.birthday %>:</label>
         <input name="birthday" type="date" class="form-control" id="birthday" required>
     </div>
     <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label for="email" class="form-label"><%= language.emailAddress %>:</label>
         <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
     </div>
     <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label"><%= language.password %>:</label>
         <input name="password" type="password" class="form-control" id="password" required>
     </div>
 
-    <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+    <button type="submit" id="submitButton" class="btn btn-primary"><%= language.submit %></button>
 </form>
 
 <div id="statusMessage" class="alert" style="display: none; margin-top: 20px;"></div>
 
 <script>
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-    const passwordInvalidMessage = 'Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.';
+    const passwordInvalidMessage = '<%= language.passwordInvalidMessage %>';
 
     document.getElementById('signupForm').addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -53,11 +53,11 @@
 
         submitButton.disabled = true;
         statusMessage.style.display = 'block';
-        statusMessage.textContent = 'Sending the email, please wait...';
+        statusMessage.textContent = '<%= language.sendingEmail %>';
         statusMessage.style.color = 'blue';
 
         if (!password) {
-            statusMessage.textContent = 'Please input your password.';
+            statusMessage.textContent = '<%= language.inputNewPassword %>';
             statusMessage.style.color = 'orange';
             submitButton.disabled = false;
             return;
@@ -75,22 +75,21 @@
             });
 
             if (response.ok) {
-                statusMessage.textContent = 'Verification email sent. Please check your inbox.';
+                statusMessage.textContent = '<%= language.verificationEmailSent %>';
                 statusMessage.style.color = 'green';
             } else {
                 const errorData = await response.json();
-                statusMessage.textContent = errorData.message || 'An error occurred. Please try again.';
+                statusMessage.textContent = errorData.message || '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';
                 submitButton.disabled = false;
             }
         } catch (error) {
             console.error('Error:', error);
-            statusMessage.textContent = 'An error occurred. Please try again.';
+            statusMessage.textContent = '<%= language.errorOccurred %>';
             statusMessage.style.color = 'red';
             submitButton.disabled = false;
         }
     });
-
 </script>
 
 <%- include("templates/footer") %>
