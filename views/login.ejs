@@ -41,16 +41,6 @@
 <%- include("templates/footer") %>
 
 <script>
-<<<<<<< HEAD
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-    const passwordInvalidMessage = '<%= language.passwordInvalidMessage %>';
-
-    document.getElementById('login-form').addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const statusMessage = document.getElementById('status-message');
-=======
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
   const passwordInvalidMessage =
     "Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.";
@@ -61,45 +51,10 @@
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const statusMessage = document.getElementById("status-message");
->>>>>>> fix/styling-auth
 
     statusMessage.style.visibility = "hidden";
     statusMessage.textContent = "";
 
-<<<<<<< HEAD
-        if (!email || !password) {
-            statusMessage.innerHTML = '<%= language.enterEmailAndPassword %>';
-            statusMessage.style.visibility = 'visible';
-            statusMessage.style.color = 'orange';
-        } else if (!passwordRegex.test(password)) {
-            statusMessage.innerHTML = passwordInvalidMessage;
-            statusMessage.style.visibility = 'visible';
-            statusMessage.style.color = 'red';
-        } else {
-            try {
-                const response = await fetch('/logging-in', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({email, password})
-                });
-                const data = await response.json();
-                if (data.success) {
-                    window.location.href = '/exercises';
-                } else {
-                    statusMessage.style.visibility = 'visible';
-                    statusMessage.style.color = 'red';
-                    statusMessage.innerHTML = data.message;
-                }
-            } catch (err) {
-                statusMessage.style.visibility = 'visible';
-                statusMessage.style.color = 'red';
-                statusMessage.innerHTML = '<%= language.errorOccurred %>' + err;
-            }
-        }
-    });
-=======
     if (!email || !password) {
       statusMessage.textContent = "Please enter a email and password";
       statusMessage.style.visibility = "visible";
@@ -134,5 +89,4 @@
       }
     }
   });
->>>>>>> fix/styling-auth
 </script>

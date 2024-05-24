@@ -122,47 +122,6 @@
     }, 4000); // Time the alert is visible before beginning to fade
   }
 
-<<<<<<< HEAD
-        submitButton.disabled = true;
-        statusMessage.style.display = 'block';
-        statusMessage.textContent = '<%= language.sendingEmail %>';
-        statusMessage.style.color = 'blue';
-
-        if (!password) {
-            statusMessage.textContent = '<%= language.inputNewPassword %>';
-            statusMessage.style.color = 'orange';
-            submitButton.disabled = false;
-            return;
-        } else if (!passwordRegex.test(password)) {
-            statusMessage.textContent = passwordInvalidMessage;
-            statusMessage.style.color = 'red';
-            submitButton.disabled = false;
-            return;
-        }
-
-        try {
-            const response = await fetch('/submitUser', {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                statusMessage.textContent = '<%= language.verificationEmailSent %>';
-                statusMessage.style.color = 'green';
-            } else {
-                const errorData = await response.json();
-                statusMessage.textContent = errorData.message || '<%= language.errorOccurred %>';
-                statusMessage.style.color = 'red';
-                submitButton.disabled = false;
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            statusMessage.textContent = '<%= language.errorOccurred %>';
-            statusMessage.style.color = 'red';
-            submitButton.disabled = false;
-        }
-    });
-=======
   document
     .getElementById("signupForm")
     .addEventListener("submit", function (event) {
@@ -272,7 +231,6 @@
       submitButton.disabled = false;
     }
   }
->>>>>>> fix/styling-auth
 </script>
 
 <%- include("templates/footer") %>
