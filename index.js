@@ -100,6 +100,7 @@ app.get("/additional-info", (req, res) => {
 });
 
 app.post("/submitAdditionalInfo", (req, res) => {
+    console.log(req?.body)
     AdditionalUserInfo(req, res).catch(err => {
         console.error('Error submitting additional info:', err);
         if (!res.headersSent) {
