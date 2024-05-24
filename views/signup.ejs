@@ -213,11 +213,14 @@
                 showStatus("<%= language.verificationEmailSent %>", "green");
             } else {
                 const errorData = await response.json();
+                console.log(errorData)
+
                 showStatus(errorData.message || "<%= language.errorOccurred %>", "red");
 
                 submitButton.disabled = false;
             }
         } catch (error) {
+            console.log(error)
             showStatus("<%= language.errorOccurred %>" + error?.message, "red");
 
             //   statusMessage.textContent = "An error occurred. Please try again.";
