@@ -145,5 +145,15 @@
   "lastNameRequired": "El apellido es obligatorio.",
   "mustBeEighteen": "Debes tener al menos 18 años.",
   "validEmailRequired": "Por favor, introduce una dirección de correo electrónico válida.",
-  "fieldRequired": "Este campo es obligatorio"
+  "fieldRequired": "Este campo es obligatorio",
+  "homeTitle": "Inicio",
+  "mon": "LUN",
+  "tue": "MAR",
+  "wed": "MIÉ",
+  "thu": "JUE",
+  "fri": "VIE",
+  "sat": "SÁB",
+  "sun": "DOM",
+  "todaysExercises": "Ejercicios de hoy",
+  "noWorkoutPlan": "No hay plan de entrenamiento para hoy."
 }

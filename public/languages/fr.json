@@ -145,5 +145,15 @@
   "lastNameRequired": "Le nom de famille est requis.",
   "mustBeEighteen": "Vous devez avoir au moins 18 ans.",
   "validEmailRequired": "Veuillez entrer une adresse e-mail valide.",
-  "fieldRequired": "Ce champ est requis"
+  "fieldRequired": "Ce champ est requis",
+  "homeTitle": "Accueil",
+  "mon": "LUN",
+  "tue": "MAR",
+  "wed": "MER",
+  "thu": "JEU",
+  "fri": "VEN",
+  "sat": "SAM",
+  "sun": "DIM",
+  "todaysExercises": "Exercices d'aujourd'hui",
+  "noWorkoutPlan": "Aucun plan d'entraînement pour aujourd'hui."
 }

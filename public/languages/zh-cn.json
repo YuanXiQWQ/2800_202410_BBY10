@@ -145,5 +145,15 @@
   "lastNameRequired": "姓氏是必填项。",
   "mustBeEighteen": "你必须年满18岁。",
   "validEmailRequired": "请输入有效的电子邮件地址。",
-  "fieldRequired": "此字段是必填项"
+  "fieldRequired": "此字段是必填项",
+  "homeTitle": "首页",
+  "mon": "周一",
+  "tue": "周二",
+  "wed": "周三",
+  "thu": "周四",
+  "fri": "周五",
+  "sat": "周六",
+  "sun": "周日",
+  "todaysExercises": "今天的锻炼",
+  "noWorkoutPlan": "今天没有锻炼计划。"
 }
