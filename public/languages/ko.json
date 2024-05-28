@@ -145,5 +145,15 @@
   "lastNameRequired": "성은 필수입니다.",
   "mustBeEighteen": "18세 이상이어야 합니다.",
   "validEmailRequired": "유효한 이메일 주소를 입력해 주세요.",
-  "fieldRequired": "이 필드는 필수입니다"
+  "fieldRequired": "이 필드는 필수입니다",
+  "homeTitle": "홈",
+  "mon": "월",
+  "tue": "화",
+  "wed": "수",
+  "thu": "목",
+  "fri": "금",
+  "sat": "토",
+  "sun": "일",
+  "todaysExercises": "오늘의 운동",
+  "noWorkoutPlan": "오늘은 운동 계획이 없습니다."
 }

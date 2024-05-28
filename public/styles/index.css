@@ -1,87 +1,86 @@
 .index-container {
-  /* display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #FFF;
-    
-    box-sizing: border-box; */
+    /* display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #FFF;
 
-  background-image: url("/images/la.png");
-  background-size: 100%;
-  background-repeat: no-repeat;
-}
+      box-sizing: border-box; */
+
+    background-image: url("../images/la.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    }
 
 h1 {
-  font-size: 3rem;
-}
+    font-size: 3rem;
+    }
 
 /* Basic Button Styling */
 .btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  line-height: 1.5;
-  font: 700 1.2rem;
-  padding: 1em 4em;
-  letter-spacing: 0.05rem;
-  background-color: #ff9262;
-  color: white; /* Text color */
-  box-shadow: inset 0 0 0 4px #ff9262; /* Initial border color */
-  position: relative;
-  transition: color 0.25s 0.08s, background-color 0.25s; /* Added transition for background-color */
-}
+    border: none;
+    cursor: pointer;
+    line-height: 1.5;
+    font: 700 1.2rem;
+    padding: 1em 4em;
+    letter-spacing: 0.05rem;
+    background: #FF9262 none;
+    color: white; /* Text color */
+    box-shadow: inset 0 0 0 4px #FF9262; /* Initial border color */
+    position: relative;
+    transition: color 0.25s 0.08s, background-color 0.25s; /* Added transition for background-color */
+    }
 
 .btn:focus {
-  outline: 2px dotted #ff9262;
-}
+    outline: 2px dotted #FF9262;
+    }
 
 /* Dynamic border drawing effect */
 .btn::before,
 .btn::after {
-  border: 0 solid transparent;
-  box-sizing: border-box;
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  width: 0;
-  height: 0;
-}
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    }
 
 .btn::before {
-  top: 0;
-  right: 0;
-  border-bottom-width: 4px;
-  border-left-width: 4px;
-}
+    top: 0;
+    right: 0;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    }
 
 .btn::after {
-  bottom: 0;
-  right: 0;
-  border-top-width: 4px;
-  border-right-width: 4px;
-}
+    bottom: 0;
+    right: 0;
+    border-top-width: 4px;
+    border-right-width: 4px;
+    }
 
 .btn:hover {
-  color: white; /* Text color on hover */
-  background-color: #3d4bcd; /* Background color on hover */
-}
+    color: white; /* Text color on hover */
+    background-color: #3D4BCD; /* Background color on hover */
+    }
 
 .btn:hover::before,
 .btn:hover::after {
-  border-color: #3d4bcd; /* Border color on hover */
-  transition: border-color 0s, width 0.25s, height 0.25s;
-  width: 100%;
-  height: 100%;
-}
+    border-color: #3D4BCD; /* Border color on hover */
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+    }
 
 .btn:hover::before {
-  transition-delay: 0s, 0s, 0.25s;
-}
+    transition-delay: 0s, 0s, 0.25s;
+    }
 
 .btn:hover::after {
-  transition-delay: 0s, 0.25s, 0s;
-}
+    transition-delay: 0s, 0.25s, 0s;
+    }
 
 /* .wrapper{
     position: fixed;
@@ -91,22 +90,22 @@ h1 {
   } */
 
 a {
-  display: block;
-  font-size: 16px;
-  text-decoration: none;
-  color: #3d4bcd;
-  /* border-top: 2px solid #3d4bcd; */
-  border-bottom: 2px solid #3d4bcd;
-  padding: 10px;
-  letter-spacing: 2px;
-  transition: all 0.25s;
-}
+    display: block;
+    font-size: 16px;
+    text-decoration: none;
+    color: #3D4BCD;
+    /* border-top: 2px solid #3d4bcd; */
+    border-bottom: 2px solid #3D4BCD;
+    padding: 10px;
+    letter-spacing: 2px;
+    transition: all 0.25s;
+    }
 
 a:hover {
-  letter-spacing: 15px;
-}
+    letter-spacing: 15px;
+    }
 
 
 .text-decoration-none {
     text-decoration: none;
-}
+    }

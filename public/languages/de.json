@@ -145,5 +145,15 @@
   "lastNameRequired": "Nachname ist erforderlich.",
   "mustBeEighteen": "Du musst mindestens 18 Jahre alt sein.",
   "validEmailRequired": "Bitte gib eine gültige E-Mail-Adresse ein.",
-  "fieldRequired": "Dieses Feld ist erforderlich"
+  "fieldRequired": "Dieses Feld ist erforderlich",
+  "homeTitle": "Startseite",
+  "mon": "MO",
+  "tue": "DI",
+  "wed": "MI",
+  "thu": "DO",
+  "fri": "FR",
+  "sat": "SA",
+  "sun": "SO",
+  "todaysExercises": "Heutige Übungen",
+  "noWorkoutPlan": "Kein Trainingsplan für heute."
 }

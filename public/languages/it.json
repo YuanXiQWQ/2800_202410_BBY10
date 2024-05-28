@@ -145,5 +145,15 @@
   "lastNameRequired": "Il cognome è obbligatorio.",
   "mustBeEighteen": "Devi avere almeno 18 anni.",
   "validEmailRequired": "Per favore, inserisci un indirizzo email valido.",
-  "fieldRequired": "Questo campo è obbligatorio"
+  "fieldRequired": "Questo campo è obbligatorio",
+  "homeTitle": "Home",
+  "mon": "LUN",
+  "tue": "MAR",
+  "wed": "MER",
+  "thu": "GIO",
+  "fri": "VEN",
+  "sat": "SAB",
+  "sun": "DOM",
+  "todaysExercises": "Esercizi di oggi",
+  "noWorkoutPlan": "Nessun piano di allenamento per oggi."
 }
