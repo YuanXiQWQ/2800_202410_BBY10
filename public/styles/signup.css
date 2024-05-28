@@ -58,55 +58,55 @@
 } */
 
 form {
-  width: 100% !important;
-  margin: 1.6rem 0rem 0rem 0rem !important;
-}
+    width: 100% !important;
+    margin: 1.6rem 0 0 0 !important;
+    }
 
 #regForm {
-  padding: 0rem 3rem;
-}
+    padding: 0 3rem;
+    }
 
 /* Style the input fields */
 
 /* Mark input boxes that gets an error on validation: */
 input.invalid {
-  background-color: #ffdddd;
-}
+    background-color: #FDD;
+    }
 
 /* Hide all steps by default: */
 .tab {
-  display: none;
-}
+    display: none;
+    }
 
 /* Make circles that indicate the steps of the form: */
 .step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #3d4bcd;
-  border: none;
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
-}
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #3D4BCD;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+    }
 
 /* Mark the active step: */
 .step.active {
-  opacity: 1;
-}
+    opacity: 1;
+    }
 
 /* Mark the steps that are finished and valid: */
 .step.finish {
-  background-color: #ff9262;
-}
+    background-color: #FF9262;
+    }
 
 .btn-width {
     width: 7em;
-}
+    }
 
 .alert {
     padding: 15px;
-    color: #fff;
+    color: #FFF;
     border-radius: 4px;
     position: fixed;
     right: 20px;
@@ -115,31 +115,31 @@ input.invalid {
     transition: all 0.5s;
     opacity: 0;
     visibility: hidden;
-  }
+    }
 
-  .alert.show {
+.alert.show {
     opacity: 1;
     visibility: visible;
-  }
+    }
 
-  .alert.green {
+.alert.green {
     background-color: #04AA6D;
-  }
+    }
 
-  .alert.red {
-    background-color: #f44336;
-  }
+.alert.red {
+    background-color: #F44336;
+    }
 
-  .alert.blue {
+.alert.blue {
     background-color: #2196F3;
-  }
+    }
 
-  /* Animation for fading out the alert */
-  @keyframes fadeOut {
+/* Animation for fading out the alert */
+@keyframes fadeOut {
     from {
-      opacity: 1;
-    }
+        opacity: 1;
+        }
     to {
-      opacity: 0;
+        opacity: 0;
+        }
     }
-  }

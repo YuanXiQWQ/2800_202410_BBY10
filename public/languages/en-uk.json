@@ -144,5 +144,15 @@
   "lastNameRequired": "Last name is required.",
   "mustBeEighteen": "You must be at least 18 years old.",
   "validEmailRequired": "Please enter a valid email address.",
-  "fieldRequired": "This field is required"
+  "fieldRequired": "This field is required",
+  "homeTitle": "Home",
+  "mon": "MON",
+  "tue": "TUE",
+  "wed": "WED",
+  "thu": "THU",
+  "fri": "FRI",
+  "sat": "SAT",
+  "sun": "SUN",
+  "todaysExercises": "Today's Exercises",
+  "noWorkoutPlan": "No workout plan for today."
 }
