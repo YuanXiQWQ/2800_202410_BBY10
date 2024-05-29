@@ -227,6 +227,7 @@ export async function register(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const verificationToken = crypto.randomBytes(32).toString("hex");
+        const verificationLink = `${appUrl}/verify-email?token=${verificationToken}`;
         const tempUser = new TempUser({
             username,
             firstName,
@@ -242,8 +243,11 @@ export async function register(req, res) {
 
         const transporter = await createTransporter();
         const mailOptions = {
-            from: process.env.EMAIL, to: email, subject: "Email Verification", text: `Please verify your email by clicking the following link: 
-            ${appUrl}/verify-email?token=${verificationToken}`,
+            from: process.env.EMAIL,
+            to: email,
+            subject: "Email Verification",
+            html: `<p>Please verify your email by clicking the following link:</p>
+                   <p><a href="${verificationLink}">${verificationLink}</a></p>`
         };
 
         await transporter.sendMail(mailOptions);

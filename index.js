@@ -286,4 +286,9 @@ app.get("/logout", ensureAuthenticated, (req, res) => {
     });
 });
 
+app.get("*", (req,res) => {
+	res.status(404);
+	res.render('404');
+})
+
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
