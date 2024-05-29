@@ -4,7 +4,7 @@ import schedule from "node-schedule";
 import crypto from "node:crypto";
 import {google} from "googleapis";
 import dotenv from "dotenv";
-import {User} from "../model/User.js";
+import {User, TempUser} from "../model/User.js";
 import Joi from "joi";
 import fs from 'fs';
 import axios from 'axios';
@@ -40,19 +40,19 @@ const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
 const passwordInvalidMessage = "Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.";
 
 /**
- * Schedule a job to delete unverified users older than 24 hours.
+ * Schedule a job to delete temp users older than 24 hours.
  */
 schedule.scheduleJob("0 0 * * *", async () => {
     const now = new Date();
     const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
     try {
-        const unverifiedUsers = await User.find({
+        const unverifiedUsers = await TempUser.find({
             isVerified: false, createdAt: {$lt: twentyFourHoursAgo},
         });
 
         const usernames = unverifiedUsers.map((user) => user.username);
-        const deleteResult = await User.deleteMany({
+        const deleteResult = await TempUser.deleteMany({
             isVerified: false, createdAt: {$lt: twentyFourHoursAgo},
         });
 
@@ -183,6 +183,7 @@ export const validatePassword = (user, password) => bcrypt.compare(password, use
 /**
  * Function to register a new user.
  * Validates the user data, hashes the password, and sends a verification email.
+ * Before the user email is verified, the user is added into tempUsers collection.
  *
  * @param {Request} req - Express request object
  * @param {Response} res - Express response object
@@ -226,7 +227,7 @@ export async function register(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const verificationToken = crypto.randomBytes(32).toString("hex");
-        const newUser = new User({
+        const tempUser = new TempUser({
             username,
             firstName,
             lastName,
@@ -237,7 +238,7 @@ export async function register(req, res) {
             isVerified: false,
         });
 
-        await newUser.save();
+        await tempUser.save();
 
         const transporter = await createTransporter();
         const mailOptions = {
@@ -292,12 +293,8 @@ export function AdditionalUserInfo(req, res) {
         } = req.session.userData;
 
         try {
-            console.log("333333333");
-
             const user = await User.findOne({username});
             if (!user) {
-                console.log("444444444444");
-
                 return res.status(404).json({
                     success: false, message: "User not found.",
                 });
@@ -308,7 +305,6 @@ export function AdditionalUserInfo(req, res) {
             user.time = arrayTime;
             user.goal = goal;
             user.fitnessLevel = fitnessLevel;
-            console.log("555555555555");
 
             await user.save();
             req.session.userData = user;
