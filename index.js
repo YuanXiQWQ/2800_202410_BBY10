@@ -159,12 +159,15 @@ app.post("/reset-password", resetPassword);
 
 app.get("/home", ensureAuthenticated, async (req, res) => {
   try {
+    const data = await getListOfExercises(req, res);
+
+    
     const user = await User.findById(req.session.userData._id);
     const workoutPlan = user.workoutPlan || [];
     res.render("home", {
       userData: req.session.userData,
       language: res.locals.language,
-      workoutPlan
+      workoutPlan, data
     });
   } catch (err) {
     console.error("Error retrieving home data:", err);
