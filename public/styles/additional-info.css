@@ -20,6 +20,17 @@
     display: inline-block;
     opacity: 0.5;
   }
+
+
+
+/* Style the form labels with a red asterisk */
+.form-label.required::after, .form-check-label.required::after {
+  content: ' *';
+  color: red;
+  margin-left: 5px;
+  vertical-align: middle; /* Ensures the asterisk is vertically aligned */
+  display: inline;
+}
   
   /* Mark the active step: */
   .step.active {
