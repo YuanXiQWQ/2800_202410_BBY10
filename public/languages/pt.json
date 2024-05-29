@@ -145,5 +145,15 @@
   "lastNameRequired": "Sobrenome é obrigatório.",
   "mustBeEighteen": "Você deve ter pelo menos 18 anos.",
   "validEmailRequired": "Por favor, insira um endereço de e-mail válido.",
-  "fieldRequired": "Este campo é obrigatório"
+  "fieldRequired": "Este campo é obrigatório",
+  "homeTitle": "Início",
+  "mon": "SEG",
+  "tue": "TER",
+  "wed": "QUA",
+  "thu": "QUI",
+  "fri": "SEX",
+  "sat": "SÁB",
+  "sun": "DOM",
+  "todaysExercises": "Exercícios de hoje",
+  "noWorkoutPlan": "Não há plano de treino para hoje."
 }

@@ -1,0 +1,115 @@
+<%- include("templates/header") %>
+<head>
+    <title><%= language.homeTitle %></title>
+    <link rel="stylesheet" href="/styles/home.css"/>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            justify-items: center;
+        }
+
+        #calendar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 1em;
+        }
+
+        #calendar div {
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+            color: #4f4f4f;
+        }
+
+        #userAvatar {
+            margin: auto;
+            text-align: center;
+        }
+
+        .user-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        #workoutPlan {
+            margin: 1em;
+            padding: 1em;
+            border: 1px solid #dadada;
+            border-radius: 20px;
+            background-color: #ffffff;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .container {
+            padding-bottom: 8rem;
+        }
+
+        .lang-text {
+            font-weight: 900;
+        }
+    </style>
+</head>
+<%- include("templates/navbar") %>
+<div class="container">
+    <a href="/calendar" id="calendar" class="undecorated">
+        <div class="lang-text"><%= language.mon %></div>
+        <div class="lang-text"><%= language.tue %></div>
+        <div class="lang-text"><%= language.wed %></div>
+        <div class="lang-text"><%= language.thu %></div>
+        <div class="lang-text"><%= language.fri %></div>
+        <div class="lang-text"><%= language.sat %></div>
+        <div class="lang-text"><%= language.sun %></div>
+        <div>
+            <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                        d="M2 1L8 5L2 9V1Z"
+                        fill="black"
+                />
+            </svg>
+        </div>
+    </a>
+
+    <a href="/profile" id="userAvatar" class="undecorated">
+        <% if (userData.avatar) { %>
+            <img src="/avatar/<%= userData.avatar %>" alt="User Avatar" class="user-avatar"/>
+        <% } else { %>
+            <img src="/images/userAvatar_default.png" alt="Default Avatar" class="user-avatar"/>
+        <% } %>
+    </a>
+
+    <a href="/exercise" id="workoutPlan" class="undecorated">
+        <p style="font-weight: 900; text-align: center;"><%= language.todaysExercises %></p>
+        <ul class="undecorated">
+            <% if (workoutPlan.length > 0) { %>
+                <% workoutPlan.forEach(function(plan) { %>
+                    <li><%= plan %></li>
+                <% }); %>
+            <% } else { %>
+                <li><%= language.noWorkoutPlan %></li>
+            <% } %>
+        </ul>
+    </a>
+<!--    <script>-->
+<!--        document.addEventListener('DOMContentLoaded', function () {-->
+<!--            const data2 = <%- JSON.stringify(data) %>;-->
+<!--            console.log(data2);-->
+<!--        });-->
+<!--    </script>-->
+</div>
+<%- include("templates/footer") %>

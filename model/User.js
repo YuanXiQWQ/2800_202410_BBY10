@@ -94,4 +94,48 @@ userSchema.plugin(encrypt, {
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-export {User};
+const tempUserSchema = new mongoose.Schema(
+    {
+        username: {
+            type: String,
+            required: true,
+        },
+        firstName: {
+            type: String,
+            required: false,
+        },
+        lastName: {
+            type: String,
+            required: false,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        verificationToken: {
+            type: String,
+            required: false,
+        },
+        isVerified: {
+            type: Boolean,
+            default: false,
+        },
+        birthday: {
+            type: Date,
+            required: true,
+        }
+    },
+    {
+        timestamps: true,
+        collection: "tempUsers",
+        collation: { locale: "en", strength: 2 },
+    }
+);
+
+const TempUser = mongoose.models.TempUser || mongoose.model("TempUser", tempUserSchema);
+
+export { User, TempUser };

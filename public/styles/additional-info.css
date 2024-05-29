@@ -109,3 +109,32 @@ input[type="number"] {
     width: 48%;
     padding: .5rem 1rem !important;
   }
+
+/* Modal buttons */
+.modal-footer .btn {
+  border-radius: 20px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for the buttons */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Font weight */
+  border: none; /* Remove border */
+  color: white; /* White text color */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Decline button styles */
+.modal-footer .btn-secondary {
+  background-color: #b6b8cb; /* Light gray color */
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #a5a7be; /* Slightly darker gray on hover */
+}
+
+/* Accept button styles */
+.modal-footer .btn-primary {
+  background-color: #3d4bcd; /* Blue color */
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #2a38a4; /* Slightly darker blue on hover */
+}

@@ -145,5 +145,15 @@
   "lastNameRequired": "姓は必須です。",
   "mustBeEighteen": "18歳以上である必要があります。",
   "validEmailRequired": "有効なメールアドレスを入力してください。",
-  "fieldRequired": "このフィールドは必須です"
+  "fieldRequired": "このフィールドは必須です",
+  "homeTitle": "ホーム",
+  "mon": "月",
+  "tue": "火",
+  "wed": "水",
+  "thu": "木",
+  "fri": "金",
+  "sat": "土",
+  "sun": "日",
+  "todaysExercises": "今日のエクササイズ",
+  "noWorkoutPlan": "今日はトレーニング計画がありません。"
 }
