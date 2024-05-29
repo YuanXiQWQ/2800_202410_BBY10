@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import {User} from "../model/User.js";
 import Joi from "joi";
 import fs from 'fs';
+import axios from 'axios';
 
 dotenv.config();
 
@@ -71,6 +72,33 @@ oauth2Client.setCredentials({
 });
 
 /**
+ * Function to update environment variables in Render.
+ *
+ * @param {string} key - The key of the environment variable.
+ * @param {string} value - The value of the environment variable.
+ */
+const updateRenderEnvVar = async (key, value) => {
+    const serviceId = process.env.RENDER_SERVICE_ID;
+    const apiKey = process.env.RENDER_API_KEY;
+
+    try {
+        const response = await axios.patch(`https://api.render.com/v1/services/${serviceId}/env-vars`, [{key, value}], {
+            headers: {
+                Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status === 200) {
+            console.log(`Environment variable ${key} updated successfully.`);
+        } else {
+            console.error(`Failed to update environment variable ${key}.`);
+        }
+    } catch (error) {
+        console.error('Error updating Render environment variable:', error);
+    }
+};
+
+/**
  * Function to refresh the access token.
  *
  * @return {Promise<string>} The refreshed access token.
@@ -81,7 +109,11 @@ const getAccessToken = async () => {
 
         if (res.data.refresh_token) {
             process.env.REFRESH_TOKEN = res.data.refresh_token;
-            fs.writeFileSync('.env', `\nREFRESH_TOKEN=${res.data.refresh_token}`, {flag: 'a'});
+            if (process.env.NODE_ENV === "development") {
+                fs.writeFileSync('.env', `\nREFRESH_TOKEN=${res.data.refresh_token}`, {flag: 'a'});
+            } else {
+                await updateRenderEnvVar('REFRESH_TOKEN', res.data.refresh_token);
+            }
         }
 
         return token;
