@@ -133,7 +133,15 @@ app.get("/calendar", async (req, res) => {
 
 app.get("/login", (req, res) => res.render("login", {language: res.locals.language}));
 
-app.post("/logging-in", logIn);
+app.post("/logging-in", async (req, res) => {
+  try {
+    await logIn(req, res);
+    res.redirect("/home");
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
 app.get("/forget-password", (req, res) => res.render("forgetPassword", {language: res.locals.language}));
 
