@@ -11,6 +11,9 @@
     autoplay
   ></video>
   <canvas id="canvas" style="position: absolute; left: 0px; z-index: 1"></canvas>
+  
+  <div class="alert alert-info center" role="alert">
+  </div>
 </div>
 
 <div class="card counter">
@@ -152,7 +155,7 @@
       if (currentTime - lastAcceptedSquatTime > 5000) {
         // Check if 5 seconds have passed
         lastAcceptedSquatTime = currentTime; // Update the last accepted time
-        console.log("Good squat depth");
+        showAlert("Good squat depth")
 
         setTimeout(() => {
           count++;
@@ -174,6 +177,29 @@
     await loadModel();
     detectPose();
   }
+
+  function showAlert(msg, duration = 5000) {
+    const alertBox = document.querySelector('.alert');
+    if (!alertBox) {
+        console.log("Alert box not found.");
+        return;
+    }
+
+    alertBox.textContent = msg;
+
+    alertBox.style.visibility = 'visible';
+    alertBox.style.opacity = '1';
+
+    setTimeout(() => {
+        alertBox.style.opacity = '0';
+
+        setTimeout(() => {
+            alertBox.style.visibility = 'hidden';
+        }, 500); 
+    }, duration);
+}
+
+
 
   main();
 </script>

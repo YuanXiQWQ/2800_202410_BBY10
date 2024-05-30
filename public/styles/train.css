@@ -8,3 +8,23 @@
   width: 6em;
   border-radius: 20px;
 }
+
+.center {
+  position: absolute;
+  top: 50%; /* position the top  edge of the element at the middle of the parent */
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+
+  transform: translate(-50%, -50%);
+}
+
+
+.alert {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    z-index: 1000;
+    background-color: #5b2dc6a9;
+    border: 1px solid #5B2DC6;
+    font-size: 23px;
+    color: white;
+}

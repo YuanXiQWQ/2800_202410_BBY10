@@ -280,7 +280,7 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
 });
 
 app.get("/train", ensureAuthenticated, (req, res) => {
-   res.render("train")
+   res.render("train-blank")
 });
 
 app.get("/logout", ensureAuthenticated, (req, res) => {
