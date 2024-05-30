@@ -22,10 +22,7 @@ async function getUserId(username) {
  * @param {Object} exercise - The exercise plan to be saved or updated.
  */
 function saveExercises(userId, exercise) {
-    exercises.findOneAndUpdate(
-        {user: userId},
-        {exercises: exercise},
-        {new: true, upsert: true})
+    exercises.findOneAndUpdate({user: userId}, {exercises: exercise}, {new: true, upsert: true})
         .then(result => {
             console.log("Exercise saved or updated successfully:", result);
         })
@@ -42,23 +39,34 @@ function saveExercises(userId, exercise) {
  */
 export async function sendInformation(req, res) {
     const user = req.session.userData;
-    const {time, fitnessLevel, height, weight, goal} = user;
-    let {startDate, endDate} = user;
+    const userDetails = await User.findOne({username: user?.username}).select("time fitnessLevel height weight goal");
     const userId = await getUserId(user?.username);
     let gptResponse = {};
 
-    // If undefined or null, set as today and after 7 days.
+    const fitnessLevel = userDetails?.fitnessLevel || user?.fitnessLevel;
+    const height = user?.height || userDetails?.height;
+    const weight = user?.weight || userDetails?.weight;
+    const goal = user?.goal || userDetails?.goal;
+
+    let {time, startDate, endDate} = req.body;
+
+    time = time ? time : user?.time || userDetails?.time;
     startDate = startDate ? startDate : moment().format('YYYY-MM-DD');
     endDate = endDate ? endDate : moment().add(7, 'days').format('YYYY-MM-DD');
 
+    console.log("time:" + time + "startDate:" + startDate + "endDate" + endDate);
     try {
         gptResponse = await sendMessageToChatGPT(generatePrompt(time, fitnessLevel, height, weight, goal, startDate, endDate));
     } catch (err) {
         console.error("Error:", err);
-        return res.status(500).json({success: false, message: "Internal Server Error" + err});
+        if (!res.headersSent) {
+            return res.status(500).json({success: false, message: "Internal Server Error" + err});
+        }
     }
 
     await saveExercises(userId, gptResponse);
     req.session.userData = {...req.session.userData, id: userId};
-    res.status(200).send("success")
+    if (!res.headersSent) {
+        res.status(200).json({success: true, message: "Exercise saved successfully"});
+    }
 }

@@ -1,0 +1,197 @@
+<%- include("templates/header") %>
+<head>
+    <title><%= language.calendarTitle %></title>
+    <link rel="stylesheet" href="/styles/profile.css">
+    <script>
+        const currentLanguage = '<%= language.code %>';
+        console.log("Language object:", <%= JSON.stringify(language) %>);
+    </script>
+    <style>
+        .container {
+            height: 80%;
+            }
+
+        #workoutDaysSelect {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            }
+
+        #workoutDaysSelect button {
+            background: #BD7FFF;
+            margin-bottom: 5px;
+            }
+
+        #workoutDaysSelect button:hover {
+            background: #C57FFF;
+            }
+
+        #workoutDaysSelect button.active {
+            border: 1px solid #8458B2;
+            background: #DF7FFF;
+            }
+    </style>
+</head>
+<%- include("templates/navbar") %>
+<div id="notification" class="alert notification hidden"></div>
+<div class="container mt-5" style="padding-bottom: 8rem;">
+    <header class="d-flex align-items-center mb-4">
+        <a id="btn-back" href="/calendar" class="btn btn-outline-secondary me-3">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.65419 7.95837H17.3334V10.0417H4.65419L10.2417 15.6292L8.76877 17.1021L0.666687 9.00003L8.76877 0.897949L10.2417 2.37087L4.65419 7.95837Z"
+                      fill="black"/>
+            </svg>
+        </a>
+        <%= language.newExerciseList %>
+    </header>
+    <main>
+        <div class="alert secondary-color">
+            <%= language.newExerciseListTips %>
+        </div>
+        <form id="exerciseListForm">
+            <div class="mb-3">
+                <label for="startDate" class="form-label"><%= language.startDate %>:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label"><%= language.endDate %>:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <p class="font-size-16 semiBold"><%= language.workoutDays %></p>
+                <input type="hidden" id="days" name="time" value=""/>
+                <div class="btn-group-2" role="group" aria-label="<%= language.daysOfWeek %>" id="workoutDaysSelect">
+                    <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('0')">
+                        <%= language.monday %>
+                    </button>
+                    <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('1')">
+                        <%= language.tuesday %>
+                    </button>
+                    <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('2')">
+                        <%= language.wednesday %>
+                    </button>
+                    <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('3')">
+                        <%= language.thursday %>
+                    </button>
+                    <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('4')">
+                        <%= language.friday %>
+                    </button>
+                    <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('5')">
+                        <%= language.saturday %>
+                    </button>
+                    <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('6')">
+                        <%= language.sunday %>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary primary-color primary-color-hover">
+                <%= language.submit %>
+            </button>
+        </form>
+        <div id="statusMessage"></div>
+    </main>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusMessage = document.getElementById('statusMessage');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        if (localStorage.getItem('successFlag')) {
+            statusMessage.textContent = '<%= language.exerciseListSubmitSuccess %>';
+            statusMessage.style.color = 'green';
+            localStorage.removeItem('successFlag');
+        }
+
+        document.getElementById('exerciseListForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            submitButton.disabled = true;
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const startDate = formData.get('startDate');
+            const endDate = formData.get('endDate');
+            const today = new Date().toISOString().split('T')[0];
+            const selectedDays = document.getElementById('days').value;
+
+            if (!startDate || !endDate) {
+                statusMessage.textContent = '<%= language.startEndDateRequired %>';
+                statusMessage.style.color = 'red';
+                submitButton.disabled = false;
+            } else if (startDate < today) {
+                statusMessage.textContent = '<%= language.startDateNotBeforeToday %>';
+                statusMessage.style.color = 'red';
+                submitButton.disabled = false;
+            } else if (endDate < startDate) {
+                statusMessage.textContent = '<%= language.endDateNotBeforeStartDate %>';
+                statusMessage.style.color = 'red';
+                submitButton.disabled = false;
+            } else if (!selectedDays) {
+                statusMessage.textContent = '<%= language.selectAtLeastOneDay %>';
+                statusMessage.style.color = 'red';
+                submitButton.disabled = false;
+            } else {
+                const exerciseData = {
+                    startDate: startDate,
+                    endDate: endDate,
+                    time: selectedDays
+                };
+                statusMessage.textContent = '<%= language.gettingResponse %>';
+                statusMessage.style.color = 'purple';
+
+                fetch('/submitNewExerciseList', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(exerciseData)
+                }).then(res => res.json()).then(data => {
+                    if (data.success) {
+                        localStorage.setItem('successFlag', 'true');
+                        location.reload();
+                        statusMessage.textContent = '<%= language.exerciseListSubmitSuccess %>';
+                        statusMessage.style.color = 'green';
+                    } else {
+                        statusMessage.textContent = data.message;
+                        statusMessage.style.color = 'red';
+                        submitButton.disabled = false;
+                    }
+                }).catch((error) => {
+                    console.error('Error:', error);
+                    statusMessage.textContent = '<%= language.submitFailed %>';
+                    statusMessage.style.color = 'red';
+                    submitButton.disabled = false;
+                });
+            }
+        });
+    });
+
+    function toggleDay(dayIndex) {
+        const daysInput = document.getElementById('days');
+        let selectedDays = daysInput.value ? daysInput.value.split(',') : [];
+        const dayStr = dayIndex.toString();
+
+        const index = selectedDays.indexOf(dayStr);
+        if (index > -1) {
+            selectedDays.splice(index, 1);
+        } else {
+            selectedDays.push(dayStr);
+        }
+
+        daysInput.value = selectedDays.join(',');
+        updateButtonStyles();
+    }
+
+    function updateButtonStyles() {
+        const selectedDays = document.getElementById('days').value.split(',');
+        document.querySelectorAll('.btn-group-2 button').forEach((button, index) => {
+            if (selectedDays.includes(index.toString())) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    }
+
+</script>
+<%- include("templates/footer") %>

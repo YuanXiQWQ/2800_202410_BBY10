@@ -19,7 +19,6 @@ function calculateWorkoutDays(time, startDate, endDate) {
         }
         currentDate.add(1, 'days');
     }
-
     return workoutDays;
 }
 
