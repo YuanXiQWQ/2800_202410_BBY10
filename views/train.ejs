@@ -1,0 +1,97 @@
+<div class="position-relative" style="width: 100%; height: 100%;">
+    <video id="video" playsinline autoplay style="width: 100%; height: 100%;"></video>
+    <canvas id="videoCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+    <canvas id="poseCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+</div>
+
+<script>
+
+const video = document.getElementById("video");
+const videoCanvas = document.getElementById("videoCanvas");
+const poseCanvas = document.getElementById("poseCanvas");
+const videoCtx = videoCanvas.getContext("2d");
+const poseCtx = poseCanvas.getContext("2d");
+
+// Error handling for user media and WebSocket
+const handleMediaError = (error) => console.error("Media capturing failed:", error);
+const handleWebSocketError = (error) => console.error("WebSocket error:", error);
+
+// Setting up the WebSocket connection
+const ws = new WebSocket("ws://localhost:3001");
+ws.onerror = handleWebSocketError;
+
+// User media setup
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+            videoCanvas.width = video.videoWidth;
+            videoCanvas.height = video.videoHeight;
+            poseCanvas.width = video.videoWidth;
+            poseCanvas.height = video.videoHeight;
+        };
+        video.play().catch(handleMediaError);
+    })
+    .catch(handleMediaError);
+
+    video.addEventListener("play", function () {
+        const sendFrame = () => {
+            if (video.paused || video.ended) return;
+            videoCtx.drawImage(video, 0, 0, videoCanvas.width, videoCanvas.height);
+            ws.send(videoCanvas.toDataURL("image/webp"));
+            requestAnimationFrame(sendFrame);
+        };
+        requestAnimationFrame(sendFrame);
+    });
+// Receiving and handling WebSocket messages
+ws.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    if (data.error) {
+        console.error('Server error:', data.error);
+        return;
+    }
+    console.log(data)
+    if (data.keypoints) {
+        drawKeypoints(data.keypoints);
+    }
+};
+
+// Drawing keypoints and connections
+function drawKeypoints(keypoints) {
+    poseCtx.clearRect(0, 0, poseCanvas.width, poseCanvas.height); // Clear canvas before drawing new keypoints
+    keypoints.forEach(keypoint => {
+        if (keypoint.score > 0.5) {
+            poseCtx.beginPath();
+            poseCtx.arc(keypoint.x, keypoint.y, 5, 0, 2 * Math.PI);
+            poseCtx.fillStyle = "red";
+            poseCtx.fill();
+        }
+    });
+    connectKeypoints(keypoints);
+}
+
+function connectKeypoints(keypoints) {
+    const connections = [
+        ["left_hip", "left_shoulder"], ["left_elbow", "left_shoulder"],
+        ["left_elbow", "left_wrist"], ["left_hip", "left_knee"],
+        ["left_knee", "left_ankle"], ["right_hip", "right_shoulder"],
+        ["right_elbow", "right_shoulder"], ["right_elbow", "right_wrist"],
+        ["right_hip", "right_knee"], ["right_knee", "right_ankle"],
+        ["left_shoulder", "right_shoulder"], ["left_hip", "right_hip"]
+    ];
+    connections.forEach(([a, b]) => {
+        const first = keypoints.find(p => p.part === a);
+        const second = keypoints.find(p => p.part === b);
+        console.log(first)
+        if (first && second && first.score > 0.5 && second.score > 0.5) {
+            poseCtx.beginPath();
+            poseCtx.moveTo(first.x, first.y);
+            poseCtx.lineTo(second.x, second.y);
+            poseCtx.strokeStyle = "blue";
+            poseCtx.lineWidth = 2;
+            poseCtx.stroke();
+        }
+    });
+}
+
+</script>

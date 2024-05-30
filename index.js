@@ -31,6 +31,8 @@ import {
 import { logIn } from "./controller/login.js";
 import { User } from "./model/User.js";
 import { loadLanguage } from "./middleware/loadLanguage.js";
+import runWebSocket from "./middleware/webSocket.js";
+import { load } from "./controller/tracking.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -38,7 +40,7 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
 
 connectDB();
-
+runWebSocket()
 app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -85,6 +87,8 @@ app.post("/submitUser", upload.none(), async (req, res) => {
     }
   }
 });
+
+
 
 app.get("/verify-email", async (req, res) => {
   const { token } = req.query;
@@ -133,7 +137,7 @@ app.post("/submitAdditionalInfo", (req, res) => {
 
 app.get("/calendar", async (req, res) => {
   const data = await getListOfExercises(req, res);
-    
+
   res.render("calendar", { data });
 });
 
@@ -345,6 +349,19 @@ app.get("/logout", ensureAuthenticated, (req, res) => {
     }
     res.redirect("/");
   });
+});
+
+app.get("/train", async (req, res) => {
+  await load();
+  res.render("train");
+});
+
+app.post("/api/pose", async (req, res) => {
+  const { image } = req.body;
+  // Decode image data and analyze pose
+  // Send back the analysis result
+  console.log(image);
+  res.json({ result: "Pose analyzed!" });
 });
 
 app.listen(PORT, () => {
