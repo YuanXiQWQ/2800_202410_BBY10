@@ -57,6 +57,23 @@
         .lang-text {
             font-weight: 900;
         }
+
+        .card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .card-content {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <%- include("templates/navbar") %>
@@ -93,23 +110,44 @@
         <% } %>
     </a>
 
-    <a href="/exercise" id="workoutPlan" class="undecorated">
+    <div id="workoutPlan" class="undecorated">
         <p style="font-weight: 900; text-align: center;"><%= language.todaysExercises %></p>
-        <ul class="undecorated">
-            <% if (workoutPlan.length > 0) { %>
-                <% workoutPlan.forEach(function(plan) { %>
-                    <li><%= plan %></li>
-                <% }); %>
-            <% } else { %>
-                <li><%= language.noWorkoutPlan %></li>
-            <% } %>
-        </ul>
-    </a>
-<!--    <script>-->
-<!--        document.addEventListener('DOMContentLoaded', function () {-->
-<!--            const data2 = <%- JSON.stringify(data) %>;-->
-<!--            console.log(data2);-->
-<!--        });-->
-<!--    </script>-->
+        <div id="exercisesList" class="undecorated">
+            <!-- Exercise cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const data2 = <%- JSON.stringify(data) %>;
+            console.log(data2);
+            
+            const exercisesList = document.getElementById('exercisesList');
+            const exercises = data2._doc.exercises;
+
+            if (exercises.length > 0) {
+                exercises.forEach(function(exercise) {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    const cardTitle = document.createElement('div');
+                    cardTitle.className = 'card-title';
+                    cardTitle.textContent = exercise.title;
+
+                    const cardContent = document.createElement('div');
+                    cardContent.className = 'card-content';
+                    cardContent.textContent = `Duration: ${exercise.time} minutes | Date: ${exercise.start}`;
+
+                    card.appendChild(cardTitle);
+                    card.appendChild(cardContent);
+
+                    exercisesList.appendChild(card);
+                });
+            } else {
+                const noPlanMessage = document.createElement('p');
+                noPlanMessage.textContent = '<%= language.noWorkoutPlan %>';
+                exercisesList.appendChild(noPlanMessage);
+            }
+        });
+    </script>
 </div>
 <%- include("templates/footer") %>
