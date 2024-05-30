@@ -1,19 +1,19 @@
 :root {
     --background-color: #FFF;
     --text-color: #000;
-    --color-primary: #3D4BCD;
-    --color-secondary: #FF9262;
+    --color-primary: #5B2DC6;
+    --color-secondary: #fb824e;
 }
 
 [data-theme="dark"] {
     --background-color: #181A1B;
     --text-color: #FFF;
-    --color-primary: #3D4BCD;
-    --color-secondary: #3D4BCD;
+    --color-primary: #5B2DC6;
+    --color-secondary: #fb824e;
 }
 
 body {
-    margin-top: 60px !important;
+    /* margin-top: 60px !important; */
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -25,7 +25,7 @@ body {
 
 .label {
     width: 115px;
-    height: 50px;
+    height: 40px;
     position: relative;
     display: block;
     background: #EBEBEB;
@@ -37,8 +37,8 @@ body {
 
 .label:after {
     content: "";
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     position: absolute;
     top: 5px;
     left: 10px;
@@ -90,8 +90,9 @@ body {
 }
 
 .label svg.moon {
-    left: 75px;
+    left: 83px;
     fill: #7E7E7E;
+    top: 8px !important;
     transition: 0.3s;
 }
 
@@ -109,9 +110,9 @@ body {
 
 .abs-left-13 {
     z-index: 1001;
-    position: absolute;
+    /* position: absolute;
     right: 60px;
-    top: 3px;
+    top: 3px; */
 }
 
 .abs-left-13 > input {
@@ -137,7 +138,7 @@ body {
 
 html,
 body {
-    width: 100vw;
+    width: 100%;
     height: 100%;
     overflow-x: hidden;
     margin: 0;
@@ -226,8 +227,11 @@ form > .btn {
         display: grid;
         position: fixed;
         font-size: 0.8rem;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         background-color: var(--color-primary);
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+
     }
 
     .icon {

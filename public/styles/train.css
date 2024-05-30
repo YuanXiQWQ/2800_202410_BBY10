@@ -1,0 +1,45 @@
+.counter {
+  background-color: var(--color-primary);
+  color: white;
+  height: 7em;
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  width: 6em;
+  border-radius: 20px;
+}
+
+.center {
+  position: absolute;
+  top: 50%; /* position the top  edge of the element at the middle of the parent */
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+
+  transform: translate(-50%, -50%);
+}
+
+
+.alert {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    z-index: 1000;
+    background-color: #5b2dc6a9;
+    border: 1px solid #5B2DC6;
+    font-size: 23px;
+    color: white;
+}
+
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 800px) {
+  .w-sm-100 {
+    width: 100% !important;
+  }
+}
+
+a {
+  text-decoration: none;
+}

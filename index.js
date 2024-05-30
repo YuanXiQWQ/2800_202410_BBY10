@@ -154,12 +154,17 @@ app.get("/login", (req, res) => res.render("login", {language: res.locals.langua
 app.post("/logging-in", async (req, res) => {
     try {
         await logIn(req, res);
-        res.redirect("/home");
+        if (!res.headersSent) {
+            res.redirect("/home");
+        }
     } catch (err) {
         console.error("Login error:", err);
-        res.status(500).json({success: false, message: "Internal Server Error"});
+        if (!res.headersSent) {
+            res.status(500).json({success: false, message: "Internal Server Error"});
+        }
     }
 });
+
 
 app.get("/forget-password", (req, res) => res.render("forgetPassword", {language: res.locals.language}));
 
@@ -271,14 +276,7 @@ app.post("/postChangeLanguage", (req, res) => {
 app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => res.render("loading"));
 
 app.get("/exercises", ensureAuthenticated, (req, res) => {
-    getListOfExercises(req, res)
-        .then((data) => {
-            return res.render("exercises", {data: data?.exercises});
-        })
-        .catch((err) => {
-            console.log("Internal Server Error by: " + err);
-            res.status(500).send("Internal Server Error");
-        });
+    res.render("workouts")
 });
 
 app.get("/process-info", ensureAuthenticated, sessionValidation, (req, res) => {
@@ -294,6 +292,19 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
         res.status(500).send("Internal Server Error");
     });
 });
+
+app.get("/train-plank", ensureAuthenticated, (req, res) => {
+   res.render("train-plank")
+});
+
+
+app.get("/train-squat", ensureAuthenticated, (req, res) => {
+    res.render("train-squat")
+ });
+ 
+app.get("/workouts", ensureAuthenticated, (req, res) => {
+    res.render("workouts")
+ });
 
 app.get("/logout", ensureAuthenticated, (req, res) => {
     req.session.destroy((err) => {

@@ -100,6 +100,7 @@
   "fitnessLevel": "Niveau de forme physique",
   "workoutDuration": "Durée de l'entraînement",
   "saturday":"Saturday",
+  "theme": "Changer le thème", 
 
   "workoutSettingsSuccess": "Paramètres d'entraînement mis à jour avec succès.",
   "editUserPersonalInfoTitle": "Modifier les informations personnelles",
