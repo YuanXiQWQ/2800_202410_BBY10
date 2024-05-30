@@ -113,9 +113,7 @@ app.post("/submitAdditionalInfo", (req, res) => {
     AdditionalUserInfo(req, res).catch((err) => {
         console.error("Error submitting additional info:", err);
         if (!res.headersSent) {
-            res
-                .status(500)
-                .json({success: false, message: "Internal Server Error"});
+            res.status(500).json({success: false, message: "Internal Server Error"});
         }
     });
 });
