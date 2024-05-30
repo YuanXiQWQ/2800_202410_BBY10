@@ -16,7 +16,7 @@
   "wednesday": "Wednesday",
   "thursday": "Thursday",
   "friday": "Friday",
-  "saturday":"Saturday",
+  "saturday": "Saturday",
   "sunday": "Sunday",
   "goal": "Goal",
   "workoutLevel": "Workout Level",
@@ -154,5 +154,14 @@
   "sat": "SAT",
   "sun": "SUN",
   "todaysExercises": "Today's Exercises",
-  "noWorkoutPlan": "No workout plan for today."
+  "calendarTitle": "New Exercise List",
+  "newExerciseList": "New Exercise List",
+  "newExerciseListTips": "Please fill out the form below to create a new exercise list.",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "exerciseListSubmitSuccess": "Exercise list created successfully.",
+  "startEndDateRequired": "Start date and end date are required.",
+  "startDateNotBeforeToday": "Start date cannot be before today.",
+  "endDateNotBeforeStartDate": "End date cannot be before the start date.",
+  "selectAtLeastOneDay": "Please select at least one day of the week."
 }

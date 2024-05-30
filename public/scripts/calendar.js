@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const calendarEl = document.getElementById('calendar');
             if (calendarEl) {
                 const calendar = new FullCalendar.Calendar(calendarEl, {
-                    windowResize: function (arg) {
-                    },
                     events: exercisesListJSON?.exercises,
                     initialView: 'dayGridMonth',
                     headerToolbar: {

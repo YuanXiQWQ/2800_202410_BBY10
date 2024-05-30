@@ -131,6 +131,22 @@ app.get("/exercisesList", async (req, res) => {
     }
 });
 
+app.get("/newExerciseList", ensureAuthenticated, (req, res) => {
+    res.render("newExerciseList", {language: res.locals.language});
+});
+
+app.post("/submitNewExerciseList", ensureAuthenticated, (req, res) => {
+    console.log("get");
+    sendInformation(req, res)
+        .then(() => {
+            res.status(200).json({success: true, message: "success"});
+        }).catch((err) => {
+        console.error("Error submitting new exercise list:", err);
+        res.status(500).json({success: false, message: "Internal Server Error"} + err);
+    });
+});
+
+
 app.get("/login", (req, res) => res.render("login", {language: res.locals.language}));
 
 app.post("/logging-in", async (req, res) => {
