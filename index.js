@@ -118,10 +118,17 @@ app.post("/submitAdditionalInfo", (req, res) => {
     });
 });
 
-app.get("/calendar", async (req, res) => {
-    const data = await getListOfExercises(req, res);
+app.get("/calendar", (req, res) => {
+    res.render("calendar");
+});
 
-    res.render("calendar", {data});
+app.get("/exercisesList", async (req, res) => {
+    try {
+        res.json(await getListOfExercises(req, res));
+    } catch (err) {
+        console.error("Error getting exercises list:", err);
+        res.status(500).json({error: "Internal Server Error" + err});
+    }
 });
 
 app.get("/login", (req, res) => res.render("login", {language: res.locals.language}));
