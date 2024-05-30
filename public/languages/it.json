@@ -155,5 +155,16 @@
   "sat": "SAB",
   "sun": "DOM",
   "todaysExercises": "Esercizi di oggi",
-  "noWorkoutPlan": "Nessun piano di allenamento per oggi."
+  "noWorkoutPlan": "Nessun piano di allenamento per oggi.",
+  "calendarTitle": "Nuova lista di esercizi",
+  "newExerciseList": "Nuova lista di esercizi",
+  "newExerciseListTips": "Si prega di compilare il modulo qui sotto per creare una nuova lista di esercizi.",
+  "startDate": "Data di inizio",
+  "endDate": "Data di fine",
+  "exerciseListSubmitSuccess": "Lista di esercizi creata con successo.",
+  "startEndDateRequired": "Le date di inizio e fine sono obbligatorie.",
+  "startDateNotBeforeToday": "La data di inizio non può essere prima di oggi.",
+  "endDateNotBeforeStartDate": "La data di fine non può essere prima della data di inizio.",
+  "selectAtLeastOneDay": "Si prega di selezionare almeno un giorno della settimana.",
+  "gettingResponse": "Ottenimento della risposta..."
 }

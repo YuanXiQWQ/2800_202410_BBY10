@@ -155,5 +155,16 @@
   "sat": "週六",
   "sun": "週日",
   "todaysExercises": "今天的鍛煉",
-  "noWorkoutPlan": "今天沒有鍛煉計劃。"
+  "noWorkoutPlan": "今天沒有鍛煉計劃。",
+  "calendarTitle": "新的鍛煉列表",
+  "newExerciseList": "新的鍛煉列表",
+  "newExerciseListTips": "請填寫下面的表格以創建一個新的鍛煉列表。",
+  "startDate": "開始日期",
+  "endDate": "結束日期",
+  "exerciseListSubmitSuccess": "鍛煉列表創建成功。",
+  "startEndDateRequired": "開始日期和結束日期是必填項。",
+  "startDateNotBeforeToday": "開始日期不能早於今天。",
+  "endDateNotBeforeStartDate": "結束日期不能早於開始日期。",
+  "selectAtLeastOneDay": "請至少選擇一週中的一天。",
+  "gettingResponse": "獲取響應中..."
 }
