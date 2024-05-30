@@ -137,6 +137,8 @@ app.post("/logging-in", logIn);
 
 app.get("/forget-password", (req, res) => res.render("forgetPassword", {language: res.locals.language}));
 
+app.get("/about", (req, res) => res.render("about", {language: res.locals.language}));
+
 app.post("/forget-password", forgetPassword);
 
 app.get("/reset-password", (req, res) => {
