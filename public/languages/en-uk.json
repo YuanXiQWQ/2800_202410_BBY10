@@ -163,5 +163,6 @@
   "startEndDateRequired": "Start date and end date are required.",
   "startDateNotBeforeToday": "Start date cannot be before today.",
   "endDateNotBeforeStartDate": "End date cannot be before the start date.",
-  "selectAtLeastOneDay": "Please select at least one day of the week."
+  "selectAtLeastOneDay": "Please select at least one day of the week.",
+  "gettingResponse": "Getting response..."
 }

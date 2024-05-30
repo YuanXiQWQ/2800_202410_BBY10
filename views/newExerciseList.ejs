@@ -93,19 +93,21 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const statusMessage = document.getElementById('statusMessage');
+        const submitButton = document.querySelector('button[type="submit"]');
+
         if (localStorage.getItem('successFlag')) {
             statusMessage.textContent = '<%= language.exerciseListSubmitSuccess %>';
             statusMessage.style.color = 'green';
             localStorage.removeItem('successFlag');
         }
 
-
         document.getElementById('exerciseListForm').addEventListener('submit', (event) => {
             event.preventDefault();
+            
+            submitButton.disabled = true;
 
             const form = event.target;
             const formData = new FormData(form);
-            const statusMessage = document.getElementById('statusMessage');
 
             const startDate = formData.get('startDate');
             const endDate = formData.get('endDate');
@@ -115,22 +117,27 @@
             if (!startDate || !endDate) {
                 statusMessage.textContent = '<%= language.startEndDateRequired %>';
                 statusMessage.style.color = 'red';
+                submitButton.disabled = false;
             } else if (startDate < today) {
                 statusMessage.textContent = '<%= language.startDateNotBeforeToday %>';
                 statusMessage.style.color = 'red';
+                submitButton.disabled = false;
             } else if (endDate < startDate) {
                 statusMessage.textContent = '<%= language.endDateNotBeforeStartDate %>';
                 statusMessage.style.color = 'red';
+                submitButton.disabled = false;
             } else if (!selectedDays) {
                 statusMessage.textContent = '<%= language.selectAtLeastOneDay %>';
                 statusMessage.style.color = 'red';
-
+                submitButton.disabled = false;
             } else {
                 const exerciseData = {
                     startDate: startDate,
                     endDate: endDate,
-                    days: selectedDays
+                    time: selectedDays
                 };
+                statusMessage.textContent = '<%= language.gettingResponse %>';
+                statusMessage.style.color = 'purple';
 
                 fetch('/submitNewExerciseList', {
                     method: 'POST',
@@ -142,13 +149,18 @@
                     if (data.success) {
                         localStorage.setItem('successFlag', 'true');
                         location.reload();
+                        statusMessage.textContent = '<%= language.exerciseListSubmitSuccess %>';
+                        statusMessage.style.color = 'green';
                     } else {
                         statusMessage.textContent = data.message;
                         statusMessage.style.color = 'red';
+                        submitButton.disabled = false;
                     }
-                }).catch(err => {
-                    statusMessage.textContent = '<%= language.errorOccurred %>' + err;
+                }).catch((error) => {
+                    console.error('Error:', error);
+                    statusMessage.textContent = '<%= language.submitFailed %>';
                     statusMessage.style.color = 'red';
+                    submitButton.disabled = false;
                 });
             }
         });
