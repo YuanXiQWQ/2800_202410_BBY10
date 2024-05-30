@@ -296,16 +296,12 @@ export function AdditionalUserInfo(req, res) {
             });
         }
 
-        const {
-            username, firstName, lastName, email, birthday, password: hashedPassword,
-        } = req.session.userData;
+        const {username} = req.session.userData;
 
         try {
             const user = await User.findOne({username});
             if (!user) {
-                return res.status(404).json({
-                    success: false, message: "User not found.",
-                });
+                return res.status(404).json({success: false, message: "User not found."});
             }
 
             user.weight = weight;
