@@ -39,7 +39,7 @@ export async function sendMessageToChatGPT(messageToSend) {
     try {
         const response = await fetch(link, httpPost);
         const result = await response.json();
-        const message = JSON.stringify(result.choices[0].message.content);
+        const message = result.choices[0].message.content;
         console.log("ChatGPT: " + message);
 
         // Try at most 3 times to parse the message as JSON
@@ -48,6 +48,8 @@ export async function sendMessageToChatGPT(messageToSend) {
         for (let i = 0; i < 3; i++) {
             try {
                 parsedMessage = JSON.parse(message);
+                console.log(parsedMessage, 'parsedMessageparsedMessage')
+
                 success = true;
                 break;
             } catch (parseError) {
