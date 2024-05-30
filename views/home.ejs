@@ -26,7 +26,7 @@
             font-weight: bold;
             color: #4f4f4f;
             cursor: pointer;
-        }
+            }
 
         #userAvatar {
             margin: auto;
@@ -57,7 +57,7 @@
 
         .lang-text {
             font-weight: 900;
-        }
+            }
 
         .card {
             background-color: #f8f9fa;
@@ -65,17 +65,18 @@
             padding: 20px;
             margin: 10px 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+            }
 
         .card-title {
             font-weight: bold;
             font-size: 1.2em;
-        }
+            }
 
         .card-content {
             margin-top: 10px;
-        }
+            }
     </style>
+    <script type="module" src="/scripts/home.js"></script>
 </head>
 <%- include("templates/navbar") %>
 <div class="container">
@@ -99,99 +100,7 @@
 
     <div id="workoutPlan" class="undecorated">
         <p style="font-weight: 900; text-align: center;"><%= language.todaysExercises %></p>
-        <div id="exercisesList" class="undecorated">
-            <!-- Exercise cards will be inserted here by JavaScript -->
-        </div>
+        <div id="exercisesList" class="undecorated"></div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    const data2 = <%- JSON.stringify(data) %>;
-    console.log(data2);
-
-    const exercisesList = document.getElementById('exercisesList');
-    const exercises = data2._doc.exercises;
-
-    function getDayName(dayCode) {
-        const dayNames = {
-            mon: 'Monday',
-            tue: 'Tuesday',
-            wed: 'Wednesday',
-            thu: 'Thursday',
-            fri: 'Friday',
-            sat: 'Saturday',
-            sun: 'Sunday'
-        };
-        return dayNames[dayCode];
-    }
-
-    function getWeekNumber(date) {
-        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-        const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-    }
-
-    function filterExercisesByDay(day) {
-        const today = new Date();
-        const currentWeekNumber = getWeekNumber(today);
-        const selectedDay = getDayName(day);
-
-        const filteredExercises = exercises.filter(exercise => {
-            const exerciseDate = new Date(exercise.start);
-            const exerciseDay = exerciseDate.toLocaleDateString('en-US', { weekday: 'long' });
-            const exerciseWeekNumber = getWeekNumber(exerciseDate);
-            return exerciseDay === selectedDay && exerciseWeekNumber === currentWeekNumber;
-        });
-        return filteredExercises;
-    }
-
-    function displayExercises(day) {
-        const filteredExercises = filterExercisesByDay(day);
-        exercisesList.innerHTML = ''; // Clear the existing exercises
-
-        if (filteredExercises.length > 0) {
-            filteredExercises.forEach(function(exercise) {
-                const card = document.createElement('div');
-                card.className = 'card';
-
-                const cardTitle = document.createElement('div');
-                cardTitle.className = 'card-title';
-                cardTitle.textContent = exercise.title;
-
-                const cardContent = document.createElement('div');
-                cardContent.className = 'card-content';
-
-                let contentText = `Duration: ${exercise.time} minutes | Date: ${exercise.start}`;
-                if (exercise.Reps && exercise.Sets) {
-                    contentText += ` | Reps: ${exercise.Reps} | Sets: ${exercise.Sets}`;
-                }
-                cardContent.textContent = contentText;
-
-                card.appendChild(cardTitle);
-                card.appendChild(cardContent);
-
-                exercisesList.appendChild(card);
-            });
-        } else {
-            const noPlanMessage = document.createElement('p');
-            noPlanMessage.textContent = '<%= language.noWorkoutPlan %>';
-            exercisesList.appendChild(noPlanMessage);
-        }
-    }
-
-    // Display today's exercises by default
-    const todayDayCode = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
-    displayExercises(todayDayCode);
-
-    // Add event listeners to day links
-    const dayLinks = document.querySelectorAll('#days .lang-text');
-    dayLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            const day = this.getAttribute('data-day');
-            displayExercises(day);
-        });
-    });
-});
-
-    </script>
 </div>
 <%- include("templates/footer") %>

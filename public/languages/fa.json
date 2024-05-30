@@ -155,5 +155,16 @@
   "sat": "شنبه",
   "sun": "یک‌شنبه",
   "todaysExercises": "تمرینات امروز",
-  "noWorkoutPlan": "برای امروز هیچ برنامه تمرینی وجود ندارد."
+  "noWorkoutPlan": "برای امروز هیچ برنامه تمرینی وجود ندارد.",
+  "calendarTitle": "لیست تمرین جدید",
+  "newExerciseList": "لیست تمرین جدید",
+  "newExerciseListTips": "لطفا فرم زیر را پر کنید تا لیست تمرین جدید ایجاد شود.",
+  "startDate": "تاریخ شروع",
+  "endDate": "تاریخ پایان",
+  "exerciseListSubmitSuccess": "لیست تمرین با موفقیت ایجاد شد.",
+  "startEndDateRequired": "تاریخ شروع و پایان الزامی است.",
+  "startDateNotBeforeToday": "تاریخ شروع نمی‌تواند قبل از امروز باشد.",
+  "endDateNotBeforeStartDate": "تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد.",
+  "selectAtLeastOneDay": "لطفاً حداقل یک روز هفته را انتخاب کنید.",
+  "gettingResponse": "در حال دریافت پاسخ..."
 }
