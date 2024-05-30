@@ -3,7 +3,22 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(exercisesListJSON => {
             const exercisesList = document.getElementById('exercisesList');
-            const exercises = exercisesListJSON.exercises;
+            const exercises = exercisesListJSON.exercises.map(event => {
+                let startDate = new Date(event.start);
+                startDate.setDate(startDate.getDate() + 3);
+
+                let endDate = null;
+                if (event.end) {
+                    endDate = new Date(event.end);
+                    endDate.setDate(endDate.getDate() + 3);
+                }
+
+                return {
+                    ...event,
+                    start: startDate.toISOString().substring(0, 10),
+                    end: endDate ? endDate.toISOString().substring(0, 10) : null,
+                };
+            });
 
             function getDayName(dayCode) {
                 const dayNames = {
@@ -24,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 return exercises.filter(exercise => {
                     const exerciseDate = new Date(exercise.start);
-                    const exerciseDayName = exerciseDate.toLocaleDateString('en-US', { weekday: 'long' });
+                    const exerciseDayName = exerciseDate.toLocaleDateString('en-US', {weekday: 'long'});
                     return exerciseDayName === selectedDayName;
                 });
             }
@@ -63,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            const todayDayCode = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+            const todayDayCode = new Date().toLocaleDateString('en-US', {weekday: 'short'}).toLowerCase();
             displayExercises(todayDayCode);
 
             const dayLinks = document.querySelectorAll('#days .lang-text');
