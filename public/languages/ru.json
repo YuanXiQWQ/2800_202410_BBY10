@@ -155,5 +155,16 @@
   "sat": "СБ",
   "sun": "ВС",
   "todaysExercises": "Сегодняшние упражнения",
-  "noWorkoutPlan": "На сегодня нет плана тренировок."
+  "noWorkoutPlan": "На сегодня нет плана тренировок.",
+  "calendarTitle": "Новый список упражнений",
+  "newExerciseList": "Новый список упражнений",
+  "newExerciseListTips": "Пожалуйста, заполните форму ниже, чтобы создать новый список упражнений.",
+  "startDate": "Дата начала",
+  "endDate": "Дата окончания",
+  "exerciseListSubmitSuccess": "Список упражнений успешно создан.",
+  "startEndDateRequired": "Дата начала и окончания обязательны.",
+  "startDateNotBeforeToday": "Дата начала не может быть раньше сегодняшнего дня.",
+  "endDateNotBeforeStartDate": "Дата окончания не может быть раньше даты начала.",
+  "selectAtLeastOneDay": "Пожалуйста, выберите хотя бы один день недели.",
+  "gettingResponse": "Получение ответа..."
 }

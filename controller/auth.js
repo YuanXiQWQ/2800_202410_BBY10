@@ -6,8 +6,8 @@ import {google} from "googleapis";
 import dotenv from "dotenv";
 import {User, TempUser} from "../model/User.js";
 import Joi from "joi";
-import fs from 'fs';
-import axios from 'axios';
+import fs from "fs";
+import axios from "axios";
 
 dotenv.config();
 
@@ -84,7 +84,7 @@ const updateRenderEnvVar = async (key, value) => {
     try {
         const response = await axios.patch(`https://api.render.com/v1/services/${serviceId}/env-vars`, [{key, value}], {
             headers: {
-                Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json',
+                Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json",
             },
         });
 
@@ -94,7 +94,7 @@ const updateRenderEnvVar = async (key, value) => {
             console.error(`Failed to update environment variable ${key}.`);
         }
     } catch (error) {
-        console.error('Error updating Render environment variable:', error);
+        console.error("Error updating Render environment variable:", error);
     }
 };
 
@@ -110,18 +110,24 @@ const getAccessToken = async () => {
         if (res.data.refresh_token) {
             process.env.REFRESH_TOKEN = res.data.refresh_token;
             if (process.env.NODE_ENV === "development") {
-                fs.writeFileSync('.env', `\nREFRESH_TOKEN=${res.data.refresh_token}`, {flag: 'a'});
+                const envFilePath = ".env";
+                let envFileContent = fs.readFileSync(envFilePath, "utf8");
+
+                envFileContent = envFileContent.replace(/REFRESH_TOKEN=.*\n?/g, "");
+                envFileContent += `\nREFRESH_TOKEN=${res.data.refresh_token}`;
+
+                fs.writeFileSync(envFilePath, envFileContent);
             } else {
-                await updateRenderEnvVar('REFRESH_TOKEN', res.data.refresh_token);
+                await updateRenderEnvVar("REFRESH_TOKEN", res.data.refresh_token);
             }
         }
 
         return token;
     } catch (error) {
         if (error.response && error.response.status === 400) {
-            console.error('Refresh token is invalid or has expired, please reauthorize the application.');
+            console.error("Refresh token is invalid or has expired, please reauthorize the application.");
         } else {
-            console.error('An error occurred while refreshing the access token:', error);
+            console.error("An error occurred while refreshing the access token:", error);
         }
     }
 };
@@ -228,6 +234,8 @@ export async function register(req, res) {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const verificationToken = crypto.randomBytes(32).toString("hex");
         const verificationLink = `${appUrl}/verify-email?token=${verificationToken}`;
+        console.log("Generated verification link:", verificationLink);
+
         const tempUser = new TempUser({
             username,
             firstName,
@@ -252,14 +260,10 @@ export async function register(req, res) {
 
         await transporter.sendMail(mailOptions);
 
-        return res
-            .status(200)
-            .json({success: true, message: "Verification email sent"});
+        return res.status(200).json({success: true, message: "Verification email sent"});
     } catch (error) {
         console.error("Error:", error);
-        return res
-            .status(500)
-            .json({success: false, message: "Internal Server Error"});
+        return res.status(500).json({success: false, message: "Internal Server Error"});
     }
 }
 
@@ -292,16 +296,12 @@ export function AdditionalUserInfo(req, res) {
             });
         }
 
-        const {
-            username, firstName, lastName, email, birthday, password: hashedPassword,
-        } = req.session.userData;
+        const {username} = req.session.userData;
 
         try {
             const user = await User.findOne({username});
             if (!user) {
-                return res.status(404).json({
-                    success: false, message: "User not found.",
-                });
+                return res.status(404).json({success: false, message: "User not found."});
             }
 
             user.weight = weight;

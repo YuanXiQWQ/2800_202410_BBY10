@@ -16,9 +16,7 @@ import {
 import {forgetPassword, resetPassword} from "./controller/password.js";
 import {sendInformation} from "./controller/chatgptIntegration.js";
 import {getListOfExercises} from "./controller/exercises.js";
-import {
-    authValidation, sessionValidation,
-} from "./middleware/authorization.js";
+import {authValidation, sessionValidation,} from "./middleware/authorization.js";
 import {logIn} from "./controller/login.js";
 import {User, TempUser} from "./model/User.js";
 import {loadLanguage} from "./middleware/loadLanguage.js";
@@ -34,7 +32,6 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Static files
 app.use(express.static(__dirname + "/public"));
 app.use("/controller", express.static(path.join(__dirname, "controller")));
 
@@ -65,9 +62,7 @@ app.post("/submitUser", upload.none(), async (req, res) => {
     } catch (err) {
         console.error("Internal Server Error by:", err);
         if (!res.headersSent) {
-            res
-                .status(500)
-                .json({success: false, message: "Internal Server Error"});
+            res.status(500).json({success: false, message: "Internal Server Error"});
         }
     }
 });
@@ -118,22 +113,53 @@ app.post("/submitAdditionalInfo", (req, res) => {
     AdditionalUserInfo(req, res).catch((err) => {
         console.error("Error submitting additional info:", err);
         if (!res.headersSent) {
-            res
-                .status(500)
-                .json({success: false, message: "Internal Server Error"});
+            res.status(500).json({success: false, message: "Internal Server Error"});
         }
     });
 });
 
-app.get("/calendar", async (req, res) => {
-    const data = await getListOfExercises(req, res);
-
-    res.render("calendar", {data});
+app.get("/calendar", (req, res) => {
+    res.render("calendar");
 });
+
+app.get("/exercisesList", async (req, res) => {
+    try {
+        res.json(await getListOfExercises(req, res));
+    } catch (err) {
+        console.error("Error getting exercises list:", err);
+        res.status(500).json({error: "Internal Server Error" + err});
+    }
+});
+
+app.get("/newExerciseList", ensureAuthenticated, (req, res) => {
+    res.render("newExerciseList", {language: res.locals.language});
+});
+
+app.post("/submitNewExerciseList", ensureAuthenticated, (req, res) => {
+    sendInformation(req, res).then(() => {
+        if (!res.headersSent) {
+            res.status(200).json({success: true, message: "success"});
+        }
+    }).catch((err) => {
+        console.error("Error submitting new exercise list:", err);
+        if (!res.headersSent) {
+            res.status(500).json({success: false, message: "Internal Server Error: " + err});
+        }
+    });
+});
+
 
 app.get("/login", (req, res) => res.render("login", {language: res.locals.language}));
 
-app.post("/logging-in", logIn);
+app.post("/logging-in", async (req, res) => {
+    try {
+        await logIn(req, res);
+        res.redirect("/home");
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({success: false, message: "Internal Server Error"});
+    }
+});
 
 app.get("/forget-password", (req, res) => res.render("forgetPassword", {language: res.locals.language}));
 
@@ -150,17 +176,7 @@ app.get("/reset-password", (req, res) => {
 app.post("/reset-password", resetPassword);
 
 app.get("/home", ensureAuthenticated, async (req, res) => {
-    try {
-        const data = await getListOfExercises(req, res);
-        const user = await User.findById(req.session.userData._id);
-        const workoutPlan = user.workoutPlan || [];
-        res.render("home", {
-            userData: req.session.userData, language: res.locals.language, workoutPlan, data
-        });
-    } catch (err) {
-        console.error("Error retrieving home data:", err);
-        res.status(500).send("Internal Server Error");
-    }
+    res.render("home", {userData: req.session.userData, language: res.locals.language});
 });
 
 app.get("/profile", ensureAuthenticated, (req, res) => res.render("profile", {userData: req.session.userData}));
@@ -294,9 +310,9 @@ app.get("/logout", ensureAuthenticated, (req, res) => {
     });
 });
 
-app.get("*", (req,res) => {
-	res.status(404);
-	res.render('404');
+app.get("*", (req, res) => {
+    res.status(404);
+    res.render('404');
 })
 
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));

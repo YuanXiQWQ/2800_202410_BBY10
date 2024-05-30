@@ -155,5 +155,16 @@
   "sat": "SÁB",
   "sun": "DOM",
   "todaysExercises": "Ejercicios de hoy",
-  "noWorkoutPlan": "No hay plan de entrenamiento para hoy."
+  "noWorkoutPlan": "No hay plan de entrenamiento para hoy.",
+  "calendarTitle": "Nueva lista de ejercicios",
+  "newExerciseList": "Nueva lista de ejercicios",
+  "newExerciseListTips": "Por favor, rellena el formulario a continuación para crear una nueva lista de ejercicios.",
+  "startDate": "Fecha de inicio",
+  "endDate": "Fecha de finalización",
+  "exerciseListSubmitSuccess": "Lista de ejercicios creada con éxito.",
+  "startEndDateRequired": "Las fechas de inicio y finalización son obligatorias.",
+  "startDateNotBeforeToday": "La fecha de inicio no puede ser anterior a hoy.",
+  "endDateNotBeforeStartDate": "La fecha de finalización no puede ser anterior a la fecha de inicio.",
+  "selectAtLeastOneDay": "Por favor, selecciona al menos un día de la semana.",
+  "gettingResponse": "Obteniendo respuesta..."
 }

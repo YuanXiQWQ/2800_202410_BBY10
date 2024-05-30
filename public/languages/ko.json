@@ -156,5 +156,16 @@
   "sat": "토",
   "sun": "일",
   "todaysExercises": "오늘의 운동",
-  "noWorkoutPlan": "오늘은 운동 계획이 없습니다."
+  "noWorkoutPlan": "오늘은 운동 계획이 없습니다.",
+  "calendarTitle": "새 운동 목록",
+  "newExerciseList": "새 운동 목록",
+  "newExerciseListTips": "새 운동 목록을 만들려면 아래 양식을 작성하세요.",
+  "startDate": "시작 날짜",
+  "endDate": "종료 날짜",
+  "exerciseListSubmitSuccess": "운동 목록이 성공적으로 생성되었습니다.",
+  "startEndDateRequired": "시작 날짜와 종료 날짜는 필수입니다.",
+  "startDateNotBeforeToday": "시작 날짜는 오늘 이전일 수 없습니다.",
+  "endDateNotBeforeStartDate": "종료 날짜는 시작 날짜 이전일 수 없습니다.",
+  "selectAtLeastOneDay": "적어도 일주일에 하루를 선택하세요.",
+  "gettingResponse": "응답을 받는 중..."
 }

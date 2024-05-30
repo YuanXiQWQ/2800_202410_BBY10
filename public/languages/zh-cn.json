@@ -155,5 +155,16 @@
   "sat": "周六",
   "sun": "周日",
   "todaysExercises": "今天的锻炼",
-  "noWorkoutPlan": "今天没有锻炼计划。"
+  "noWorkoutPlan": "今天没有锻炼计划。",
+  "calendarTitle": "新的锻炼列表",
+  "newExerciseList": "新的锻炼列表",
+  "newExerciseListTips": "请填写下面的表格以创建一个新的锻炼列表。",
+  "startDate": "开始日期",
+  "endDate": "结束日期",
+  "exerciseListSubmitSuccess": "锻炼列表创建成功。",
+  "startEndDateRequired": "开始日期和结束日期是必填项。",
+  "startDateNotBeforeToday": "开始日期不能早于今天。",
+  "endDateNotBeforeStartDate": "结束日期不能早于开始日期。",
+  "selectAtLeastOneDay": "请至少选择一周中的一天。",
+  "gettingResponse": "获取响应中..."
 }

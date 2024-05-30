@@ -156,5 +156,16 @@
   "sat": "SA",
   "sun": "SO",
   "todaysExercises": "Heutige Übungen",
-  "noWorkoutPlan": "Kein Trainingsplan für heute."
+  "noWorkoutPlan": "Kein Trainingsplan für heute.",
+  "calendarTitle": "Neue Übungsliste",
+  "newExerciseList": "Neue Übungsliste",
+  "newExerciseListTips": "Bitte füllen Sie das untenstehende Formular aus, um eine neue Übungsliste zu erstellen.",
+  "startDate": "Anfangsdatum",
+  "endDate": "Enddatum",
+  "exerciseListSubmitSuccess": "Übungsliste erfolgreich erstellt.",
+  "startEndDateRequired": "Anfangs- und Enddatum sind erforderlich.",
+  "startDateNotBeforeToday": "Das Anfangsdatum kann nicht vor heute liegen.",
+  "endDateNotBeforeStartDate": "Das Enddatum kann nicht vor dem Anfangsdatum liegen.",
+  "selectAtLeastOneDay": "Bitte wählen Sie mindestens einen Wochentag aus.",
+  "gettingResponse": "Antwort wird empfangen..."
 }
