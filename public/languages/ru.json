@@ -99,7 +99,7 @@
   "fitnessGoal": "Цель фитнеса",
   "fitnessLevel": "Уровень фитнеса",
   "saturday":"Saturday",
-
+  "theme": "Переключить тему",  
   "workoutDuration": "Продолжительность тренировки",
   "workoutSettingsSuccess": "Настройки тренировки успешно обновлены.",
   "editUserPersonalInfoTitle": "Редактировать личную информацию",

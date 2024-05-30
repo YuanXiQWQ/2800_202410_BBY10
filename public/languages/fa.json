@@ -100,6 +100,7 @@
   "fitnessLevel": "سطح تناسب اندام",
   "workoutDuration": "مدت زمان تمرین ",
   "saturday":"Saturday",
+  "theme": "تغییر تم",         
 
   "workoutSettingsSuccess": "تنظیمات تمرین با موفقیت به روز شد.",
   "editUserPersonalInfoTitle": "ویرایش اطلاعات شخصی",

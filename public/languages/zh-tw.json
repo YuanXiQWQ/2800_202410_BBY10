@@ -99,6 +99,7 @@
   "fitnessGoal": "健身目標",
   "fitnessLevel": "健身級別",
   "saturday":"Saturday",
+  "theme": "切換主題",       
 
   "workoutDuration": "鍛煉時長",
   "workoutSettingsSuccess": "鍛煉設置更新成功。",

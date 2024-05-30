@@ -99,6 +99,7 @@
   "fitnessGoal": "フィットネス目標",
   "fitnessLevel": "フィットネスレベル",
   "saturday":"Saturday",
+  "theme": "テーマを切り替える",  
 
   "workoutDuration": "トレーニングの期間",
   "workoutSettingsSuccess": "トレーニング設定が正常に更新されました。",

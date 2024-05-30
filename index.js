@@ -255,14 +255,7 @@ app.post("/postChangeLanguage", (req, res) => {
 app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => res.render("loading"));
 
 app.get("/exercises", ensureAuthenticated, (req, res) => {
-    getListOfExercises(req, res)
-        .then((data) => {
-            return res.render("exercises", {data: data?.exercises});
-        })
-        .catch((err) => {
-            console.log("Internal Server Error by: " + err);
-            res.status(500).send("Internal Server Error");
-        });
+    res.render("workouts")
 });
 
 app.get("/process-info", ensureAuthenticated, sessionValidation, (req, res) => {
@@ -279,9 +272,18 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
     });
 });
 
-app.get("/train", ensureAuthenticated, (req, res) => {
-   res.render("train-blank")
+app.get("/train-plank", ensureAuthenticated, (req, res) => {
+   res.render("train-plank")
 });
+
+
+app.get("/train-squat", ensureAuthenticated, (req, res) => {
+    res.render("train-squat")
+ });
+ 
+app.get("/workouts", ensureAuthenticated, (req, res) => {
+    res.render("workouts")
+ });
 
 app.get("/logout", ensureAuthenticated, (req, res) => {
     req.session.destroy((err) => {
