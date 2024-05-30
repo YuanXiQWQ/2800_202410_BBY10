@@ -62,6 +62,5 @@ export async function sendInformation(req, res) {
 
     await saveExercises(userId, gptResponse);
     req.session.userData = {...req.session.userData, id: userId};
-    console.log(gptResponse);
     res.status(200).send("success")
 }

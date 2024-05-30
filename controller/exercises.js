@@ -17,6 +17,7 @@ export async function getListOfExercises(req, res) {
     exercises: data?.exercises.map((ele) => ({
       ...ele,
       start: formatDate(ele?.start),
+      end: formatDate(ele?.end),
     })),
   };
 }
