@@ -154,7 +154,6 @@ app.get("/login", (req, res) => res.render("login", {language: res.locals.langua
 app.post("/logging-in", async (req, res) => {
     try {
         await logIn(req, res);
-        res.redirect("/home");
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).json({success: false, message: "Internal Server Error"});
