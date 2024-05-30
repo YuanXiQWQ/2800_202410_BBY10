@@ -113,7 +113,7 @@ body {
 }
 
 .abs-left-13 {
-  z-index: 1001;
+  /* z-index: 1001; */
   /* position: absolute;
     right: 60px;
     top: 3px; */
@@ -215,11 +215,11 @@ form > .btn {
   #topNavbar {
     display: none;
   }
-
+/* 
   .abs-left-13 {
     right: 10px;
     top: 10px;
-  }
+  } */
 
   #bottomNavbar {
     bottom: 0;
