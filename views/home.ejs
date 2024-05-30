@@ -123,9 +123,12 @@
             
             const exercisesList = document.getElementById('exercisesList');
             const exercises = data2._doc.exercises;
+            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-            if (exercises.length > 0) {
-                exercises.forEach(function(exercise) {
+            const todaysExercises = exercises.filter(exercise => exercise.start === today);
+
+            if (todaysExercises.length > 0) {
+                todaysExercises.forEach(function(exercise) {
                     const card = document.createElement('div');
                     card.className = 'card';
 
