@@ -1,72 +1,91 @@
+import moment from 'moment';
+
+/**
+ * Function to calculate the dates
+ * that meet the criteria specified in the time array between the start date and the end date.
+ *
+ * @param time - Array of numbers representing the days of the week the user can work out (0-6 for Monday-Sunday).
+ * @param startDate - Moment object representing the start date of the fitness plan.
+ * @param endDate - Moment object representing the end date of the fitness plan.
+ * @return {*[]} - Array of strings representing the dates that meet the criteria.
+ */
+function calculateWorkoutDays(time, startDate, endDate) {
+    let workoutDays = [];
+    let currentDate = moment(startDate);
+
+    while (currentDate.isSameOrBefore(endDate)) {
+        if (time.includes(currentDate.day())) {
+            workoutDays.push(currentDate.format('YYYY-MM-DD'));
+        }
+        currentDate.add(1, 'days');
+    }
+
+    return workoutDays;
+}
+
 /**
  * Function to generate a fitness plan prompt based on user inputs.
- * The function takes the current date and user parameters to create a detailed fitness plan in JSON format.
  *
- * @param {number} time - Bitmask representing workout days of the week (0-6 for Sunday-Saturday).
+ * @param {number[]} time - Array of numbers representing the days of the week the user can work out (0-6 for Monday-Sunday).
  * @param {string} fitnessLevel - User's fitness level (e.g., beginner, intermediate, advanced).
- * @param {number} weight - User's weight.
+ * @param {number} height - User's height in cm.
+ * @param {number} weight - User's weight in kg.
  * @param {string} goal - User's fitness goal (e.g., lose weight, build muscle).
- * @return {string} - A prompt string describing the fitness plan with workout days, fitness level, weight, and goal, formatted in JSON.
+ * @param {object} startDate - Moment object representing the start date of the fitness plan.
+ * @param {object} endDate - Moment object representing the end date of the fitness plan.
+ * @return {string} - A prompt string to be sent to GPT-3.5-turbo for generating the fitness plan.
  */
-export function generatePrompt(time, fitnessLevel, weight, goal) {
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1;
-    const currentDay = today.getDate();
-    const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+export function generatePrompt(time, fitnessLevel, height, weight, goal, startDate, endDate) {
+    const workoutDays = calculateWorkoutDays(time, startDate, endDate);
 
-    // Interpret the 'time' parameter to determine workout days
-    const workoutDays = [];
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    for (let i = 0; i < 7; i++) {
-        if (time & (1 << i)) { // Check each bit in the 'time' bitmask
-            workoutDays.push(days[i]);
-        }
-    }
-    const startDate = new Date(currentYear, currentMonth - 1, 1);
-    const endDate = new Date(currentYear, currentMonth, 0);
+    const prompt = `Create a fitness plan only for the following dates:
+     ${workoutDays.join(', ')}
+    The plan should be based on the following parameters:
+        Fitness Level: ${fitnessLevel}
+        Height: ${height} cm
+        Weight: ${weight} kg
+        Goal: ${goal}
+    The plan should be a JSON formatted array, where each object represents a workout session including:
+        - "title" - (string value) the name of the workout
+        - "time" - (numeric value) the duration of the workout in minutes
+        - "Reps" - (numeric value) the number of repetitions per set
+        - "Sets" - (numeric value) the number of sets
+        - "start" - (date value) the start date of the workout in the format 'YYYY-MM-DD'
+        - "end" - (date value) the end date of the workout in the format 'YYYY-MM-DD'
+    
+    Ensure the response meets the following criteria:
+    1. The generated fitness plan should schedule activities within the specified dates.
+    2. The start and end dates of the plan items can be different, but they must fall within the specified dates. For
+    example, if an item takes two days to complete and the workout days are 2024-05-01, 2024-05-03, and 2024-05-04, the
+    item can be scheduled as follows:
+       - Item 1: start and end on 2024-05-01.
+       - Item 2: start and end on 2024-05-03.
+       - Item 3: start on 2024-05-03 and end on 2024-05-04.
+    3. The fitness content should meet the following:
+       - It can be repetitive but should be scientific and reasonable.
+       - It should match the user's fitness level, height, and weight.
+       - It should meet the user's fitness goals.
+    5. For dates outside the specified dates, it is strictly prohibited to generate a JSON object for that day or
+    attempt to set it as a rest day or similar.
+    
+    For example, if the workouts are scheduled for the following dates:
+    ["2024-05-01", "2024-05-02", "2024-05-06", "2024-05-08", "2024-05-09", "2024-05-13", "2024-05-15"],
+    the fitness level is Beginner, height is 170 cm, weight is 80 kg, and the goal is weight loss, it can be scheduled
+    as follows:
+    [
+        {"title": "Push-Ups", "time": 20, "Reps": 12, "Sets": 3, "start": "2024-05-01", "end": "2024-05-01"},
+        {"title": "Squats", "time": 20, "Reps": 15, "Sets": 3, "start": "2024-05-01", "end": "2024-05-02"},
+        {"title": "Sit-Ups", "time": 25, "Reps": 15, "Sets": 3, "start": "2024-05-06", "end": "2024-05-06"},
+        {"title": "Jump Rope", "time": 30, "Reps": 0, "Sets": 1, "start": "2024-05-08", "end": "2024-05-08"},
+        {"title": "Pull-Ups", "time": 15, "Reps": 8, "Sets": 3, "start": "2024-05-08", "end": "2024-05-09"},
+        {"title": "Plank", "time": 20, "Reps": 0, "Sets": 3, "start": "2024-05-13", "end": "2024-05-13"},
+        {"title": "Jump Rope", "time": 25, "Reps": 20, "Sets": 3, "start": "2024-05-15", "end": "2024-05-15"}
+    ]
+    
+    Ensure the response is a JSON formatted array with no additional text or unnecessary symbols. The dates should be
+    within the specified start and end dates and match the selected workout days. Each workout should be specific and
+    detailed to meet the user's fitness level, height, weight, and goal.`;
 
-    return `{
-      "start_date": "${currentYear}-${currentMonth}-${currentDay}",
-      "end_date": "${currentYear}-${currentMonth}-${daysInMonth}",
-      "parameters": {
-        "workout_days": ${JSON.stringify(workoutDays)},
-        "fitness_level": "${fitnessLevel}",
-        "weight": ${weight},
-        "goal": "${goal}"
-      },
-      "instructions": "Create a fitness plan in JSON formatted array, where each object represents a workout session 
-      that includes the name of the workout, the duration in minutes, the start date in the format 'YYYY-MM-DD'. For 
-      example, if workouts are scheduled for Monday and Wednesday, and the first Monday of this month falls on the 
-      ${currentDay}, the JSON should look like this: [
-      {"title": "Push-Ups", "time": 30, "Reps": 10, "Sets": 3, "start": "${currentYear}-${currentMonth}-${currentDay}"}, 
-      {"title": "Squats", "time": 45, "Reps": 10, "Sets": 3, "start": "${currentYear}-${currentMonth}-${currentDay + 2}"}
-      ]. 
-      The response should be strictly an array of JSON objects, with no additional text or unnecessary symbols. The time
-      format should be YYYY-MM-DD. MAKE SURE THE MONTH IS 2 DIGITS PLEASE. I also need the exercises to be specific and
-      not just "Cardio" or "Strength". If there are multiple exercises for the same day, they should be separated with
-      separate titles, times, starts, etc. Use your judgment based on the given information to provide the best
-      workout plan."
-    }`;
-
-    return `Create a fitness plan for the current month, starting from today (${currentDay}-${currentMonth}-${currentYear}) until the end of the month (${daysInMonth}-${currentMonth}-${currentYear}). This plan should be based on the following parameters:
-    Workout Days: ${workoutDays}
-    Fitness Level: ${fitnessLevel}
-    Weight: ${weight}
-    Goal: ${goal}
-    The plan should be a JSON formatted array, where each object represents a workout session that includes:
-    - The name of the workout
-    - The duration of the workout in minutes
-    - The start date in the format 'day-month-year', adjusted for the days you have chosen to workout.
-  
-  For example, if workouts are scheduled for Monday and Wednesday, and the first Monday of this month falls on the ${currentDay}, the JSON should look like this:
-      
-       [
-        { "title": "Push-Ups", "time": 30, "Reps": 10, "Sets:" 3, "start": "${currentYear}-${currentMonth}-${currentDay}" },
-        { "title": "Squats", "time": 45, "Reps": 10, "Sets:" 3, "start": "${currentYear}-${currentMonth}-${currentDay + 2}" }  // Assuming today is Monday and the day after next is Wednesday
-      ]
-  
-  Each JSON object corresponds to a specific workout session. The response should strictly be an array of JSON objects, with no additional text or unnecessary symbols. The time format should be YYYY-MM-DD. MAKE SURE THE MONTH IS 2 DIGITS PLEASE, RESPONSE ONLY WITH THE ARRAY PLEASE. I also need the exercises to be specific and not just "Cardio" or "Strength.
-  If i have multiple exercises for the same day I want them seperated with sepearte titles, time, start ect. Remember to carefully go over the parameters to give a proper detailed workout plan. Multiple workouts are allowed per day, use your judgement based on the given information to give the best workout plan.`
-
+    console.log(prompt);
+    return prompt;
 }

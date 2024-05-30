@@ -2,6 +2,7 @@ import {sendMessageToChatGPT} from "../model/ChatGPT.js";
 import {generatePrompt} from "./prompt.js";
 import {exercises} from "../model/exercises.js";
 import {User} from "../model/User.js";
+import moment from "moment";
 
 /**
  * Asynchronous function to retrieve a user's ID based on their username.
@@ -43,12 +44,17 @@ function saveExercises(userId, exercise) {
  */
 export async function sendInformation(req, res) {
     const user = req.session.userData;
-    const {time, fitnessLevel, weight, goal} = user;
+    const {time, fitnessLevel, height, weight, goal} = user;
+    let {startDate, endDate} = user;
     const userId = await getUserId(user?.username);
     let gptResponse = {};
 
+    // If undefined or null, set as today and after 7 days.
+    startDate = startDate ? startDate : moment().format('YYYY-MM-DD');
+    endDate = endDate ? endDate : moment().add(7, 'days').format('YYYY-MM-DD');
+
     try {
-        gptResponse = await sendMessageToChatGPT(generatePrompt(time, fitnessLevel, weight, goal));
+        gptResponse = await sendMessageToChatGPT(generatePrompt(time, fitnessLevel, height, weight, goal, startDate, endDate));
     } catch (err) {
         console.error("Error:", err);
         return res.status(500).json({success: false, message: "Internal Server Error" + err});
