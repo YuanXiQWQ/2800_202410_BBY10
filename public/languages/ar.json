@@ -97,8 +97,7 @@
   "workoutSettings": "إعدادات التمرين",
   "workoutSettingsTips": "عدل إعدادات التمرين الخاصة بك هنا.",
   "fitnessGoal": "هدف اللياقة البدنية",
-  "saturday":"السبت",
-
+  "saturday": "السبت",
   "fitnessLevel": "مستوى اللياقة البدنية",
   "workoutDuration": "مدة التمرين (ايام)",
   "workoutSettingsSuccess": "تم تحديث إعدادات التمرين بنجاح.",
@@ -155,5 +154,20 @@
   "sat": "السبت",
   "sun": "الأحد",
   "todaysExercises": "تمارين اليوم",
-  "noWorkoutPlan": "لا توجد خطة تمرين لليوم."
+  "noWorkoutPlan": "لا توجد خطة تمرين لليوم.",
+  "calendarTitle": "قائمة تمارين جديدة",
+  "newExerciseList": "قائمة تمارين جديدة",
+  "newExerciseListTips": "يرجى ملء النموذج أدناه لإنشاء قائمة تمارين جديدة.",
+  "startDate": "تاريخ البدء",
+  "endDate": "تاريخ الانتهاء",
+  "exerciseListSubmitSuccess": "تم إنشاء قائمة التمارين بنجاح.",
+  "startEndDateRequired": "تاريخ البدء وتاريخ الانتهاء مطلوبان.",
+  "startDateNotBeforeToday": "لا يمكن أن يكون تاريخ البدء قبل اليوم.",
+  "endDateNotBeforeStartDate": "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء.",
+  "selectAtLeastOneDay": "يرجى اختيار يوم واحد على الأقل في الأسبوع.",
+  "gettingResponse": "جارٍ الحصول على الاستجابة...",
+  "trackYourPlank": "تتبع تمارين البلانك",
+  "plankDescription": "الوصول إلى أداة تتبع البلانك الخاصة بنا للحصول على تعليقات فورية حول الوضعية والمدة لتحسين تمارين البلانك وتقوية عضلاتك الأساسية.",
+  "trackYourSquats": "تتبع تمارين القرفصاء",
+  "squatDescription": "ابدأ تتبع تمارين القرفصاء هنا. عزز وضعيتك وقوتك من خلال جلسات القرفصاء الموجهة لدينا."
 }

@@ -100,8 +100,7 @@
   "fitnessLevel": "Niveau de forme physique",
   "workoutDuration": "Durée de l'entraînement",
   "saturday": "Samedi",
-  "theme": "Changer le thème", 
-
+  "theme": "Changer le thème",
   "workoutSettingsSuccess": "Paramètres d'entraînement mis à jour avec succès.",
   "editUserPersonalInfoTitle": "Modifier les informations personnelles",
   "editYourPersonalInformation": "Modifiez vos informations personnelles",
@@ -167,5 +166,9 @@
   "startDateNotBeforeToday": "La date de début ne peut pas être antérieure à aujourd'hui.",
   "endDateNotBeforeStartDate": "La date de fin ne peut pas être antérieure à la date de début.",
   "selectAtLeastOneDay": "Veuillez sélectionner au moins un jour de la semaine.",
-  "gettingResponse": "Obtention de la réponse..."
+  "gettingResponse": "Obtention de la réponse...",
+  "trackYourPlank": "Suivez votre planche",
+  "plankDescription": "Accédez à notre outil de suivi de la planche pour un retour en temps réel sur la posture et la durée afin de perfectionner vos planches et renforcer votre tronc.",
+  "trackYourSquats": "Suivez vos squats",
+  "squatDescription": "Commencez à suivre vos exercices de squat ici. Améliorez votre forme et votre force avec nos séances de squat guidées."
 }

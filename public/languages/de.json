@@ -17,8 +17,7 @@
   "thursday": "Donnerstag",
   "friday": "Freitag",
   "saturday": "Samstag",
-  "theme": "Thema wechseln",  
-
+  "theme": "Thema wechseln",
   "sunday": "Sonntag",
   "goal": "Ziel",
   "workoutLevel": "Trainingsstufe",
@@ -167,5 +166,9 @@
   "startDateNotBeforeToday": "Das Anfangsdatum kann nicht vor heute liegen.",
   "endDateNotBeforeStartDate": "Das Enddatum kann nicht vor dem Anfangsdatum liegen.",
   "selectAtLeastOneDay": "Bitte wählen Sie mindestens einen Wochentag aus.",
-  "gettingResponse": "Antwort wird empfangen..."
+  "gettingResponse": "Antwort wird empfangen...",
+  "trackYourPlank": "Verfolgen Sie Ihr Planking",
+  "plankDescription": "Greifen Sie auf unser Planking-Tracking-Tool zu, um in Echtzeit Feedback zur Haltung und Dauer zu erhalten, um Ihr Planking zu perfektionieren und Ihre Rumpfkraft zu stärken.",
+  "trackYourSquats": "Verfolgen Sie Ihre Kniebeugen",
+  "squatDescription": "Beginnen Sie hier, Ihre Kniebeugen-Übungen zu verfolgen. Verbessern Sie Ihre Form und Stärke mit unseren geführten Kniebeugen-Sitzungen."
 }

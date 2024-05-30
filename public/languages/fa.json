@@ -100,8 +100,7 @@
   "fitnessLevel": "سطح تناسب اندام",
   "workoutDuration": "مدت زمان تمرین ",
   "saturday": "شنبه",
-  "theme": "تغییر تم",         
-
+  "theme": "تغییر تم",
   "workoutSettingsSuccess": "تنظیمات تمرین با موفقیت به روز شد.",
   "editUserPersonalInfoTitle": "ویرایش اطلاعات شخصی",
   "editYourPersonalInformation": "اطلاعات شخصی خود را ویرایش کنید",
@@ -167,5 +166,9 @@
   "startDateNotBeforeToday": "تاریخ شروع نمی‌تواند قبل از امروز باشد.",
   "endDateNotBeforeStartDate": "تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد.",
   "selectAtLeastOneDay": "لطفاً حداقل یک روز هفته را انتخاب کنید.",
-  "gettingResponse": "در حال دریافت پاسخ..."
+  "gettingResponse": "در حال دریافت پاسخ...",
+  "trackYourPlank": "پیگیری تمرین پلانک شما",
+  "plankDescription": "به ابزار ردیابی پلانک ما دسترسی پیدا کنید تا بازخوردهای فوری در مورد وضعیت و مدت زمان برای بهبود تمرین پلانک و تقویت عضلات مرکزی خود را دریافت کنید.",
+  "trackYourSquats": "پیگیری تمرین اسکوات شما",
+  "squatDescription": "اینجا تمرینات اسکوات خود را پیگیری کنید. با جلسات راهنمایی اسکوات ما، فرم و قدرت خود را بهبود بخشید."
 }

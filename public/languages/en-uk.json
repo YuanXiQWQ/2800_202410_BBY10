@@ -16,9 +16,8 @@
   "wednesday": "Wednesday",
   "thursday": "Thursday",
   "friday": "Friday",
-  "saturday":"Saturday",
+  "saturday": "Saturday",
   "theme": "Switch Theme",
-
   "sunday": "Sunday",
   "goal": "Goal",
   "workoutLevel": "Workout Level",
@@ -167,5 +166,9 @@
   "startDateNotBeforeToday": "Start date cannot be before today.",
   "endDateNotBeforeStartDate": "End date cannot be before the start date.",
   "selectAtLeastOneDay": "Please select at least one day of the week.",
-  "gettingResponse": "Getting response..."
+  "gettingResponse": "Getting response...",
+  "trackYourPlank": "Track Your Plank",
+  "plankDescription": "Access our plank tracking tool for real-time feedback on posture and duration to perfect your planks and strengthen your core.",
+  "trackYourSquats": "Track Your Squats",
+  "squatDescription": "Start tracking your squat exercises here. Enhance your form and strength with our guided squat sessions."
 }

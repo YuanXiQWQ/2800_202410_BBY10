@@ -99,8 +99,7 @@
   "fitnessGoal": "フィットネス目標",
   "fitnessLevel": "フィットネスレベル",
   "saturday": "土曜日",
-  "theme": "テーマを切り替える",  
-
+  "theme": "テーマを切り替える",
   "workoutDuration": "トレーニングの期間",
   "workoutSettingsSuccess": "トレーニング設定が正常に更新されました。",
   "editUserPersonalInfoTitle": "個人情報を編集",
@@ -167,5 +166,9 @@
   "startDateNotBeforeToday": "開始日は今日以降でなければなりません。",
   "endDateNotBeforeStartDate": "終了日は開始日以降でなければなりません。",
   "selectAtLeastOneDay": "少なくとも週の一日を選択してください。",
-  "gettingResponse": "応答を取得中..."
+  "gettingResponse": "応答を取得中...",
+  "trackYourPlank": "プランクを記録する",
+  "plankDescription": "私たちのプランクトラッキングツールにアクセスして、姿勢と持続時間に関するリアルタイムのフィードバックを受け取り、プランクを完璧にし、コアを強化しましょう。",
+  "trackYourSquats": "スクワットを記録する",
+  "squatDescription": "ここでスクワットのエクササイズを記録し始めましょう。私たちのガイド付きスクワットセッションでフォームと強さを向上させましょう。"
 }

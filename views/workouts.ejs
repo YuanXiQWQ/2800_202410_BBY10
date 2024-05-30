@@ -1,58 +1,53 @@
-<%- include("templates/header") %> <%- include("templates/navbar") %>
+<%- include("templates/header") %>
+<%- include("templates/navbar") %>
 <head>
-  <link rel="stylesheet" href="/styles/train.css" />
+    <link rel="stylesheet" href="/styles/train.css"/>
 </head>
 <div class="d-flex justify-content-center container flex-column">
     <a href="/train-plank">
-  <div
-    class="card d-flex my-2 flex-row justify-content-between align-items-center w-100 p-3"
-    style="width: 100%; height: 13em"
-  >
-   
-      <div class="card-body col-8">
-        <p class="card-text black font-size-25">Track Your Plank</p>
-        <p class="light font-size-14">
-          Access our plank tracking tool for real-time feedback on posture and
-          duration to perfect your planks and strengthen your core.
-        </p>
-      </div>
-      <div class="col-3 d-flex justify-content-center">
-
-        <img
-        src="/images/plank.png"
-        alt="Card image cap"
-        width="200"
-        class="w-sm-100"
-      />
-        
-      </div>
-  
-  </div>
-</a>
-  <a href="/train-squat">
-  <div
-    class="card d-flex my-2 flex-row justify-content-between align-items-center w-100 p-3"
-    style="width: 100%; height: 13em"
-  >
-
-      <div class="card-body col-8">
-        <p class="card-text black font-size-25">Track Your Squats</p>
-        <p class="light font-size-14">
-          Start tracking your squat exercises here. Enhance your form and
-          strength with our guided squat sessions.
-        </p>
-      </div>
-      <div class="col-3 d-flex justify-content-center">
-        <img
-        class=""
-        src="/images/squat.png"
-        alt="Card image cap"
-        height="150"
-      />
-      </div>
-  
-  </div>
-</a>
+        <div
+                class="card d-flex my-2 flex-row justify-content-between align-items-center w-100 p-3"
+                style="width: 100%; height: 13em"
+        >
+            <div class="card-body col-8">
+                <p class="card-text black font-size-25"><span class="lang-text"><%= language.trackYourPlank %></span>
+                </p>
+                <p class="light font-size-14">
+                    <span class="lang-text"><%= language.plankDescription %></span>
+                </p>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+                <img
+                        src="/images/plank.png"
+                        alt="Card image cap"
+                        width="200"
+                        class="w-sm-100"
+                />
+            </div>
+        </div>
+    </a>
+    <a href="/train-squat">
+        <div
+                class="card d-flex my-2 flex-row justify-content-between align-items-center w-100 p-3"
+                style="width: 100%; height: 13em"
+        >
+            <div class="card-body col-8">
+                <p class="card-text black font-size-25"><span class="lang-text"><%= language.trackYourSquats %></span>
+                </p>
+                <p class="light font-size-14">
+                    <span class="lang-text"><%= language.squatDescription %></span>
+                </p>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+                <img
+                        class=""
+                        src="/images/squat.png"
+                        alt="Card image cap"
+                        height="150"
+                />
+            </div>
+        </div>
+    </a>
 </div>
 
 <%- include("templates/footer") %>

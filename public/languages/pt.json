@@ -165,5 +165,9 @@
   "startDateNotBeforeToday": "A data de início não pode ser antes de hoje.",
   "endDateNotBeforeStartDate": "A data de término não pode ser antes da data de início.",
   "selectAtLeastOneDay": "Por favor, selecione pelo menos um dia da semana.",
-  "gettingResponse": "Obtendo resposta..."
+  "gettingResponse": "Obtendo resposta...",
+  "trackYourPlank": "Acompanhe sua prancha",
+  "plankDescription": "Acesse nossa ferramenta de rastreamento de prancha para feedback em tempo real sobre postura e duração para aperfeiçoar suas pranchas e fortalecer seu core.",
+  "trackYourSquats": "Acompanhe seus agachamentos",
+  "squatDescription": "Comece a acompanhar seus exercícios de agachamento aqui. Melhore sua forma e força com nossas sessões guiadas de agachamento."
 }
