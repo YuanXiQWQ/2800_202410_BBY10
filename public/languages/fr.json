@@ -155,5 +155,16 @@
   "sat": "SAM",
   "sun": "DIM",
   "todaysExercises": "Exercices d'aujourd'hui",
-  "noWorkoutPlan": "Aucun plan d'entraînement pour aujourd'hui."
+  "noWorkoutPlan": "Aucun plan d'entraînement pour aujourd'hui.",
+  "calendarTitle": "Nouvelle liste d'exercices",
+  "newExerciseList": "Nouvelle liste d'exercices",
+  "newExerciseListTips": "Veuillez remplir le formulaire ci-dessous pour créer une nouvelle liste d'exercices.",
+  "startDate": "Date de début",
+  "endDate": "Date de fin",
+  "exerciseListSubmitSuccess": "Liste d'exercices créée avec succès.",
+  "startEndDateRequired": "Les dates de début et de fin sont obligatoires.",
+  "startDateNotBeforeToday": "La date de début ne peut pas être antérieure à aujourd'hui.",
+  "endDateNotBeforeStartDate": "La date de fin ne peut pas être antérieure à la date de début.",
+  "selectAtLeastOneDay": "Veuillez sélectionner au moins un jour de la semaine.",
+  "gettingResponse": "Obtention de la réponse..."
 }
