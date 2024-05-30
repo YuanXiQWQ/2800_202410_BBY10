@@ -22,12 +22,10 @@ async function getUserId(username) {
  * @param {Object} exercise - The exercise plan to be saved or updated.
  */
 function saveExercises(userId, exercise) {
-
-    const filter = {user: userId};
-    const update = {exercises: exercise};
-    const options = {new: true, upsert: true}; // 'new: true' returns the modified document, 'upsert: true' creates it if it doesn't exist
-
-    exercises.findOneAndUpdate(filter, update, options)
+    exercises.findOneAndUpdate(
+        {user: userId},
+        {exercises: exercise},
+        {new: true, upsert: true})
         .then(result => {
             console.log("Exercise saved or updated successfully:", result);
         })
