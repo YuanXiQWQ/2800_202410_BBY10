@@ -1,0 +1,179 @@
+<%- include("templates/header") %>
+<head>
+  <link rel="stylesheet" href="/styles/train.css" />
+</head>
+<div class="position-relative h-100">
+  <video
+    id="video"
+    width="100%"
+    height="100%"
+    style="object-fit: cover"
+    autoplay
+  ></video>
+  <canvas id="canvas" style="position: absolute; left: 0px; z-index: 1"></canvas>
+</div>
+
+<div class="card counter">
+  <div class="card-body text-center">
+    <p class="mb-0 bold" style="font-size: 20px">Count</p>
+    <p id="count black" style="font-size: 40px">0</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+<script>
+  let video;
+  let model;
+  let canvas;
+  let ctx;
+
+  let count = 0;
+  let down = false; // false means the user is up, true means the user has gone down
+
+  async function setupCamera() {
+    video = document.getElementById("video");
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+
+    return new Promise((resolve) => {
+      video.onloadedmetadata = () => {
+        adjustCanvas(); // Set canvas size based on video size
+        resolve(video);
+      };
+    });
+  }
+
+  function adjustCanvas() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.style.width = "100vw"; 
+    canvas.style.height = "100%"; 
+  }
+
+  window.addEventListener("resize", adjustCanvas); 
+
+  async function loadModel() {
+    model = await poseDetection.createDetector(
+      poseDetection.SupportedModels.MoveNet,
+      {
+        modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
+        minPoseScore: 0.7,
+      }
+    );
+  }
+
+  async function detectPose() {
+    const poses = await model.estimatePoses(video);
+    drawPoses(poses);
+    requestAnimationFrame(detectPose);
+  }
+
+  function drawPoses(poses) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Use canvas dimensions
+    poses.forEach((pose) => {
+      const adjacentKeyPoints = poseDetection.util.getAdjacentPairs(
+        poseDetection.SupportedModels.MoveNet
+      );
+      adjacentKeyPoints.forEach(([i, j]) => {
+        const kp1 = pose.keypoints[i];
+        const kp2 = pose.keypoints[j];
+
+        if (kp1.score > 0.5 && kp2.score > 0.5) {
+          ctx.beginPath();
+          ctx.moveTo(kp1.x, kp1.y);
+          ctx.lineTo(kp2.x, kp2.y);
+          ctx.strokeStyle = "#fb824e";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      });
+
+      pose.keypoints.forEach((keypoint) => {
+        if (keypoint.score > 0.5) {
+          ctx.beginPath();
+          ctx.arc(keypoint.x, keypoint.y, 5, 0, 2 * Math.PI);
+          ctx.fillStyle = "#5B2DC6";
+          ctx.fill();
+        }
+      });
+
+      // updateSquatCount(pose);
+      analyzeSquatForm(pose); // Analyze squat form
+    });
+  }
+
+  function calculateAngle(a, b, c) {
+    const radians =
+      Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(a.y - b.y, a.x - b.x);
+    return Math.abs((radians * 180.0) / Math.PI);
+  }
+
+  let lastAcceptedSquatTime = 0; // Variable to track the last accepted squat time
+
+  function analyzeSquatForm(pose) {
+    // Define the required keypoints
+    const requiredKeypoints = [
+      "left_hip",
+      "left_knee",
+      "left_ankle",
+      "right_hip",
+      "right_knee",
+      "right_ankle",
+    ];
+    const allKeypointsDetected = requiredKeypoints.every((keypointName) => {
+      const keypoint = pose.keypoints.find((p) => p.name === keypointName);
+      return keypoint && keypoint.score > 0.5;
+    });
+
+    if (!allKeypointsDetected) {
+      console.log(
+        "Not all required keypoints for squat analysis are detected or confident enough."
+      );
+      return;
+    }
+
+    const leftHip = pose.keypoints.find((p) => p.name === "left_hip");
+    const leftKnee = pose.keypoints.find((p) => p.name === "left_knee");
+    const leftAnkle = pose.keypoints.find((p) => p.name === "left_ankle");
+    const rightHip = pose.keypoints.find((p) => p.name === "right_hip");
+    const rightKnee = pose.keypoints.find((p) => p.name === "right_knee");
+    const rightAnkle = pose.keypoints.find((p) => p.name === "right_ankle");
+
+    const leftKneeAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
+    const rightKneeAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
+    if (leftKneeAngle < 160 && rightKneeAngle < 160) {
+      const currentTime = Date.now();
+      if (currentTime - lastAcceptedSquatTime > 5000) {
+        // Check if 5 seconds have passed
+        lastAcceptedSquatTime = currentTime; // Update the last accepted time
+        console.log("Good squat depth");
+
+        setTimeout(() => {
+          count++;
+          const cons = document.getElementById("count");
+          cons.textContent = count;
+          //   cons.style.color = "red";
+          cons.style.fontSize = "40";
+        }, 2000);
+      } else {
+        console.log("Squat detected, but ignored due to 5-second rule");
+      }
+    } else {
+      console.log("Improve squat depth");
+    }
+  }
+
+  async function main() {
+    await setupCamera();
+    await loadModel();
+    detectPose();
+  }
+
+  main();
+</script>

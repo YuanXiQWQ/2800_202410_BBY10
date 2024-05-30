@@ -279,6 +279,10 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
     });
 });
 
+app.get("/train", ensureAuthenticated, (req, res) => {
+   res.render("train")
+});
+
 app.get("/logout", ensureAuthenticated, (req, res) => {
     req.session.destroy((err) => {
         if (err) {
