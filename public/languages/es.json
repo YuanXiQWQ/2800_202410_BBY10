@@ -98,8 +98,11 @@
   "workoutSettingsTips": "Ajuste aquí su configuración de entrenamiento.",
   "fitnessGoal": "Objetivo de fitness",
   "fitnessLevel": "Nivel de fitness",
-  "saturday":"Saturday",
-
+  "saturday": "Saturday",
+  "gainMuscle": "Gain Muscle",
+  "fatLoss": "Fat Loss",
+  "flexibility": "Flexibility",
+  "loseWeight": "Lose Weight",
   "workoutDuration": "Duración del entrenamiento",
   "workoutSettingsSuccess": "Configuración del entrenamiento actualizada con éxito.",
   "editUserPersonalInfoTitle": "Editar información personal",
@@ -166,5 +169,9 @@
   "startDateNotBeforeToday": "La fecha de inicio no puede ser anterior a hoy.",
   "endDateNotBeforeStartDate": "La fecha de finalización no puede ser anterior a la fecha de inicio.",
   "selectAtLeastOneDay": "Por favor, selecciona al menos un día de la semana.",
-  "gettingResponse": "Obteniendo respuesta..."
+  "gettingResponse": "Obteniendo respuesta...",
+  "trackYourPlank": "Sigue tu plancha",
+  "plankDescription": "Accede a nuestra herramienta de seguimiento de planchas para obtener retroalimentación en tiempo real sobre la postura y la duración para perfeccionar tus planchas y fortalecer tu core.",
+  "trackYourSquats": "Sigue tus sentadillas",
+  "squatDescription": "Comienza a seguir tus ejercicios de sentadillas aquí. Mejora tu forma y fuerza con nuestras sesiones guiadas de sentadillas."
 }

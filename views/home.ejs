@@ -1,6 +1,9 @@
 <%- include("templates/header") %>
+
 <head>
-    <title><%= language.homeTitle %></title>
+    <title>
+        <%= language.homeTitle %>
+    </title>
     <link rel="stylesheet" href="/styles/home.css"/>
     <style>
         .container {
@@ -15,13 +18,13 @@
             justify-content: space-between;
             align-items: center;
             background-color: #f8f9fa;
-            padding: 10px;
             border-radius: 10px;
             margin: 1em;
             }
 
         #days div {
             flex: 1;
+            padding: 10px;
             text-align: center;
             font-weight: bold;
             color: #4f4f4f;
@@ -59,6 +62,43 @@
             font-weight: 900;
             }
 
+        #days > div {
+            border-radius: 20px;
+            }
+
+        #days > div:hover {
+            background: #CCC;
+            }
+
+        #days > div.highlighted {
+            background: #BD7FFF;
+            color: #FFF;
+            }
+
+        #calendar-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #4f4f4f;
+            }
+
+        #calendar-link:hover {
+            background: #CCC;
+            }
+
+        #calendar-link svg {
+            fill: #4f4f4f;
+            width: 24px;
+            height: 24px;
+            }
+
+        #calendar-link:hover svg {
+            fill: #000;
+            }
+
         .card {
             background-color: #f8f9fa;
             border-radius: 10px;
@@ -81,13 +121,32 @@
 <%- include("templates/navbar") %>
 <div class="container">
     <div id="days" class="undecorated">
-        <div class="lang-text" data-day="mon"><%= language.mon %></div>
-        <div class="lang-text" data-day="tue"><%= language.tue %></div>
-        <div class="lang-text" data-day="wed"><%= language.wed %></div>
-        <div class="lang-text" data-day="thu"><%= language.thu %></div>
-        <div class="lang-text" data-day="fri"><%= language.fri %></div>
-        <div class="lang-text" data-day="sat"><%= language.sat %></div>
-        <div class="lang-text" data-day="sun"><%= language.sun %></div>
+        <div class="lang-text" data-day="mon">
+            <%= language.mon %>
+        </div>
+        <div class="lang-text" data-day="tue">
+            <%= language.tue %>
+        </div>
+        <div class="lang-text" data-day="wed">
+            <%= language.wed %>
+        </div>
+        <div class="lang-text" data-day="thu">
+            <%= language.thu %>
+        </div>
+        <div class="lang-text" data-day="fri">
+            <%= language.fri %>
+        </div>
+        <div class="lang-text" data-day="sat">
+            <%= language.sat %>
+        </div>
+        <div class="lang-text" data-day="sun">
+            <%= language.sun %>
+        </div>
+        <a id="calendar-link" href="/calendar" class="undecorated">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 6l-1.41 1.41L13.17 12l-4.58 4.59L10 18l6-6z"/>
+            </svg>
+        </a>
     </div>
 
     <a href="/profile" id="userAvatar" class="undecorated">
@@ -98,9 +157,40 @@
         <% } %>
     </a>
 
-    <div id="workoutPlan" class="undecorated">
-        <p style="font-weight: 900; text-align: center;"><%= language.todaysExercises %></p>
+    <a href="/workouts" id="workoutPlan" class="undecorated">
+        <p style="font-weight: 900; text-align: center;">
+            <%= language.todaysExercises %>
+        </p>
         <div id="exercisesList" class="undecorated"></div>
-    </div>
+    </a>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const daysMap = {
+            0: 'sun',
+            1: 'mon',
+            2: 'tue',
+            3: 'wed',
+            4: 'thu',
+            5: 'fri',
+            6: 'sat'
+        };
+
+        const today = new Date().getDay();
+        const todayDay = daysMap[today];
+
+        document.querySelectorAll('#days .lang-text').forEach(dayElement => {
+            if (dayElement.dataset.day === todayDay) {
+                dayElement.classList.add('highlighted');
+            }
+
+            dayElement.addEventListener('click', () => {
+                document.querySelectorAll('#days .lang-text').forEach(el => {
+                    el.classList.remove('highlighted');
+                });
+                dayElement.classList.add('highlighted');
+            });
+        });
+    });
+</script>
 <%- include("templates/footer") %>

@@ -98,8 +98,7 @@
   "workoutSettingsTips": "Modifica qui le impostazioni del tuo allenamento.",
   "fitnessGoal": "Obiettivo di fitness",
   "fitnessLevel": "Livello di fitness",
-  "saturday":"Saturday",
-
+  "saturday": "Sabato",
   "workoutDuration": "Durata dell'allenamento",
   "workoutSettingsSuccess": "Impostazioni allenamento aggiornate con successo.",
   "editUserPersonalInfoTitle": "Modifica informazioni personali",
@@ -166,5 +165,9 @@
   "startDateNotBeforeToday": "La data di inizio non può essere prima di oggi.",
   "endDateNotBeforeStartDate": "La data di fine non può essere prima della data di inizio.",
   "selectAtLeastOneDay": "Si prega di selezionare almeno un giorno della settimana.",
-  "gettingResponse": "Ottenimento della risposta..."
+  "gettingResponse": "Ottenimento della risposta...",
+  "trackYourPlank": "Monitora il tuo plank",
+  "plankDescription": "Accedi al nostro strumento di monitoraggio del plank per ottenere feedback in tempo reale sulla postura e la durata per perfezionare i tuoi plank e rafforzare il core.",
+  "trackYourSquats": "Monitora i tuoi squat",
+  "squatDescription": "Inizia a monitorare i tuoi esercizi di squat qui. Migliora la tua forma e forza con le nostre sessioni guidate di squat."
 }

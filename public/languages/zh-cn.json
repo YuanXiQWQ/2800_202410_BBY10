@@ -97,7 +97,7 @@
   "workoutSettings": "锻炼设置",
   "workoutSettingsTips": "在此调整您的锻炼设置。",
   "fitnessGoal": "健身目标",
-  "saturday":"Saturday",
+  "saturday":"星期六",
   "theme": "切换主题",
   "fitnessLevel": "健身等级",
   "workoutDuration": "锻炼时长",
@@ -166,5 +166,9 @@
   "startDateNotBeforeToday": "开始日期不能早于今天。",
   "endDateNotBeforeStartDate": "结束日期不能早于开始日期。",
   "selectAtLeastOneDay": "请至少选择一周中的一天。",
-  "gettingResponse": "获取响应中..."
+  "gettingResponse": "获取响应中...",
+  "trackYourPlank": "记录你的平板支撑",
+  "plankDescription": "使用我们的平板支撑追踪工具，实时反馈姿势和时长，完善你的平板支撑，增强核心力量。",
+  "trackYourSquats": "记录你的深蹲",
+  "squatDescription": "在这里开始记录你的深蹲练习。通过我们的指导深蹲课程，提升你的姿势和力量。"
 }

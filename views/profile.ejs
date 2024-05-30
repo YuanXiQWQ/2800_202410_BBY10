@@ -546,4 +546,30 @@
           </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const checkbox = document.getElementById("darkmode-toggle");
+      const currentTheme = localStorage.getItem("theme")
+        ? localStorage.getItem("theme")
+        : null;
+
+      if (currentTheme) {
+        document.body.setAttribute("data-theme", currentTheme);
+        if (currentTheme === "dark") {
+          checkbox.checked = true;
+        }
+      }
+
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+          document.body.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
+        } else {
+          document.body.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+        }
+      });
+    });
+  </script>
 <%- include("templates/footer") %>

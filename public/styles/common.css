@@ -25,3 +25,7 @@
 .text-decoration-none {
   text-decoration: none;
 }
+
+.container {
+  margin-top: 70px;
+}
