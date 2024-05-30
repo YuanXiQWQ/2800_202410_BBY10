@@ -8,9 +8,9 @@
             flex-direction: column;
             gap: 50px;
             justify-items: center;
-        }
+            }
 
-        #calendar {
+        #days {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -18,19 +18,20 @@
             padding: 10px;
             border-radius: 10px;
             margin: 1em;
-        }
+            }
 
-        #calendar div {
+        #days div {
             flex: 1;
             text-align: center;
             font-weight: bold;
             color: #4f4f4f;
+            cursor: pointer;
         }
 
         #userAvatar {
             margin: auto;
             text-align: center;
-        }
+            }
 
         .user-avatar {
             width: 150px;
@@ -38,7 +39,7 @@
             border-radius: 50%;
             object-fit: cover;
             cursor: pointer;
-        }
+            }
 
         #workoutPlan {
             margin: 1em;
@@ -48,42 +49,45 @@
             background-color: #ffffff;
             cursor: pointer;
             color: #000;
-        }
+            }
 
         .container {
             padding-bottom: 8rem;
-        }
+            }
 
         .lang-text {
             font-weight: 900;
+        }
+
+        .card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .card-content {
+            margin-top: 10px;
         }
     </style>
 </head>
 <%- include("templates/navbar") %>
 <div class="container">
-    <a href="/calendar" id="calendar" class="undecorated">
-        <div class="lang-text"><%= language.mon %></div>
-        <div class="lang-text"><%= language.tue %></div>
-        <div class="lang-text"><%= language.wed %></div>
-        <div class="lang-text"><%= language.thu %></div>
-        <div class="lang-text"><%= language.fri %></div>
-        <div class="lang-text"><%= language.sat %></div>
-        <div class="lang-text"><%= language.sun %></div>
-        <div>
-            <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                        d="M2 1L8 5L2 9V1Z"
-                        fill="black"
-                />
-            </svg>
-        </div>
-    </a>
+    <div id="days" class="undecorated">
+        <div class="lang-text" data-day="mon"><%= language.mon %></div>
+        <div class="lang-text" data-day="tue"><%= language.tue %></div>
+        <div class="lang-text" data-day="wed"><%= language.wed %></div>
+        <div class="lang-text" data-day="thu"><%= language.thu %></div>
+        <div class="lang-text" data-day="fri"><%= language.fri %></div>
+        <div class="lang-text" data-day="sat"><%= language.sat %></div>
+        <div class="lang-text" data-day="sun"><%= language.sun %></div>
+    </div>
 
     <a href="/profile" id="userAvatar" class="undecorated">
         <% if (userData.avatar) { %>
@@ -93,23 +97,101 @@
         <% } %>
     </a>
 
-    <a href="/exercise" id="workoutPlan" class="undecorated">
+    <div id="workoutPlan" class="undecorated">
         <p style="font-weight: 900; text-align: center;"><%= language.todaysExercises %></p>
-        <ul class="undecorated">
-            <% if (workoutPlan.length > 0) { %>
-                <% workoutPlan.forEach(function(plan) { %>
-                    <li><%= plan %></li>
-                <% }); %>
-            <% } else { %>
-                <li><%= language.noWorkoutPlan %></li>
-            <% } %>
-        </ul>
-    </a>
-<!--    <script>-->
-<!--        document.addEventListener('DOMContentLoaded', function () {-->
-<!--            const data2 = <%- JSON.stringify(data) %>;-->
-<!--            console.log(data2);-->
-<!--        });-->
-<!--    </script>-->
+        <div id="exercisesList" class="undecorated">
+            <!-- Exercise cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const data2 = <%- JSON.stringify(data) %>;
+    console.log(data2);
+
+    const exercisesList = document.getElementById('exercisesList');
+    const exercises = data2._doc.exercises;
+
+    function getDayName(dayCode) {
+        const dayNames = {
+            mon: 'Monday',
+            tue: 'Tuesday',
+            wed: 'Wednesday',
+            thu: 'Thursday',
+            fri: 'Friday',
+            sat: 'Saturday',
+            sun: 'Sunday'
+        };
+        return dayNames[dayCode];
+    }
+
+    function getWeekNumber(date) {
+        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    }
+
+    function filterExercisesByDay(day) {
+        const today = new Date();
+        const currentWeekNumber = getWeekNumber(today);
+        const selectedDay = getDayName(day);
+
+        const filteredExercises = exercises.filter(exercise => {
+            const exerciseDate = new Date(exercise.start);
+            const exerciseDay = exerciseDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const exerciseWeekNumber = getWeekNumber(exerciseDate);
+            return exerciseDay === selectedDay && exerciseWeekNumber === currentWeekNumber;
+        });
+        return filteredExercises;
+    }
+
+    function displayExercises(day) {
+        const filteredExercises = filterExercisesByDay(day);
+        exercisesList.innerHTML = ''; // Clear the existing exercises
+
+        if (filteredExercises.length > 0) {
+            filteredExercises.forEach(function(exercise) {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const cardTitle = document.createElement('div');
+                cardTitle.className = 'card-title';
+                cardTitle.textContent = exercise.title;
+
+                const cardContent = document.createElement('div');
+                cardContent.className = 'card-content';
+
+                let contentText = `Duration: ${exercise.time} minutes | Date: ${exercise.start}`;
+                if (exercise.Reps && exercise.Sets) {
+                    contentText += ` | Reps: ${exercise.Reps} | Sets: ${exercise.Sets}`;
+                }
+                cardContent.textContent = contentText;
+
+                card.appendChild(cardTitle);
+                card.appendChild(cardContent);
+
+                exercisesList.appendChild(card);
+            });
+        } else {
+            const noPlanMessage = document.createElement('p');
+            noPlanMessage.textContent = '<%= language.noWorkoutPlan %>';
+            exercisesList.appendChild(noPlanMessage);
+        }
+    }
+
+    // Display today's exercises by default
+    const todayDayCode = new Date().toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+    displayExercises(todayDayCode);
+
+    // Add event listeners to day links
+    const dayLinks = document.querySelectorAll('#days .lang-text');
+    dayLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            const day = this.getAttribute('data-day');
+            displayExercises(day);
+        });
+    });
+});
+
+    </script>
 </div>
 <%- include("templates/footer") %>

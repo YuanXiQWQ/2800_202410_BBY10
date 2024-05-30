@@ -134,6 +134,13 @@ input.invalid {
     background-color: #2196F3;
     }
 
+/* Style the form labels with a red asterisk */
+.form-label.required::after {
+    content: ' *';
+    color: red;
+    margin-left: 5px;
+}
+
 /* Animation for fading out the alert */
 @keyframes fadeOut {
     from {
