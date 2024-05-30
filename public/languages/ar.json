@@ -98,7 +98,7 @@
   "workoutSettingsTips": "عدل إعدادات التمرين الخاصة بك هنا.",
   "fitnessGoal": "هدف اللياقة البدنية",
   "saturday":"السبت",
-  "theme": "تبديل الثيم",
+
   "fitnessLevel": "مستوى اللياقة البدنية",
   "workoutDuration": "مدة التمرين (ايام)",
   "workoutSettingsSuccess": "تم تحديث إعدادات التمرين بنجاح.",
@@ -155,16 +155,5 @@
   "sat": "السبت",
   "sun": "الأحد",
   "todaysExercises": "تمارين اليوم",
-  "noWorkoutPlan": "لا توجد خطة تمرين لليوم.",
-  "calendarTitle": "قائمة التمارين الجديدة",
-  "newExerciseList": "قائمة التمارين الجديدة",
-  "newExerciseListTips": "يرجى ملء النموذج أدناه لإنشاء قائمة تمارين جديدة.",
-  "startDate": "تاريخ البدء",
-  "endDate": "تاريخ الانتهاء",
-  "exerciseListSubmitSuccess": "تم إنشاء قائمة التمارين بنجاح.",
-  "startEndDateRequired": "تاريخ البدء وتاريخ الانتهاء مطلوبان.",
-  "startDateNotBeforeToday": "لا يمكن أن يكون تاريخ البدء قبل اليوم.",
-  "endDateNotBeforeStartDate": "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء.",
-  "selectAtLeastOneDay": "يرجى تحديد يوم واحد على الأقل من الأسبوع.",
-  "gettingResponse": "جارٍ الحصول على الاستجابة..."
+  "noWorkoutPlan": "لا توجد خطة تمرين لليوم."
 }
