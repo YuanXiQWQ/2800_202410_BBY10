@@ -100,7 +100,7 @@
     <div id="workoutPlan" class="undecorated">
         <p style="font-weight: 900; text-align: center;"><%= language.todaysExercises %></p>
         <div id="exercisesList" class="undecorated">
-            <!-- Exercise cards will be inserted here by JavaScript -->
+            <!-- JavaScript will insert exercise cards here -->
         </div>
     </div>
     <script>
@@ -135,13 +135,12 @@
         const currentWeekNumber = getWeekNumber(today);
         const selectedDay = getDayName(day);
 
-        const filteredExercises = exercises.filter(exercise => {
+        return exercises.filter(exercise => {
             const exerciseDate = new Date(exercise.start);
-            const exerciseDay = exerciseDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const exerciseDay = exerciseDate.toLocaleDateString('en-US', {weekday: 'long'});
             const exerciseWeekNumber = getWeekNumber(exerciseDate);
             return exerciseDay === selectedDay && exerciseWeekNumber === currentWeekNumber;
         });
-        return filteredExercises;
     }
 
     function displayExercises(day) {

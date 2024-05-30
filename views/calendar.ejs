@@ -16,9 +16,9 @@
             const data2 = <%- JSON.stringify(data) %>;
             console.log(data2);
 
-            var calendarEl = document.getElementById('calendar');
+            const calendarEl = document.getElementById('calendar');
             if (calendarEl) {  // Check if the calendar element exists
-                var calendar = new FullCalendar.Calendar(calendarEl, {
+                const calendar = new FullCalendar.Calendar(calendarEl, {
                     windowResize: function (arg) {
                         // Add any functionality you need during window resize
                     },

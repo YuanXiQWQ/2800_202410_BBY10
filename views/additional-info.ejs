@@ -466,18 +466,20 @@
             }
 
             function nextPrev(n) {
-                // This function will figure out which tab to display
                 const x = document.getElementsByClassName("tab");
-                // Exit the function if any field in the current tab is invalid:
+
                 if (n === 1 && !validateForm()) return false;
-                // Hide the current tab:
+
+                if (currentTab === 0) {
+                    convertWeightToKg();
+                    convertHeightToCm();
+                }
+
                 x[currentTab].style.display = "none";
-                // Increase or decrease the current tab by 1:
                 currentTab = currentTab + n;
-                // if you have reached the end of the form... :
+
                 if (currentTab >= x.length) {
                     showLoading(true);
-                    //...the form gets submitted:
                     document.getElementById("nextBtn").type = "submit";
                     document.getElementById("regForm").submit();
                     document.getElementById("nextBtn").style.display = "none";
@@ -485,8 +487,31 @@
 
                     return false;
                 }
-                // Otherwise, display the correct tab:
                 showTab(currentTab);
+            }
+
+            function convertWeightToKg() {
+                const weightInput = document.querySelector('input[name="weight"]');
+                const weightUnit = weightInput.getAttribute("data-unit");
+                let weightValue = parseFloat(weightInput.value);
+
+                if (weightUnit === "lb") {
+                    weightValue = weightValue * 0.453592;
+                }
+
+                weightInput.value = weightValue.toFixed(2);
+            }
+
+            function convertHeightToCm() {
+                const heightInput = document.querySelector('input[name="height"]');
+                const heightUnit = heightInput.getAttribute("data-unit");
+                let heightValue = parseFloat(heightInput.value);
+
+                if (heightUnit === "ft") {
+                    heightValue = heightValue * 30.48;
+                }
+
+                heightInput.value = heightValue.toFixed(2);
             }
 
             function validateForm() {
