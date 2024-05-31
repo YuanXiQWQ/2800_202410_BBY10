@@ -1,738 +1,742 @@
 <%- include("templates/header") %>
 
 <head>
-  <title><%= language.workoutDetailsTitle %></title>
-  <link rel="stylesheet" href="/styles/additional-info.css" />
+    <title><%= language.workoutDetailsTitle %></title>
+    <link rel="stylesheet" href="/styles/additional-info.css"/>
 </head>
 
 <div class="container mt-5 px-5">
-  <div class="my-3">
-    <h1 class="black d-inline-block border-bottom-2px py-1">
-      <i> <%= language.register %> </i>
-    </h1>
-  </div>
-
-  <div
-    class="spinner-grow text-primary"
-    id="loadingIndicator"
-    style="display: none; text-align: center"
-    role="status"
-    role="status"
-  >
-    <span class="sr-only"> <%= language.loading %> </span>
-  </div>
-  <form
-    class="m-0 w-100"
-    id="regForm"
-    action="/submitAdditionalInfo"
-    method="POST"
-  >
-    <!-- <p class="font-size-16 semiBold">Personal Information</p> -->
-
-    <!-- One "tab" for each step in the form: -->
-    <div style="text-align: center; margin-bottom: 20px">
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
+    <div class="my-3">
+        <h1 class="black d-inline-block border-bottom-2px py-1">
+            <i> <%= language.register %> </i>
+        </h1>
     </div>
-    <div class="tab">
-      <div class="input-group d-flex flex-column mb-3">
-        <label for="weight" class="form-label font-size-14 required">
-          <%= language.weight %>
-        </label>
-        <div class="position-relative">
-          <input
-            type="number"
-            class="form-control"
-            placeholder="<%= language.yourWeight %>"
-            aria-label="<%= language.weight %>"
-            min="1"
-            name="weight"
-            required
-          />
-          <div class="input-group-append" id="weightUnitButtons">
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              onclick="setWeightUnit('kg')"
+
+    <div
+            class="spinner-grow text-primary"
+            id="loadingIndicator"
+            style="display: none; text-align: center"
+            role="status"
+            role="status"
+    >
+        <span class="sr-only"> <%= language.loading %> </span>
+    </div>
+    <form class="m-0 w-100" id="regForm" action="/submitAdditionalInfo" method="POST">
+        <!-- <p class="font-size-16 semiBold">Personal Information</p> -->
+
+        <!-- One "tab" for each step in the form: -->
+        <div style="text-align: center; margin-bottom: 20px">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+        </div>
+        <div class="tab">
+            <div class="input-group d-flex flex-column mb-3">
+                <label for="weight" class="form-label font-size-14 required">
+                    <%= language.weight %>
+                </label>
+                <div class="position-relative">
+                    <input type="number" class="form-control" placeholder="<%= language.yourWeight %>"
+                           aria-label="<%= language.weight %>" min="1" name="weight" required/>
+                    <div class="input-group-append" id="weightUnitButtons">
+                        <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="setWeightUnit('kg')"
+                        >
+                            kg
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="setWeightUnit('lb')"
+                        >
+                            lb
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group d-flex flex-column mb-3">
+                <label for="height" class="form-label font-size-14 required">
+                    <%= language.height %>
+                </label>
+                <div class="position-relative">
+                    <input
+                            type="number"
+                            class="form-control"
+                            placeholder="<%= language.yourHeight %>"
+                            aria-label="<%= language.height %>"
+                            min="1"
+                            name="height"
+                            required
+                    />
+                    <div class="input-group-append" id="heightUnitButtons">
+                        <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="setHeightUnit('cm')"
+                        >
+                            cm
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="setHeightUnit('ft')"
+                        >
+                            ft
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab">
+            <p class="font-size-16 semiBold"><%= language.experienceInWorkout %></p>
+            <input type="hidden" id="fitnessLevel" name="fitnessLevel" value=""/>
+
+            <div
+                    class="d-flex flex-column btn-group-1"
+                    role="group"
+                    aria-label="<%= language.workoutExperience %>"
             >
-              kg
-            </button>
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              onclick="setWeightUnit('lb')"
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setExperience('<%= language.beginner %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.beginner %></p>
+                    <p class="mb-1 light text-start font-size-12">
+                        <%= language.lessThanSixMonths %>
+                    </p>
+                </button>
+
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setExperience('<%= language.intermediate %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.intermediate %></p>
+                    <p class="mb-1 light text-start font-size-12">
+                        <%= language.moreThanSixMonthsLessThanTwoYears %>
+                    </p>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setExperience('<%= language.advanced %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.advanced %></p>
+                    <p class="mb-1 light text-start font-size-12">
+                        <%= language.moreThanTwoYears %>
+                    </p>
+                </button>
+            </div>
+        </div>
+
+        <div class="tab">
+            <p class="font-size-16 semiBold"><%= language.workoutDays %></p>
+            <input type="hidden" id="days" name="time" value=""/>
+
+            <div
+                    class="btn-group-2 d-flex flex-wrap"
+                    role="group"
+                    aria-label="<%= language.daysOfWeek %>"
             >
-              lb
-            </button>
-          </div>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn me-1"
+                        onclick="toggleDay('0')"
+                >
+                    <%= language.monday %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn ms-1"
+                        onclick="toggleDay('1')"
+                >
+                    <%= language.tuesday %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn me-1"
+                        onclick="toggleDay('2')"
+                >
+                    <%= language.wednesday %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn ms-1"
+                        onclick="toggleDay('3')"
+                >
+                    <%= language.thursday %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn me-1"
+                        onclick="toggleDay('4')"
+                >
+                    <%= language.friday %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn ms-1"
+                        onclick="toggleDay('5')"
+                >
+                    <%= language.saturday %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-exper day-btn me-1"
+                        onclick="toggleDay('6')"
+                >
+                    <%= language.sunday %>
+                </button>
+            </div>
         </div>
-      </div>
 
-      <div class="input-group d-flex flex-column mb-3">
-        <label for="height" class="form-label font-size-14 required">
-          <%= language.height %>
-        </label>
-        <div class="position-relative">
-          <input
-            type="number"
-            class="form-control"
-            placeholder="<%= language.yourHeight %>"
-            aria-label="<%= language.height %>"
-            min="1"
-            name="height"
-            required
-          />
-          <div class="input-group-append" id="heightUnitButtons">
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              onclick="setHeightUnit('cm')"
+        <div class="tab">
+            <p class="font-size-16 semiBold">
+                <%= language.yourGoal %>
+                <label for="goal" class="form-label required"></label>
+            </p>
+
+            <!-- <textarea class="form-control" id="goal" name="goal" required
+                          rows="3"></textarea> -->
+
+            <div
+                    class="d-flex flex-column btn-group-3"
+                    role="group"
+                    aria-label="<%= language.workoutExperience %>"
             >
-              cm
-            </button>
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              onclick="setHeightUnit('ft')"
-            >
-              ft
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+                <input type="hidden" id="goal" name="goal" value=""/>
 
-    <div class="tab">
-      <p class="font-size-16 semiBold"><%= language.experienceInWorkout %></p>
-      <input type="hidden" id="fitnessLevel" name="fitnessLevel" value="" />
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setGoal('<%= language.gainMuscle %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.gainMuscle %></p>
 
-      <div
-        class="d-flex flex-column btn-group-1"
-        role="group"
-        aria-label="<%= language.workoutExperience %>"
-      >
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setExperience('<%= language.beginner %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.beginner %></p>
-          <p class="mb-1 light text-start font-size-12">
-            <%= language.lessThanSixMonths %>
-          </p>
-        </button>
+                </button>
 
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setExperience('<%= language.intermediate %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.intermediate %></p>
-          <p class="mb-1 light text-start font-size-12">
-            <%= language.moreThanSixMonthsLessThanTwoYears %>
-          </p>
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setExperience('<%= language.advanced %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.advanced %></p>
-          <p class="mb-1 light text-start font-size-12">
-            <%= language.moreThanTwoYears %>
-          </p>
-        </button>
-      </div>
-    </div>
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setGoal('<%= language.loseWeight %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.loseWeight %></p>
 
-    <div class="tab">
-      <p class="font-size-16 semiBold"><%= language.workoutDays %></p>
-      <input type="hidden" id="days" name="time" value="" />
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setGoal('<%= language.fatLoss %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.fatLoss %></p>
 
-      <div
-        class="btn-group-2 d-flex flex-wrap"
-        role="group"
-        aria-label="<%= language.daysOfWeek %>"
-      >
-        <button
-          type="button"
-          class="btn btn-exper day-btn me-1"
-          onclick="toggleDay('0')"
-        >
-          <%= language.monday %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-exper day-btn ms-1"
-          onclick="toggleDay('1')"
-        >
-          <%= language.tuesday %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-exper day-btn me-1"
-          onclick="toggleDay('2')"
-        >
-          <%= language.wednesday %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-exper day-btn ms-1"
-          onclick="toggleDay('3')"
-        >
-          <%= language.thursday %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-exper day-btn me-1"
-          onclick="toggleDay('4')"
-        >
-          <%= language.friday %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-exper day-btn ms-1"
-          onclick="toggleDay('5')"
-        >
-          <%= language.saturday %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-exper day-btn me-1"
-          onclick="toggleDay('6')"
-        >
-          <%= language.sunday %>
-        </button>
-      </div>
-    </div>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-secondary btn-exper"
+                        onclick="setGoal('<%= language.flexibility %>')"
+                >
+                    <p class="mb-1 bold text-start"><%= language.flexibility %></p>
 
-    <div class="tab">
-      <p class="font-size-16 semiBold">
-        <%= language.yourGoal %>
-        <label for="goal" class="form-label required"></label>
-      </p>
+                </button>
+            </div>
 
-      <!-- <textarea class="form-control" id="goal" name="goal" required
-                    rows="3"></textarea> -->
-
-      <div
-        class="d-flex flex-column btn-group-3"
-        role="group"
-        aria-label="<%= language.workoutExperience %>"
-      >
-        <input type="hidden" id="goal" name="goal" value="" />
-
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setGoal('<%= language.gainMuscle %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.gainMuscle %></p>
-         
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setGoal('<%= language.loseWeight %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.loseWeight %></p>
-          
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setGoal('<%= language.fatLoss %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.fatLoss %></p>
-         
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary btn-exper"
-          onclick="setGoal('<%= language.flexibility %>')"
-        >
-          <p class="mb-1 bold text-start"><%= language.flexibility %></p>
-         
-        </button>
-      </div>
-
-      <div class="form-check mt-3">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          id="termsCheckbox"
-          required
-        />
-        <p>
-          Terms and Conditions
-          <label class="form-check-label required" for="termsCheckbox">
-            <%= language.agreeTo %>
-            <a href="#" id="termsLink"> <%= language.termsAndConditions %> </a>
-          </label>
-        </p>
-      </div>
-    </div>
-
-    <div style="overflow: auto; margin-top: 20px">
-      <div style="float: right">
-        <button
-          type="button"
-          class="btn btn-width secondary-color"
-          id="prevBtn"
-          onclick="nextPrev(-1)"
-        >
-          <%= language.previous %>
-        </button>
-        <button
-          type="button"
-          class="btn btn-width primary-color"
-          id="nextBtn"
-          onclick="nextPrev(1)"
-        >
-          <%= language.next %>
-        </button>
-      </div>
-    </div>
-
-    <!-- Circles that indicate the steps of the form: -->
-  </form>
-
-  <div
-    class="modal fade"
-    id="termsModal"
-    tabindex="-1"
-    aria-labelledby="termsModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="termsModalLabel">
-            <%= language.termsAndConditions %>
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <h5>Terms and Conditions</h5>
-
-          <p>
-            <strong>1. Introduction</strong><br />
-            Welcome to NexGenFit. These Terms and Conditions ("Terms") govern
-            your use of the App, including any content, functionality, and
-            services offered on or through the App.
-          </p>
-
-          <p>
-            <strong>2. Acceptance of Terms</strong><br />
-            By using the App, you agree to comply with and be bound by these
-            Terms. If you do not agree to these Terms, you must not access or
-            use the App.
-          </p>
-
-          <p>
-            <strong>3. User Data and Privacy</strong><br />
-            Data Collection: We collect personal information that you provide
-            when you register, such as your name, email address, weight, height,
-            fitness level, workout plans, and goals.<br />
-            Usage Data: We may also collect data about how you use the App,
-            including your workout activities and preferences.<br />
-            Data Storage: Your data is stored securely on our servers. We
-            implement appropriate technical and organizational measures to
-            protect your data from unauthorized access, use, or disclosure.<br />
-            Data Usage: The data collected is used to provide and improve our
-            services, personalize your experience, and for statistical
-            analysis.<br />
-            Third-Party Sharing: We do not share your personal data with third
-            parties without your explicit consent, except where required by law.
-          </p>
-
-          <p>
-            <strong>4. User Responsibilities</strong><br />
-            Accuracy of Information: You are responsible for providing accurate
-            and up-to-date information. We are not liable for any issues arising
-            from incorrect information provided by you.<br />
-            Account Security: You are responsible for maintaining the
-            confidentiality of your account login information and for any
-            activities that occur under your account. Notify us immediately of
-            any unauthorized use of your account.
-          </p>
-
-          <p>
-            <strong>5. Prohibited Activities</strong><br />
-            You agree not to engage in any of the following prohibited
-            activities:<br />
-            - Copying or distributing any part of the App without our prior
-            written consent.<br />
-            - Using the App for any unlawful purpose or in a way that could
-            damage, disable, overburden, or impair the App.<br />
-            - Attempting to gain unauthorized access to the App, other accounts,
-            or computer systems or networks connected to the App.
-          </p>
-
-          <p>
-            <strong>6. Intellectual Property</strong><br />
-            The App and its entire contents, features, and functionality are
-            owned by [Your Company Name], its licensors, or other providers of
-            such material and are protected by intellectual property laws.
-          </p>
-
-          <p>
-            <strong>7. Disclaimers</strong><br />
-            The App is provided on an "as is" and "as available" basis. We make
-            no warranties, express or implied, regarding the App's operation or
-            the information, content, or materials included on the App.
-          </p>
-
-          <p>
-            <strong>8. Limitation of Liability</strong><br />
-            To the fullest extent permitted by law, [Your Company Name] shall
-            not be liable for any damages of any kind arising from the use of
-            the App, including but not limited to direct, indirect, incidental,
-            punitive, and consequential damages.
-          </p>
-
-          <p>
-            <strong>9. Changes to Terms</strong><br />
-            We reserve the right to modify or replace these Terms at any time.
-            Any changes will be effective immediately upon posting the revised
-            Terms on the App. Your continued use of the App following the
-            posting of any changes constitutes your acceptance of those changes.
-            It is your responsibility to review these Terms periodically for
-            updates.
-          </p>
-
-          <p>
-            <strong>10. Termination</strong><br />
-            We reserve the right to terminate or suspend your account and access
-            to the App at our sole discretion, without notice, for conduct that
-            we believe violates these Terms or is harmful to other users, us, or
-            third parties, or for any other reason.
-          </p>
-
-          <p>
-            <strong>11. Governing Law</strong><br />
-            These Terms shall be governed by and construed in accordance with
-            the laws of [Your Jurisdiction], without regard to its conflict of
-            law provisions. Any disputes arising out of or relating to these
-            Terms or the App shall be resolved in the courts of [Your
-            Jurisdiction].
-          </p>
-
-          <p>
-            <strong>12. Contact Information</strong><br />
-            If you have any questions or concerns about these Terms or the App,
-            please contact us at:<br />
-            NexGenFit<br />
-          </p>
-
-          <p>
-            <strong>13. Entire Agreement</strong><br />
-            These Terms, together with our Privacy Policy and any other legal
-            notices published by us on the App, constitute the entire agreement
-            between you and NexGenFit regarding your use of the App. If any
-            provision of these Terms is deemed invalid by a court of competent
-            jurisdiction, the invalidity of such provision shall not affect the
-            validity of the remaining provisions of these Terms, which shall
-            remain in full force and effect.
-          </p>
-
-          <p>
-            <strong>14. Waiver</strong><br />
-            No waiver of any term of these Terms shall be deemed a further or
-            continuing waiver of such term or any other term, and our failure to
-            assert any right or provision under these Terms shall not constitute
-            a waiver of such right or provision.
-          </p>
-
-          <p>
-            <strong>15. Severability</strong><br />
-            If any provision of these Terms is held to be invalid or
-            unenforceable, such provision shall be struck and the remaining
-            provisions shall be enforced to the fullest extent under law.
-          </p>
-
-          <p>
-            By using NexGenFit, you acknowledge that you have read, understood,
-            and agree to be bound by these Terms and Conditions.
-          </p>
+            <div class="form-check mt-3">
+                <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="termsCheckbox"
+                        required
+                />
+                <p>
+                    Terms and Conditions
+                    <label class="form-check-label required" for="termsCheckbox">
+                        <%= language.agreeTo %>
+                        <a href="#" id="termsLink"> <%= language.termsAndConditions %> </a>
+                    </label>
+                </p>
+            </div>
         </div>
 
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            id="declineBtn"
-            data-bs-dismiss="modal"
-          >
-            Decline
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="acceptBtn"
-            data-bs-dismiss="modal"
-          >
-            Accept
-          </button>
+        <div style="overflow: auto; margin-top: 20px">
+            <div style="float: right">
+                <button
+                        type="button"
+                        class="btn btn-width secondary-color"
+                        id="prevBtn"
+                        onclick="nextPrev(-1)"
+                >
+                    <%= language.previous %>
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-width primary-color"
+                        id="nextBtn"
+                        onclick="nextPrev(1)"
+                >
+                    <%= language.next %>
+                </button>
+            </div>
         </div>
-      </div>
+
+        <!-- Circles that indicate the steps of the form: -->
+    </form>
+
+    <div
+            class="modal fade"
+            id="termsModal"
+            tabindex="-1"
+            aria-labelledby="termsModalLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">
+                        <%= language.termsAndConditions %>
+                    </h5>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Terms and Conditions</h5>
+
+                    <p>
+                        <strong>1. Introduction</strong><br/>
+                        Welcome to NexGenFit. These Terms and Conditions ("Terms") govern
+                        your use of the App, including any content, functionality, and
+                        services offered on or through the App.
+                    </p>
+
+                    <p>
+                        <strong>2. Acceptance of Terms</strong><br/>
+                        By using the App, you agree to comply with and be bound by these
+                        Terms. If you do not agree to these Terms, you must not access or
+                        use the App.
+                    </p>
+
+                    <p>
+                        <strong>3. User Data and Privacy</strong><br/>
+                        Data Collection: We collect personal information that you provide
+                        when you register, such as your name, email address, weight, height,
+                        fitness level, workout plans, and goals.<br/>
+                        Usage Data: We may also collect data about how you use the App,
+                        including your workout activities and preferences.<br/>
+                        Data Storage: Your data is stored securely on our servers. We
+                        implement appropriate technical and organizational measures to
+                        protect your data from unauthorized access, use, or disclosure.<br/>
+                        Data Usage: The data collected is used to provide and improve our
+                        services, personalize your experience, and for statistical
+                        analysis.<br/>
+                        Third-Party Sharing: We do not share your personal data with third
+                        parties without your explicit consent, except where required by law.
+                    </p>
+
+                    <p>
+                        <strong>4. User Responsibilities</strong><br/>
+                        Accuracy of Information: You are responsible for providing accurate
+                        and up-to-date information. We are not liable for any issues arising
+                        from incorrect information provided by you.<br/>
+                        Account Security: You are responsible for maintaining the
+                        confidentiality of your account login information and for any
+                        activities that occur under your account. Notify us immediately of
+                        any unauthorized use of your account.
+                    </p>
+
+                    <p>
+                        <strong>5. Prohibited Activities</strong><br/>
+                        You agree not to engage in any of the following prohibited
+                        activities:<br/>
+                        - Copying or distributing any part of the App without our prior
+                        written consent.<br/>
+                        - Using the App for any unlawful purpose or in a way that could
+                        damage, disable, overburden, or impair the App.<br/>
+                        - Attempting to gain unauthorized access to the App, other accounts,
+                        or computer systems or networks connected to the App.
+                    </p>
+
+                    <p>
+                        <strong>6. Intellectual Property</strong><br/>
+                        The App and its entire contents, features, and functionality are
+                        owned by [Your Company Name], its licensors, or other providers of
+                        such material and are protected by intellectual property laws.
+                    </p>
+
+                    <p>
+                        <strong>7. Disclaimers</strong><br/>
+                        The App is provided on an "as is" and "as available" basis. We make
+                        no warranties, express or implied, regarding the App's operation or
+                        the information, content, or materials included on the App.
+                    </p>
+
+                    <p>
+                        <strong>8. Limitation of Liability</strong><br/>
+                        To the fullest extent permitted by law, [Your Company Name] shall
+                        not be liable for any damages of any kind arising from the use of
+                        the App, including but not limited to direct, indirect, incidental,
+                        punitive, and consequential damages.
+                    </p>
+
+                    <p>
+                        <strong>9. Changes to Terms</strong><br/>
+                        We reserve the right to modify or replace these Terms at any time.
+                        Any changes will be effective immediately upon posting the revised
+                        Terms on the App. Your continued use of the App following the
+                        posting of any changes constitutes your acceptance of those changes.
+                        It is your responsibility to review these Terms periodically for
+                        updates.
+                    </p>
+
+                    <p>
+                        <strong>10. Termination</strong><br/>
+                        We reserve the right to terminate or suspend your account and access
+                        to the App at our sole discretion, without notice, for conduct that
+                        we believe violates these Terms or is harmful to other users, us, or
+                        third parties, or for any other reason.
+                    </p>
+
+                    <p>
+                        <strong>11. Governing Law</strong><br/>
+                        These Terms shall be governed by and construed in accordance with
+                        the laws of [Your Jurisdiction], without regard to its conflict of
+                        law provisions. Any disputes arising out of or relating to these
+                        Terms or the App shall be resolved in the courts of [Your
+                        Jurisdiction].
+                    </p>
+
+                    <p>
+                        <strong>12. Contact Information</strong><br/>
+                        If you have any questions or concerns about these Terms or the App,
+                        please contact us at:<br/>
+                        NexGenFit<br/>
+                    </p>
+
+                    <p>
+                        <strong>13. Entire Agreement</strong><br/>
+                        These Terms, together with our Privacy Policy and any other legal
+                        notices published by us on the App, constitute the entire agreement
+                        between you and NexGenFit regarding your use of the App. If any
+                        provision of these Terms is deemed invalid by a court of competent
+                        jurisdiction, the invalidity of such provision shall not affect the
+                        validity of the remaining provisions of these Terms, which shall
+                        remain in full force and effect.
+                    </p>
+
+                    <p>
+                        <strong>14. Waiver</strong><br/>
+                        No waiver of any term of these Terms shall be deemed a further or
+                        continuing waiver of such term or any other term, and our failure to
+                        assert any right or provision under these Terms shall not constitute
+                        a waiver of such right or provision.
+                    </p>
+
+                    <p>
+                        <strong>15. Severability</strong><br/>
+                        If any provision of these Terms is held to be invalid or
+                        unenforceable, such provision shall be struck and the remaining
+                        provisions shall be enforced to the fullest extent under law.
+                    </p>
+
+                    <p>
+                        By using NexGenFit, you acknowledge that you have read, understood,
+                        and agree to be bound by these Terms and Conditions.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="declineBtn"
+                            data-bs-dismiss="modal"
+                    >
+                        Decline
+                    </button>
+                    <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="acceptBtn"
+                            data-bs-dismiss="modal"
+                    >
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Set default units on initial load
-      setWeightUnit("kg");
-      setHeightUnit("cm");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const weightInput = document.querySelector('input[name="weight"]');
+            const heightInput = document.querySelector('input[name="height"]');
 
-      updateButtonStyles();
+            weightInput.addEventListener('input', function () {
+                if (this.value !== "" && parseFloat(this.value) < 1) {
+                    this.value = 1;
+                }
+            });
 
-      const termsCheckbox = document.getElementById("termsCheckbox");
-      const termsLink = document.getElementById("termsLink");
-      const termsModal = new bootstrap.Modal(
-        document.getElementById("termsModal")
-      );
-      const acceptBtn = document.getElementById("acceptBtn");
-      const declineBtn = document.getElementById("declineBtn");
-      const submitBtn = document.getElementById("submitBtn");
+            heightInput.addEventListener('input', function () {
+                if (this.value !== "" && parseFloat(this.value) < 1) {
+                    this.value = 1;
+                }
+            });
 
-      termsLink.addEventListener("click", function (event) {
-        event.preventDefault();
-        termsModal.show();
-      });
+            // Set default units on initial load
+            setWeightUnit("kg");
+            setHeightUnit("cm");
 
-      termsCheckbox.addEventListener("click", function (event) {
-        event.preventDefault();
-        termsModal.show();
-      });
+            updateButtonStyles();
 
-      acceptBtn.addEventListener("click", function () {
-        termsCheckbox.checked = true;
-        submitBtn.disabled = !termsCheckbox.checked;
-      });
+            const termsCheckbox = document.getElementById("termsCheckbox");
+            const termsLink = document.getElementById("termsLink");
+            const termsModal = new bootstrap.Modal(
+                document.getElementById("termsModal")
+            );
+            const acceptBtn = document.getElementById("acceptBtn");
+            const declineBtn = document.getElementById("declineBtn");
+            const submitBtn = document.getElementById("submitBtn");
 
-      declineBtn.addEventListener("click", function () {
-        termsCheckbox.checked = false;
-        submitBtn.disabled = !termsCheckbox.checked;
-      });
-    });
+            termsLink.addEventListener("click", function (event) {
+                event.preventDefault();
+                termsModal.show();
+            });
 
-    function toggleDay(dayIndex) {
-      let selectedDays = document.getElementById("days").value
-        ? document.getElementById("days").value.split(",")
-        : [];
-      const dayStr = dayIndex.toString();
+            termsCheckbox.addEventListener("click", function (event) {
+                event.preventDefault();
+                termsModal.show();
+            });
 
-      const index = selectedDays.indexOf(dayStr);
-      if (index > -1) {
-        selectedDays.splice(index, 1); // Remove day if already selected
-      } else {
-        selectedDays.push(dayStr); // Add day if not already selected
-      }
+            acceptBtn.addEventListener("click", function () {
+                termsCheckbox.checked = true;
+                submitBtn.disabled = !termsCheckbox.checked;
+            });
 
-      // Update the hidden input and button appearance
-      document.getElementById("days").value = selectedDays.join(",");
-      updateButtonStyles();
-    }
-
-    function updateButtonStyles() {
-      const selectedDays = document.getElementById("days").value.split(",");
-      document
-        .querySelectorAll(".btn-group-2 button")
-        .forEach((button, index) => {
-          if (selectedDays.includes(index.toString())) {
-            button.classList.add("active");
-          } else {
-            button.classList.remove("active");
-          }
+            declineBtn.addEventListener("click", function () {
+                termsCheckbox.checked = false;
+                submitBtn.disabled = !termsCheckbox.checked;
+            });
         });
-    }
 
-    function setExperience(level) {
-      const experienceButtons = document.querySelectorAll(
-        ".btn-group-1 button"
-      );
-      experienceButtons.forEach((button) => {
-        if (button.textContent.toLowerCase().includes(level.toLowerCase())) {
-          button.classList.add("active"); // Highlight the active button
-        } else {
-          button.classList.remove("active"); // Remove highlight from other buttons
+        function toggleDay(dayIndex) {
+            let selectedDays = document.getElementById("days").value
+                ? document.getElementById("days").value.split(",")
+                : [];
+            const dayStr = dayIndex.toString();
+
+            const index = selectedDays.indexOf(dayStr);
+            if (index > -1) {
+                selectedDays.splice(index, 1); // Remove day if already selected
+            } else {
+                selectedDays.push(dayStr); // Add day if not already selected
+            }
+
+            // Update the hidden input and button appearance
+            document.getElementById("days").value = selectedDays.join(",");
+            updateButtonStyles();
         }
-      });
 
-      // Optionally set a hidden input value if needed for form submission
-      document.getElementById("fitnessLevel").value = level;
-    }
-
-    let currentTab = 0; // The Current tab is set to be the first tab (0)
-    showTab(currentTab); // Display the current tab
-
-    function showTab(n) {
-      // This function will display the specified tab of the form ...
-      const x = document.getElementsByClassName("tab");
-      x[n].style.display = "block";
-      // ... and fix the Previous/Next buttons:
-      if (n === 0) {
-        document.getElementById("prevBtn").style.display = "none";
-      } else {
-        document.getElementById("prevBtn").style.display = "inline";
-      }
-      if (n === x.length - 1) {
-        document.getElementById("nextBtn").innerHTML = "<%= language.submit %>";
-      } else {
-        document.getElementById("nextBtn").innerHTML = "<%= language.next %>";
-      }
-      // ... and run a function that displays the correct step indicator:
-      fixStepIndicator(n);
-    }
-
-    function nextPrev(n) {
-      const x = document.getElementsByClassName("tab");
-
-      if (n === 1 && !validateForm()) return false;
-
-      if (currentTab === 0) {
-        convertWeightToKg();
-        convertHeightToCm();
-      }
-
-      x[currentTab].style.display = "none";
-      currentTab = currentTab + n;
-
-      if (currentTab >= x.length) {
-        showLoading(true);
-        document.getElementById("nextBtn").type = "submit";
-        document.getElementById("regForm").submit();
-        document.getElementById("nextBtn").style.display = "none";
-        document.getElementById("prevBtn").style.display = "none";
-
-        return false;
-      }
-      showTab(currentTab);
-    }
-
-    function convertWeightToKg() {
-      const weightInput = document.querySelector('input[name="weight"]');
-      const weightUnit = weightInput.getAttribute("data-unit");
-      let weightValue = parseFloat(weightInput.value);
-
-      if (weightUnit === "lb") {
-        weightValue = weightValue * 0.453592;
-      }
-
-      weightInput.value = weightValue.toFixed(2);
-    }
-
-    function convertHeightToCm() {
-      const heightInput = document.querySelector('input[name="height"]');
-      const heightUnit = heightInput.getAttribute("data-unit");
-      let heightValue = parseFloat(heightInput.value);
-
-      if (heightUnit === "ft") {
-        heightValue = heightValue * 30.48;
-      }
-
-      heightInput.value = heightValue.toFixed(2);
-    }
-
-    function validateForm() {
-      // This function deals with validation of the form fields
-      let x,
-        y,
-        i,
-        valid = true;
-      x = document.getElementsByClassName("tab");
-      y = x[currentTab].getElementsByTagName("input");
-      // A loop that checks every input field in the current tab:
-      for (i = 0; i < y.length; i++) {
-        // If a field is empty...
-        if (y[i].value === "") {
-          // add an "invalid" class to the field:
-          y[i].className += " invalid";
-          // and set the current valid status to false:
-          valid = false;
+        function updateButtonStyles() {
+            const selectedDays = document.getElementById("days").value.split(",");
+            document
+                .querySelectorAll(".btn-group-2 button")
+                .forEach((button, index) => {
+                    if (selectedDays.includes(index.toString())) {
+                        button.classList.add("active");
+                    } else {
+                        button.classList.remove("active");
+                    }
+                });
         }
-      }
-      // If the valid status is true, mark the step as finished and valid:
-      if (valid) {
-        document.getElementsByClassName("step")[currentTab].className +=
-          " finish";
-      }
-      return valid; // return the valid status
-    }
 
-    function fixStepIndicator(n) {
-      // This function removes the "active" class of all steps...
-      let i,
-        x = document.getElementsByClassName("step");
-      for (i = 0; i < x.length; i++) {
-        x[i].className = x[i].className.replace(" active", "");
-      }
-      //... and adds the "active" class to the current step:
-      x[n].className += " active";
-    }
+        function setExperience(level) {
+            const experienceButtons = document.querySelectorAll(
+                ".btn-group-1 button"
+            );
+            experienceButtons.forEach((button) => {
+                if (button.textContent.toLowerCase().includes(level.toLowerCase())) {
+                    button.classList.add("active"); // Highlight the active button
+                } else {
+                    button.classList.remove("active"); // Remove highlight from other buttons
+                }
+            });
 
-    function setWeightUnit(unit) {
-      const weightButtons = document.querySelectorAll(
-        "#weightUnitButtons button"
-      );
-      weightButtons.forEach((btn) => {
-        console.log(unit, btn.textContent);
-        if (btn.textContent.includes(unit)) {
-          btn.classList.add("active-unit");
-        } else {
-          btn.classList.remove("active-unit");
+            // Optionally set a hidden input value if needed for form submission
+            document.getElementById("fitnessLevel").value = level;
         }
-      });
-      document
-        .querySelector('input[name="weight"]')
-        .setAttribute("data-unit", unit);
-    }
 
-    function showLoading(show) {
-      document.getElementById("loadingIndicator").style.display = show
-        ? "block"
-        : "none";
-    }
+        let currentTab = 0; // The Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
 
-    function setHeightUnit(unit) {
-      const heightButtons = document.querySelectorAll(
-        "#heightUnitButtons button"
-      );
-      heightButtons.forEach((btn) => {
-        if (btn.textContent.includes(unit)) {
-          btn.classList.add("active-unit");
-        } else {
-          btn.classList.remove("active-unit");
+        function showTab(n) {
+            // This function will display the specified tab of the form ...
+            const x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            // ... and fix the Previous/Next buttons:
+            if (n === 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n === x.length - 1) {
+                document.getElementById("nextBtn").innerHTML = "<%= language.submit %>";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "<%= language.next %>";
+            }
+            // ... and run a function that displays the correct step indicator:
+            fixStepIndicator(n);
         }
-      });
-    }
 
-    function setGoal(goal) {
-      const goalButtons = document.querySelectorAll(
-        ".btn-group-3 button.btn-exper"
-      );
-      const goalInput = document.getElementById("goal"); // Assuming there is a hidden input with id="goal"
+        function nextPrev(n) {
+            const x = document.getElementsByClassName("tab");
 
-      goalButtons.forEach((button) => {
-        if (button.textContent.toLowerCase().includes(goal.toLowerCase())) {
-          button.classList.add("active"); // Highlight the active button
-        } else {
-          button.classList.remove("active"); // Remove highlight from other buttons
+            if (n === 1 && !validateForm()) return false;
+
+            if (currentTab === 0) {
+                convertWeightToKg();
+                convertHeightToCm();
+            }
+
+            x[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+
+            if (currentTab >= x.length) {
+                showLoading(true);
+                document.getElementById("nextBtn").type = "submit";
+                document.getElementById("regForm").submit();
+                document.getElementById("nextBtn").style.display = "none";
+                document.getElementById("prevBtn").style.display = "none";
+
+                return false;
+            }
+            showTab(currentTab);
         }
-      });
 
-      goalInput.value = goal; // Set the hidden input value to the selected goal for form submission
-    }
-  </script>
+        function convertWeightToKg() {
+            const weightInput = document.querySelector('input[name="weight"]');
+            const weightUnit = weightInput.getAttribute("data-unit");
+            let weightValue = parseFloat(weightInput.value);
 
-  <%- include("templates/footer") %>
+            if (weightUnit === "lb") {
+                weightValue = weightValue * 0.453592;
+            }
+
+            weightInput.value = weightValue.toFixed(2);
+        }
+
+        function convertHeightToCm() {
+            const heightInput = document.querySelector('input[name="height"]');
+            const heightUnit = heightInput.getAttribute("data-unit");
+            let heightValue = parseFloat(heightInput.value);
+
+            if (heightUnit === "ft") {
+                heightValue = heightValue * 30.48;
+            }
+
+            heightInput.value = heightValue.toFixed(2);
+        }
+
+        function validateForm() {
+            let x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+
+            // A loop that checks every input field in the current tab:
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty or less than 1...
+                if (y[i].value === "" || parseFloat(y[i].value) < 1) {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false:
+                    valid = false;
+                } else {
+                    // remove "invalid" class if the field is valid
+                    y[i].classList.remove("invalid");
+                }
+            }
+
+            // If the valid status is true, mark the step as finished and valid:
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+
+            return valid; // return the valid status
+        }
+
+        function fixStepIndicator(n) {
+            // This function removes the "active" class of all steps...
+            let i,
+                x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            //... and adds the "active" class to the current step:
+            x[n].className += " active";
+        }
+
+        function setWeightUnit(unit) {
+            const weightButtons = document.querySelectorAll(
+                "#weightUnitButtons button"
+            );
+            weightButtons.forEach((btn) => {
+                console.log(unit, btn.textContent);
+                if (btn.textContent.includes(unit)) {
+                    btn.classList.add("active-unit");
+                } else {
+                    btn.classList.remove("active-unit");
+                }
+            });
+            document
+                .querySelector('input[name="weight"]')
+                .setAttribute("data-unit", unit);
+        }
+
+        function showLoading(show) {
+            document.getElementById("loadingIndicator").style.display = show
+                ? "block"
+                : "none";
+        }
+
+        function setHeightUnit(unit) {
+            const heightButtons = document.querySelectorAll(
+                "#heightUnitButtons button"
+            );
+            heightButtons.forEach((btn) => {
+                if (btn.textContent.includes(unit)) {
+                    btn.classList.add("active-unit");
+                } else {
+                    btn.classList.remove("active-unit");
+                }
+            });
+        }
+
+        function setGoal(goal) {
+            const goalButtons = document.querySelectorAll(
+                ".btn-group-3 button.btn-exper"
+            );
+            const goalInput = document.getElementById("goal"); // Assuming there is a hidden input with id="goal"
+
+            goalButtons.forEach((button) => {
+                if (button.textContent.toLowerCase().includes(goal.toLowerCase())) {
+                    button.classList.add("active"); // Highlight the active button
+                } else {
+                    button.classList.remove("active"); // Remove highlight from other buttons
+                }
+            });
+
+            goalInput.value = goal; // Set the hidden input value to the selected goal for form submission
+        }
+    </script>
+
+    <%- include("templates/footer") %>
 </div>

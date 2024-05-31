@@ -294,17 +294,17 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
 });
 
 app.get("/train-plank", ensureAuthenticated, (req, res) => {
-   res.render("train-plank")
+    res.render("train-plank")
 });
 
 
 app.get("/train-squat", ensureAuthenticated, (req, res) => {
     res.render("train-squat")
- });
- 
+});
+
 app.get("/workouts", ensureAuthenticated, (req, res) => {
     res.render("workouts")
- });
+});
 
 app.get("/logout", ensureAuthenticated, (req, res) => {
     req.session.destroy((err) => {

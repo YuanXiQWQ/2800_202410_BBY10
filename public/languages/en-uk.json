@@ -104,7 +104,6 @@
   "workoutSettingsTips": "Adjust your workout settings here.",
   "fitnessGoal": "Fitness Goal",
   "fitnessLevel": "Fitness Level",
-  "workoutDuration": "Workout Duration",
   "workoutSettingsSuccess": "Workout settings updated successfully.",
   "editUserPersonalInfoTitle": "Edit Personal Information",
   "editYourPersonalInformation": "Edit Your Personal Information",
@@ -174,5 +173,6 @@
   "trackYourPlank": "Track Your Plank",
   "plankDescription": "Access our plank tracking tool for real-time feedback on posture and duration to perfect your planks and strengthen your core.",
   "trackYourSquats": "Track Your Squats",
-  "squatDescription": "Start tracking your squat exercises here. Enhance your form and strength with our guided squat sessions."
+  "squatDescription": "Start tracking your squat exercises here. Enhance your form and strength with our guided squat sessions.",
+  "workoutDaysTitle": "Workout Days"
 }
