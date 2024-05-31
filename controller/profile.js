@@ -21,20 +21,20 @@ export async function changePassword(req, res) {
     try {
         const user = await findByUsername(req.session.userData.username);
         if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
+            return res.status(404).json({success: false, message: res.locals.language.userNotFound});
         }
 
         const isMatch = await validatePassword(user, oldPassword);
         if (!isMatch) {
-            return res.status(400).json({success: false, message: 'Old password is incorrect'});
+            return res.status(400).json({success: false, message: res.locals.language.oldPasswordIncorrect});
         }
 
         user.password = await bcrypt.hash(newPassword, 10);
         await user.save();
 
-        res.status(200).json({success: true, message: 'Password changed successfully'});
+        res.status(200).json({success: true, message: res.locals.language.passwordChangeSuccess});
     } catch (error) {
-        res.status(500).json({success: false, message: 'Server error', error});
+        res.status(500).json({success: false, message: res.locals.language.serverError, error});
     }
 }
 
@@ -53,7 +53,7 @@ export async function postUserAvatar(req, res) {
         const user = await findByUsername(req.session.userData.username);
 
         if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
+            return res.status(404).json({success: false, message: res.locals.language.userNotFound});
         }
 
         if (username) {
@@ -63,8 +63,7 @@ export async function postUserAvatar(req, res) {
 
             if (now - lastUpdated < thirtyDays) {
                 return res.status(404).json({
-                    success: false,
-                    message: 'Username can only be changed once every 30 days.'
+                    success: false, message: res.locals.language.usernameChangeLimit,
                 });
             }
 
@@ -85,20 +84,20 @@ export async function postUserAvatar(req, res) {
                 user.avatar = filename;
                 await user.save();
                 req.session.userData.avatar = user.avatar;
-                res.status(200).json({success: true, message: 'Updated successfully'});
+                res.status(200).json({success: true, message: res.locals.language.updateSuccess});
             });
 
             uploadStream.on('error', (error) => {
                 console.error('Error uploading file:', error);
-                res.status(500).send('Internal Server Error');
+                res.status(500).send(res.locals.language.internalServerError);
             });
         } else {
             await user.save();
-            res.status(200).json({success: true, message: 'Updated successfully'});
+            res.status(200).json({success: true, message: res.locals.language.updateSuccess});
         }
     } catch (error) {
         console.error('Error updating user avatar:', error);
-        return res.status(500).json({success: false, message: 'Internal Server Error'});
+        return res.status(500).json({success: false, message: res.locals.language.internalServerError});
     }
 }
 
@@ -116,15 +115,29 @@ export async function postPersonalInformation(req, res) {
     try {
         const user = await findByUsername(req.session.userData.username);
         if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
+            return res.status(404).json({success: false, message: res.locals.language.userNotFound});
         }
 
         // Check if email already exists
         if (email && email !== user.email) {
             const emailExists = await User.findOne({email});
             if (emailExists) {
-                return res.status(400).json({success: false, message: 'Email already exists'});
+                return res.status(400).json({success: false, message: res.locals.language.emailExists});
             }
+        }
+
+        /* Keep "==" and don't change to "===" because somehow it is not a number, and I'm afraid that if
+        some time it changes to number for some reason, so just keep that. */
+        if (height == 0) {
+            return res.status(400).json({success: false, message: res.locals.language.heightDisappearing});
+        } else if (height < 0) {
+            return res.status(400).json({success: false, message: res.locals.language.heightNegative});
+        }
+
+        if (weight == 0) {
+            return res.status(400).json({success: false, message: res.locals.language.weightDisappearing});
+        } else if (weight < 0) {
+            return res.status(400).json({success: false, message: res.locals.language.weightNegative});
         }
 
         user.firstName = firstName || user.firstName;
@@ -146,16 +159,16 @@ export async function postPersonalInformation(req, res) {
             weight: user.weight
         };
 
-        res.status(200).json({success: true, message: 'Personal information updated successfully'});
+        res.status(200).json({success: true, message: res.locals.language.personalInfoUpdateSuccess});
     } catch (error) {
         console.error('Error saving personal information:', error);
-        res.status(500).json({success: false, message: 'Server error', error});
+        res.status(500).json({success: false, message: res.locals.language.serverError, error});
     }
 }
 
 /**
  * Function to update the user's workout settings.
- * Updates the user's goal, fitness level, and workout time.
+ * Updates the user's goal, fitness level, and workout days.
  *
  * @param {Request} req - Express request object containing the user's workout settings in the body
  * @param {Response} res - Express response object
@@ -167,26 +180,23 @@ export async function updateWorkoutSettings(req, res) {
     try {
         const user = await findByUsername(req.session.userData.username);
         if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
+            return res.status(404).json({success: false, message: res.locals.language.userNotFound});
         }
 
         user.goal = goal || user.goal;
         user.fitnessLevel = fitnessLevel || user.fitnessLevel;
-        user.time = time || user.time;
+        user.workoutDays = time || user.workoutDays;
 
         await user.save();
 
         req.session.userData = {
-            ...req.session.userData,
-            goal: user.goal,
-            fitnessLevel: user.fitnessLevel,
-            time: user.time
+            ...req.session.userData, goal: user.goal, fitnessLevel: user.fitnessLevel, workoutDays: user.workoutDays
         };
 
-        res.status(200).json({success: true, message: 'Workout settings updated successfully'});
+        res.status(200).json({success: true, message: res.locals.language.workoutSettingsUpdateSuccess});
     } catch (error) {
         console.error('Error saving workout settings:', error);
-        res.status(500).json({success: false, message: 'Server error', error});
+        res.status(500).json({success: false, message: res.locals.language.serverError, error});
     }
 }
 
@@ -201,24 +211,31 @@ export async function deleteAccount(req, res) {
     try {
         const user = await findByUsername(req.session.userData.username);
         if (!user) {
-            return res.status(404).json({success: false, message: 'User not found'});
+            return res.status(404).json({success: false, message: res.locals.language.userNotFound});
         }
 
         req.session.destroy(async err => {
             if (err) {
-                return res.status(500).json({success: false, message: 'Failed to delete account'});
+                return res.status(500).json({success: false, message: res.locals.language.deleteAccountFailed});
             }
             await User.deleteOne({_id: user?._id});
 
-            res.status(200).json({success: true, message: 'Account deleted successfully'});
+            res.status(200).json({success: true, message: res.locals.language.accountDeletedSuccess});
         });
-       
+
     } catch (error) {
         console.error('Error deleting account:', error);
-        res.status(500).json({success: false, message: 'Internal Server Error'});
+        res.status(500).json({success: false, message: res.locals.language.internalServerError});
     }
 }
 
+/**
+ * Function to change the user's language.
+ *
+ * @param req - Express request object
+ * @param res - Express response object
+ * @returns {Promise<void>} A promise that resolves when the language is changed
+ */
 export const changeLanguage = (req, res) => {
     const {language} = req.session;
 
@@ -226,11 +243,11 @@ export const changeLanguage = (req, res) => {
     fs.readFile(languageFilePath, 'utf-8', (err, data) => {
         if (err) {
             console.error(`Could not read language file: ${err.message}`);
-            return res.json({success: false, message: 'Failed to change language.'});
+            return res.json({success: false, message: res.locals.language.languageChangeFailed});
         } else {
             req.session.userData.preferredLanguage = language;
             res.locals.language = JSON.parse(data);
-            return res.json({success: true, message: 'Language changed successfully.'});
+            return res.json({success: true, message: res.locals.language.languageChangeSuccess});
         }
     });
 };

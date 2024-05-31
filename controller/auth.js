@@ -205,13 +205,13 @@ export async function register(req, res) {
 
     if (validationResult.error) {
         return res.status(400).json({
-            success: false, message: validationResult.error.details[0].message,
+            success: false, message: res.locals.language.validationError,
         });
     }
 
     if (!passwordRegex.test(password)) {
         return res.status(400).json({
-            success: false, message: passwordInvalidMessage,
+            success: false, message: res.locals.language.passwordInvalidMessage,
         });
     }
 
@@ -220,14 +220,14 @@ export async function register(req, res) {
 
         if (existingUser) {
             return res.status(409).json({
-                success: false, message: "User already exists with this email.",
+                success: false, message: res.locals.language.userExistsEmail,
             });
         }
 
         const existingUsername = await User.findOne({username});
         if (existingUsername) {
             return res.status(409).json({
-                success: false, message: "User already exists with this username.",
+                success: false, message: res.locals.language.userExistsUsername,
             });
         }
 
@@ -253,17 +253,17 @@ export async function register(req, res) {
         const mailOptions = {
             from: process.env.EMAIL,
             to: email,
-            subject: "Email Verification",
-            html: `<p>Please verify your email by clicking the following link:</p>
+            subject: res.locals.language.emailVerificationSubject,
+            html: `<p>${res.locals.language.verifyEmailText}:</p>
                    <p><a href="${verificationLink}">${verificationLink}</a></p>`
         };
 
         await transporter.sendMail(mailOptions);
 
-        return res.status(200).json({success: true, message: "Verification email sent"});
+        return res.status(200).json({success: true, message: res.locals.language.verificationEmailSent});
     } catch (error) {
         console.error("Error:", error);
-        return res.status(500).json({success: false, message: "Internal Server Error"});
+        return res.status(500).json({success: false, message: res.locals.language.internalServerError});
     }
 }
 
@@ -301,7 +301,7 @@ export function AdditionalUserInfo(req, res) {
         try {
             const user = await User.findOne({username});
             if (!user) {
-                return res.status(404).json({success: false, message: "User not found."});
+                return res.status(404).json({success: false, message: res.locals.language.userNotFound});
             }
 
             user.weight = weight;
@@ -317,7 +317,7 @@ export function AdditionalUserInfo(req, res) {
         } catch (error) {
             console.error("Error saving additional info:", error);
             req.session.destroy();
-            res.status(500).send("Internal Server Error");
+            res.status(500).send(res.locals.language.internalServerError);
             reject(error);
         }
     });

@@ -18,7 +18,7 @@ export async function forgetPassword(req, res) {
     const {email} = req.body;
     try {
         const user = await User.findOne({email});
-        if (!user) return res.status(400).json({success: false, message: "User not found with this email."});
+        if (!user) return res.status(400).json({success: false, message: res.locals.language.userNotFoundWithEmail});
 
         const resetToken = crypto.randomBytes(32).toString("hex");
         user.verificationToken = resetToken;
@@ -30,17 +30,17 @@ export async function forgetPassword(req, res) {
         const mailOptions = {
             from: process.env.EMAIL,
             to: email,
-            subject: "Password Reset",
-            html: `<p>Please reset your password by clicking the following link:</p>
+            subject: res.locals.language.passwordResetSubject,
+            html: `<p>${res.locals.language.resetPasswordText}:</p>
                    <p><a href="${resetLink}">${resetLink}</a></p>`
         };
 
         await transporter.sendMail(mailOptions);
 
-        return res.status(200).json({success: true, message: "Password reset email sent"});
+        return res.status(200).json({success: true, message: res.locals.language.passwordResetEmailSent});
     } catch (error) {
         console.error("Error:", error);
-        return res.status(500).json({success: false, message: "Internal Server Error"});
+        return res.status(500).json({success: false, message: res.locals.language.internalServerError});
     }
 }
 
@@ -59,20 +59,20 @@ export async function resetPassword(req, res) {
     if (!newPassword || !passwordRegex.test(newPassword)) {
         return res.status(400).json({
             success: false,
-            message: passwordInvalidMessage,
+            message: res.locals.language.passwordInvalidMessage,
         });
     }
 
     try {
         const user = await User.findOne({verificationToken: token});
-        if (!user) return res.status(400).json({success: false, message: 'Invalid token'});
+        if (!user) return res.status(400).json({success: false, message: res.locals.language.invalidToken});
 
         user.password = await bcrypt.hash(newPassword, 10);
         user.verificationToken = undefined;
         await user.save();
 
-        res.status(200).json({success: true, message: 'Password reset successfully'});
+        res.status(200).json({success: true, message: res.locals.language.passwordResetSuccess});
     } catch (error) {
-        res.status(500).json({success: false, message: 'Server error', error});
+        res.status(500).json({success: false, message: res.locals.language.serverError, error});
     }
 }
