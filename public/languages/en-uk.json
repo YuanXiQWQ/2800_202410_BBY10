@@ -202,5 +202,7 @@
   "userExistsUsername": "User already exists with this username.",
   "emailVerificationSubject": "Email Verification",
   "verifyEmailText": "Please verify your email by clicking the following link",
-  "about": "About"
+  "about": "About",
+  "agreeTo" : "I agree to the",
+  "termsAndConditions" : "Terms and Conditions"
 }

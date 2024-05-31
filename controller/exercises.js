@@ -19,7 +19,7 @@ export async function getListOfExercises(req, res) {
     const data = await exercises.findOne({user: userid});
 
     return {
-        ...data._doc,
+        ...data?._doc,
         exercises: data?.exercises.map((ele) => ({
             ...ele, start: formatDate(ele?.start), end: formatDate(ele?.end),
         })),

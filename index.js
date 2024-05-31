@@ -106,8 +106,9 @@ app.get("/verify-email", async (req, res) => {
 });
 
 app.get("/additional-info", ensureAuthenticated, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     if (!req.session.userData || !req.session.userData.isVerified) return res.redirect("/signup");
-    res.render("additional-info", {userData: req.session.userData, language: res.locals.language});
+    res.render("additional-info", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.post("/submitAdditionalInfo", ensureAuthenticated, (req, res) => {
