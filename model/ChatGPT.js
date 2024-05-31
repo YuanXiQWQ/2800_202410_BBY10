@@ -23,10 +23,10 @@ export async function sendMessageToChatGPT(messageToSend) {
             "language": "en"
         }],
         "max_tokens": 4096,
-        "temperature": 0.3,
-        "top_p": 0.5,
-        "frequency_penalty": 0.5,
-        "presence_penalty": 0.2
+        "temperature": 0.7,
+        "top_p": 1,
+        "frequency_penalty": 0,
+        "presence_penalty": 0
     });
 
     let httpPost = {
@@ -40,7 +40,7 @@ export async function sendMessageToChatGPT(messageToSend) {
         const response = await fetch(link, httpPost);
         const result = await response.json();
         const message = result.choices[0].message.content;
-        console.log("ChatGPT: " + message);
+        console.log("ChatGPT response:", message);
 
         // Try at most 3 times to parse the message as JSON
         let parsedMessage;

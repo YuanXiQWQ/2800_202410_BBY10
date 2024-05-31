@@ -37,54 +37,47 @@ function calculateWorkoutDays(time, startDate, endDate) {
 export function generatePrompt(time, fitnessLevel, height, weight, goal, startDate, endDate) {
     const workoutDays = calculateWorkoutDays(time, startDate, endDate);
 
-    const prompt = `Create a fitness plan only for the following dates:
-     ${workoutDays.join(', ')}
-    The plan should be based on the following parameters:
-        Fitness Level: ${fitnessLevel}
-        Height: ${height} cm
-        Weight: ${weight} kg
-        Goal: ${goal}
-    The plan should be a JSON formatted array, where each object represents a workout session including:
-        - "title" - (string value) the name of the workout
-        - "time" - (numeric value) the duration of the workout in minutes
-        - "Reps" - (numeric value) the number of repetitions per set
-        - "Sets" - (numeric value) the number of sets
-        - "start" - (date value) the start date of the workout in the format 'YYYY-MM-DD'
-        - "end" - (date value) the end date of the workout in the format 'YYYY-MM-DD'
+    return `Create a fitness plan only for the following dates:
+    ${workoutDays.join(', ')}
+The plan should be based on the following parameters:
+    Fitness Level: ${fitnessLevel}
+    Height: ${height} cm
+    Weight: ${weight} kg
+    Goal: ${goal}
+The plan should be a JSON formatted array, where each object represents a workout session including:
+    - "title" - (string value) the name of the workout
+    - "time" - (numeric value) the duration of the workout in minutes
+    - "Reps" - (numeric value) the number of repetitions per set
+    - "Sets" - (numeric value) the number of sets
+    - "start" - (date value) the start date of the workout in the format 'YYYY-MM-DD'
+    - "end" - (date value) the end date of the workout in the format 'YYYY-MM-DD'
     
-    Ensure the response meets the following criteria:
-    1. The generated fitness plan should schedule activities within the specified dates.
-    2. The start and end dates of the plan items can be different, but they must fall within the specified dates. For
-    example, if an item takes two days to complete and the workout days are 2024-05-01, 2024-05-03, and 2024-05-04, the
-    item can be scheduled as follows:
-       - Item 1: start and end on 2024-05-01.
-       - Item 2: start and end on 2024-05-03.
-       - Item 3: start on 2024-05-03 and end on 2024-05-04.
-    3. The fitness content should meet the following:
-       - It can be repetitive but should be scientific and reasonable.
-       - It should match the user's fitness level, height, and weight.
-       - It should meet the user's fitness goals.
-    5. For dates outside the specified dates, it is strictly prohibited to generate a JSON object for that day or
-    attempt to set it as a rest day or similar.
-    
-    For example, if the workouts are scheduled for the following dates:
-    ["2024-05-01", "2024-05-02", "2024-05-06", "2024-05-08", "2024-05-09", "2024-05-13", "2024-05-15"],
-    the fitness level is Beginner, height is 170 cm, weight is 80 kg, and the goal is weight loss, it can be scheduled
-    as follows:
-    [
-        {"title": "Push-Ups", "time": 20, "Reps": 12, "Sets": 3, "start": "2024-05-01", "end": "2024-05-01"},
-        {"title": "Squats", "time": 20, "Reps": 15, "Sets": 3, "start": "2024-05-01", "end": "2024-05-02"},
-        {"title": "Sit-Ups", "time": 25, "Reps": 15, "Sets": 3, "start": "2024-05-06", "end": "2024-05-06"},
-        {"title": "Jump Rope", "time": 30, "Reps": 0, "Sets": 1, "start": "2024-05-08", "end": "2024-05-08"},
-        {"title": "Pull-Ups", "time": 15, "Reps": 8, "Sets": 3, "start": "2024-05-08", "end": "2024-05-09"},
-        {"title": "Plank", "time": 20, "Reps": 0, "Sets": 3, "start": "2024-05-13", "end": "2024-05-13"},
-        {"title": "Jump Rope", "time": 25, "Reps": 20, "Sets": 3, "start": "2024-05-15", "end": "2024-05-15"}
-    ]
-    
-    Ensure the response is a JSON formatted array with no additional text or unnecessary symbols. The dates should be
-    within the specified start and end dates and match the selected workout days. Each workout should be specific and
-    detailed to meet the user's fitness level, height, weight, and goal.`;
+Ensure the response meets the following criteria:
+1. The generated fitness plan should schedule activities within the specified dates.
+2. The start and end dates of the plan items can be different, but they must fall within the specified dates. For example, if an item takes two days to complete and the workout days are 2024-05-01, 2024-05-03, and 2024-05-04, the item can be scheduled as follows:
+   - Item 1: start and end on 2024-05-01.
+   - Item 2: start and end on 2024-05-03.
+   - Item 3: start on 2024-05-03 and end on 2024-05-04.
+3. The fitness content should meet the following:
+   - It can be repetitive but should be scientific and reasonable.
+   - It should match the user's fitness level, height, and weight.
+   - It should meet the user's fitness goals.
+5. For dates outside the specified dates, it is strictly prohibited to generate a JSON object for that day or attempt to set it as a rest day or similar.
 
-    console.log(prompt);
-    return prompt;
+For example, if the workouts are scheduled for the following dates:
+["2024-05-01", "2024-05-02", "2024-05-06", "2024-05-08", "2024-05-09", "2024-05-13", "2024-05-15"],
+the fitness level is Beginner, height is 170 cm, weight is 80 kg, and the goal is weight loss, it can be scheduled as follows:
+[
+    {"title": "Push-Ups", "time": 20, "Reps": 12, "Sets": 3, "start": "2024-05-01", "end": "2024-05-01"},
+    {"title": "Squats", "time": 20, "Reps": 15, "Sets": 3, "start": "2024-05-01", "end": "2024-05-02"},
+    {"title": "Sit-Ups", "time": 25, "Reps": 15, "Sets": 3, "start": "2024-05-06", "end": "2024-05-06"},
+    {"title": "Jump Rope", "time": 30, "Reps": 0, "Sets": 1, "start": "2024-05-08", "end": "2024-05-08"},
+    {"title": "Pull-Ups", "time": 15, "Reps": 8, "Sets": 3, "start": "2024-05-08", "end": "2024-05-09"},
+    {"title": "Plank", "time": 20, "Reps": 0, "Sets": 3, "start": "2024-05-13", "end": "2024-05-13"},
+    {"title": "Jump Rope", "time": 25, "Reps": 20, "Sets": 3, "start": "2024-05-15", "end": "2024-05-15"}
+]
+
+Ensure the response is a JSON formatted array with no additional text or unnecessary symbols. The dates should be within the specified start and end dates and match the selected workout days. Each workout should be specific and detailed to meet the user's fitness level, height, weight, and goal.
+
+Last Attention!!! Your response MUST be JSON format, without any additional text or symbols!!!`
 }

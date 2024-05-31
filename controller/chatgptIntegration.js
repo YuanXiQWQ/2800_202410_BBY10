@@ -24,7 +24,11 @@ async function getUserId(username) {
 function saveExercises(userId, exercise) {
     exercises.findOneAndUpdate({user: userId}, {exercises: exercise}, {new: true, upsert: true})
         .then(result => {
-            console.log("Exercise saved or updated successfully:", result);
+            if (result) {
+                console.log("Exercise saved or updated successfully:", result);
+            } else {
+                console.error("Failed to save or update exercise:", result);
+            }
         })
         .catch(err => {
             console.error("Error during save or update operation:", err);
@@ -54,7 +58,6 @@ export async function sendInformation(req, res) {
     startDate = startDate ? startDate : moment().format('YYYY-MM-DD');
     endDate = endDate ? endDate : moment().add(7, 'days').format('YYYY-MM-DD');
 
-    console.log("time:" + time + "startDate:" + startDate + "endDate" + endDate);
     try {
         gptResponse = await sendMessageToChatGPT(generatePrompt(time, fitnessLevel, height, weight, goal, startDate, endDate));
     } catch (err) {
