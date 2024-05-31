@@ -238,5 +238,19 @@
   "severabilityContent": "Si une disposition de ces Termes est jugée invalide ou inapplicable, cette disposition sera supprimée et les dispositions restantes seront appliquées dans toute la mesure permise par la loi.",
   "conclusion": "En utilisant NexGenFit, vous reconnaissez avoir lu, compris et accepté d'être lié par ces Termes et Conditions.",
   "decline": "Refuser",
-  "accept": "Accepter"
+  "accept": "Accepter",
+  "aboutUs": "À propos de nous",
+  "whoWeAre": "Qui nous sommes",
+  "welcomeMessage": "Bienvenue chez NexGenFit, votre compagnon de fitness ultime conçu pour vous aider à atteindre vos objectifs de santé et de bien-être avec facilité. Notre mission est de rendre les plans de fitness personnalisés accessibles et agréables pour tout le monde, quel que soit leur niveau de forme physique ou leur emploi du temps.",
+  "ourStory": "Notre histoire",
+  "ourStoryContent": "NexGenFit a été fondé en 2024 par une équipe d'enthousiastes du fitness qui ont reconnu la nécessité d'une approche plus personnalisée de l'entraînement. Frustrés par les programmes de fitness génériques qui ne répondaient pas aux besoins individuels, nous avons décidé de créer une application qui propose des plans d'entraînement personnalisés.",
+  "ourValues": "Nos valeurs",
+  "ourValuesContent": "Chez NexGenFit, nous croyons en la puissance de la personnalisation et de l'inclusivité. Nos valeurs fondamentales sont :",
+  "inclusivity": "Inclusivité",
+  "inclusivityContent": "Le fitness est pour tout le monde, et notre application est conçue pour être accessible à tous, quel que soit l'âge, le sexe ou le niveau de forme physique.",
+  "flexibilityContent": "La vie peut être imprévisible. Nos plans d'entraînement s'adaptent à votre emploi du temps, vous assurant de rester sur la bonne voie quoi qu'il arrive.",
+  "empowerment": "Autonomisation",
+  "empowermentContent": "Nous fournissons les outils, les conseils et le soutien dont vous avez besoin pour prendre en main votre parcours de fitness et atteindre vos objectifs.",
+  "whatWeOffer": "Ce que nous offrons",
+  "whatWeOfferContent": "NexGenFit se spécialise dans la création de plans d'entraînement personnalisés qui répondent à vos objectifs spécifiques, à vos préférences et à votre niveau de forme physique. Notre application garantit que chaque entraînement est efficace, agréable et adapté spécialement pour vous. Que vous visiez à développer vos muscles, perdre du poids ou maintenir votre forme générale, nous avons ce qu'il vous faut."
 }
