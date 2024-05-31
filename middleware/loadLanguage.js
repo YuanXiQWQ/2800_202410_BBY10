@@ -4,10 +4,13 @@ import path from 'path';
 export const loadLanguage = (req, res, next) => {
     let language = 'en-uk';
 
-    if (req.session.userData && req.session.userData.preferredLanguage) {
-        language = req.session.userData.preferredLanguage;
-    } else if (req.query.lang) {
+    if (req.query.lang) {
         language = req.query.lang;
+        req.session.language = language;
+    } else if (req.session.userData && req.session.userData.preferredLanguage) {
+        language = req.session.userData.preferredLanguage;
+    } else if (req.session.language) {
+        language = req.session.language;
     }
 
     const languageFilePath = path.join(process.cwd(), 'public', 'languages', `${language}.json`);

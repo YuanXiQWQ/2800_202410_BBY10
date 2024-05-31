@@ -201,5 +201,6 @@
   "userExistsEmail": "该电子邮件已经注册。",
   "userExistsUsername": "该用户名已经存在。",
   "emailVerificationSubject": "电子邮件验证",
-  "verifyEmailText": "请通过点击以下链接验证您的电子邮件"
+  "verifyEmailText": "请通过点击以下链接验证您的电子邮件",
+  "about": "关于"
 }

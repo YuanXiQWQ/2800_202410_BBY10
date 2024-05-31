@@ -1,29 +1,107 @@
+<!-- footer.ejs -->
 <!-- Should be the last element in the body -->
-
-
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0  text-color">© 2024 NexGenFit, Inc</p>
-            <a href="/"
-                class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="/about" class="nav-link px-2 text-color">About</a></li>
-            </ul>
-        </footer>
+<div class="container position-relative">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-color">© 2024 NexGenFit, Inc</p>
+        <ul class="nav col-md-4 justify-content-end">
+            <% if (!login) { %>
+                <li class="nav-item position-relative">
+                    <a href="#" id="language-toggle" class="nav-link px-2 text-color">
+                        <svg width="20" height="20" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M39.96 0C17.88 0 0 17.92 0 40C0 62.08 17.88 80 39.96 80C62.08 80 80 62.08 80 40C80 17.92 62.08 0 39.96 0ZM67.68 24H55.88C54.6 19 52.76 14.2 50.36 9.76C57.72 12.28 63.84 17.4 67.68 24ZM40 8.16C43.32 12.96 45.92 18.28 47.64 24H32.36C34.08 18.28 36.68 12.96 40 8.16ZM9.04 48C8.4 45.44 8 42.76 8 40C8 37.24 8.4 34.56 9.04 32H22.56C22.24 34.64 22 37.28 22 40C22 42.72 22.24 45.36 22.56 48H9.04ZM12.32 56H24.12C25.4 61 27.24 65.8 29.64 70.24C22.28 67.72 16.16 62.64 12.32 56ZM24.12 24H12.32C16.16 17.36 22.28 12.28 29.64 9.76C27.24 14.2 25.4 19 24.12 24ZM40 71.84C36.68 67.04 34.08 61.72 32.36 56H47.64C45.92 61.72 43.32 67.04 40 71.84ZM49.36 48H30.64C30.28 45.36 30 42.72 30 40C30 37.28 30.28 34.6 30.64 32H49.36C49.72 34.6 50 37.28 50 40C50 42.72 49.72 45.36 49.36 48ZM50.36 70.24C52.76 65.8 54.6 61 55.88 56H67.68C63.84 62.6 57.72 67.72 50.36 70.24ZM57.44 48C57.76 45.36 58 42.72 58 40C58 37.28 57.76 34.64 57.44 32H70.96C71.6 34.56 72 37.24 72 40C72 42.76 71.6 45.44 70.96 48H57.44Z"
+                                  fill="black"/>
+                        </svg>
+                    </a>
+                </li>
+            <% } %>
+            <li class="nav-item"><a href="/about" class="nav-link px-2 text-color"><%= language.about %></a></li>
+        </ul>
+    </footer>
+    <div id="language-menu" class="language-menu">
+        <div class="language-grid">
+            <button class="language-button" data-lang="en-uk"><%= language.english %></button>
+            <button class="language-button" data-lang="zh-cn"><%= language.chinese %></button>
+            <button class="language-button" data-lang="zh-tw"><%= language.traditionalChinese %></button>
+            <button class="language-button" data-lang="ar"><%= language.arabic %></button>
+            <button class="language-button" data-lang="fa"><%= language.persian %></button>
+            <button class="language-button" data-lang="fr"><%= language.french %></button>
+            <button class="language-button" data-lang="ru"><%= language.russian %></button>
+            <button class="language-button" data-lang="de"><%= language.german %></button>
+            <button class="language-button" data-lang="ja"><%= language.japanese %></button>
+            <button class="language-button" data-lang="it"><%= language.italian %></button>
+            <button class="language-button" data-lang="ko"><%= language.korean %></button>
+            <button class="language-button" data-lang="es"><%= language.spanish %></button>
+            <button class="language-button" data-lang="pt"><%= language.portuguese %></button>
+        </div>
     </div>
 </div>
 
+<script>
+    document.getElementById('language-toggle').addEventListener('click', function (event) {
+        event.preventDefault();
+        const languageMenu = document.getElementById('language-menu');
+        languageMenu.classList.toggle('show');
+    });
 
+    document.querySelectorAll('.language-button').forEach(button => {
+        button.addEventListener('click', function () {
+            const selectedLanguage = this.getAttribute('data-lang');
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('lang', selectedLanguage);
+            window.location.href = currentUrl.toString();
+        });
+    });
+</script>
 
+<style>
+    .language-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #dadada;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        overflow: hidden;
+        max-height: 0;
+        }
 
+    .language-menu.show {
+        display: block;
+        max-height: 300px;
+        }
 
+    .language-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+        padding: 10px;
+        }
 
+    .language-button {
+        padding: 10px;
+        background: #f0f0f0;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+        }
 
+    .language-button:hover {
+        background: #e0e0e0;
+        }
 
+    .nav-item a {
+        display: flex;
+        align-items: center;
+        }
+
+    .nav-item svg {
+        margin-right: 5px;
+        }
+</style>
 </body>
-
 </html>

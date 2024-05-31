@@ -201,5 +201,6 @@
   "userExistsEmail": "このメールアドレスはすでに登録されています。",
   "userExistsUsername": "このユーザー名はすでに存在します。",
   "emailVerificationSubject": "メールアドレスの確認",
-  "verifyEmailText": "以下のリンクをクリックしてメールアドレスを確認してください"
+  "verifyEmailText": "以下のリンクをクリックしてメールアドレスを確認してください",
+  "about": "約"
 }

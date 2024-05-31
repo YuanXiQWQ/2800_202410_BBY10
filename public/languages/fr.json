@@ -201,5 +201,6 @@
   "userExistsEmail": "Un utilisateur existe déjà avec cet email.",
   "userExistsUsername": "Un utilisateur existe déjà avec ce nom d'utilisateur.",
   "emailVerificationSubject": "Vérification de l'email",
-  "verifyEmailText": "Veuillez vérifier votre email en cliquant sur le lien suivant"
+  "verifyEmailText": "Veuillez vérifier votre email en cliquant sur le lien suivant",
+  "about": "À propos"
 }

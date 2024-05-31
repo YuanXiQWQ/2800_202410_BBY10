@@ -201,5 +201,6 @@
   "userExistsEmail": "該電子郵件已經註冊。",
   "userExistsUsername": "該用戶名已經存在。",
   "emailVerificationSubject": "電子郵件驗證",
-  "verifyEmailText": "請通過點擊以下鏈接驗證您的電子郵件"
+  "verifyEmailText": "請通過點擊以下鏈接驗證您的電子郵件",
+  "about": "關於"
 }

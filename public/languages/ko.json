@@ -201,5 +201,6 @@
   "userExistsEmail": "이 이메일로 이미 사용자가 존재합니다.",
   "userExistsUsername": "이 사용자 이름으로 이미 사용자가 존재합니다.",
   "emailVerificationSubject": "이메일 인증",
-  "verifyEmailText": "다음 링크를 클릭하여 이메일을 인증하세요"
+  "verifyEmailText": "다음 링크를 클릭하여 이메일을 인증하세요",
+  "about": "소개"
 }
