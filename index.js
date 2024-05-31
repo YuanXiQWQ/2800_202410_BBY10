@@ -181,7 +181,13 @@ app.get("/forget-password", authValidation, (req, res) => {
 
 app.get("/about", authValidation, (req, res) => {
     const isLoggedIn = !!req.session.userData;
-    res.render("about", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+    const about = false;
+    res.render("about", {
+        userData: req.session.userData,
+        language: res.locals.language,
+        login: isLoggedIn,
+        about: about
+    });
 });
 
 app.post("/forget-password", forgetPassword);
