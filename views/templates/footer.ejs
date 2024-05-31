@@ -13,7 +13,7 @@
                         </svg>
                     </a>
                 </li>
-            <% } else { %>
+            <% } else if(typeof about === "undefined") { %>
                 <li class="nav-item"><a href="/about" class="nav-link px-2 text-color"><%= language.about %></a></li>
             <% } %>
         </ul>
