@@ -105,6 +105,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setExperience('Beginner')"
+                        data-level="Beginner"
                 >
                     <p class="mb-1 bold text-start"><%= language.beginner %></p>
                     <p class="mb-1 light text-start font-size-12">
@@ -116,6 +117,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setExperience('Intermediate')"
+                        data-level="Intermediate"
                 >
                     <p class="mb-1 bold text-start"><%= language.intermediate %></p>
                     <p class="mb-1 light text-start font-size-12">
@@ -126,6 +128,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setExperience('Advanced')"
+                        data-level="Advanced"
                 >
                     <p class="mb-1 bold text-start"><%= language.advanced %></p>
                     <p class="mb-1 light text-start font-size-12">
@@ -216,6 +219,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setGoal('GainMuscle')"
+                        data-goal="gainMuscle"
                 >
                     <p class="mb-1 bold text-start"><%= language.gainMuscle %></p>
 
@@ -225,6 +229,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setGoal('LoseWeight')"
+                        data-goal="loseWeight"
                 >
                     <p class="mb-1 bold text-start"><%= language.loseWeight %></p>
 
@@ -233,6 +238,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setGoal('FatLoss')"
+                        data-goal="fatLoss"
                 >
                     <p class="mb-1 bold text-start"><%= language.fatLoss %></p>
 
@@ -241,6 +247,7 @@
                         type="button"
                         class="btn btn-secondary btn-exper"
                         onclick="setGoal('Flexibility')"
+                        data-goal="flexibility"
                 >
                     <p class="mb-1 bold text-start"><%= language.flexibility %></p>
 
@@ -255,7 +262,6 @@
                         required
                 />
                 <p>
-                    Terms and Conditions
                     <label class="form-check-label required" for="termsCheckbox">
                         <%= language.agreeTo %>
                         <a href="#" id="termsLink"> <%= language.termsAndConditions %> </a>
@@ -288,187 +294,104 @@
         <!-- Circles that indicate the steps of the form: -->
     </form>
 
-    <div
-            class="modal fade"
-            id="termsModal"
-            tabindex="-1"
-            aria-labelledby="termsModalLabel"
-            aria-hidden="true"
-    >
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="termsModalLabel">
-                        <%= language.termsAndConditions %>
+                        <%- language.termsAndConditions %>
                     </h5>
-                    <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5>Terms and Conditions</h5>
+                    <h5><%- language.termsTitle %></h5>
 
                     <p>
-                        <strong>1. Introduction</strong><br/>
-                        Welcome to NexGenFit. These Terms and Conditions ("Terms") govern
-                        your use of the App, including any content, functionality, and
-                        services offered on or through the App.
+                        <strong>1. <%- language.introduction %></strong><br/>
+                        <%- language.introductionContent %>
                     </p>
 
                     <p>
-                        <strong>2. Acceptance of Terms</strong><br/>
-                        By using the App, you agree to comply with and be bound by these
-                        Terms. If you do not agree to these Terms, you must not access or
-                        use the App.
+                        <strong>2. <%- language.acceptanceOfTerms %></strong><br/>
+                        <%- language.acceptanceOfTermsContent %>
                     </p>
 
                     <p>
-                        <strong>3. User Data and Privacy</strong><br/>
-                        Data Collection: We collect personal information that you provide
-                        when you register, such as your name, email address, weight, height,
-                        fitness level, workout plans, and goals.<br/>
-                        Usage Data: We may also collect data about how you use the App,
-                        including your workout activities and preferences.<br/>
-                        Data Storage: Your data is stored securely on our servers. We
-                        implement appropriate technical and organizational measures to
-                        protect your data from unauthorized access, use, or disclosure.<br/>
-                        Data Usage: The data collected is used to provide and improve our
-                        services, personalize your experience, and for statistical
-                        analysis.<br/>
-                        Third-Party Sharing: We do not share your personal data with third
-                        parties without your explicit consent, except where required by law.
+                        <strong>3. <%- language.userDataAndPrivacy %></strong><br/>
+                        <%- language.userDataAndPrivacyContent %>
                     </p>
 
                     <p>
-                        <strong>4. User Responsibilities</strong><br/>
-                        Accuracy of Information: You are responsible for providing accurate
-                        and up-to-date information. We are not liable for any issues arising
-                        from incorrect information provided by you.<br/>
-                        Account Security: You are responsible for maintaining the
-                        confidentiality of your account login information and for any
-                        activities that occur under your account. Notify us immediately of
-                        any unauthorized use of your account.
+                        <strong>4. <%- language.userResponsibilities %></strong><br/>
+                        <%- language.userResponsibilitiesContent %>
                     </p>
 
                     <p>
-                        <strong>5. Prohibited Activities</strong><br/>
-                        You agree not to engage in any of the following prohibited
-                        activities:<br/>
-                        - Copying or distributing any part of the App without our prior
-                        written consent.<br/>
-                        - Using the App for any unlawful purpose or in a way that could
-                        damage, disable, overburden, or impair the App.<br/>
-                        - Attempting to gain unauthorized access to the App, other accounts,
-                        or computer systems or networks connected to the App.
+                        <strong>5. <%- language.prohibitedActivities %></strong><br/>
+                        <%- language.prohibitedActivitiesContent %>
                     </p>
 
                     <p>
-                        <strong>6. Intellectual Property</strong><br/>
-                        The App and its entire contents, features, and functionality are
-                        owned by [Your Company Name], its licensors, or other providers of
-                        such material and are protected by intellectual property laws.
+                        <strong>6. <%- language.intellectualProperty %></strong><br/>
+                        <%- language.intellectualPropertyContent %>
                     </p>
 
                     <p>
-                        <strong>7. Disclaimers</strong><br/>
-                        The App is provided on an "as is" and "as available" basis. We make
-                        no warranties, express or implied, regarding the App's operation or
-                        the information, content, or materials included on the App.
+                        <strong>7. <%- language.disclaimers %></strong><br/>
+                        <%- language.disclaimersContent %>
                     </p>
 
                     <p>
-                        <strong>8. Limitation of Liability</strong><br/>
-                        To the fullest extent permitted by law, [Your Company Name] shall
-                        not be liable for any damages of any kind arising from the use of
-                        the App, including but not limited to direct, indirect, incidental,
-                        punitive, and consequential damages.
+                        <strong>8. <%- language.limitationOfLiability %></strong><br/>
+                        <%- language.limitationOfLiabilityContent %>
                     </p>
 
                     <p>
-                        <strong>9. Changes to Terms</strong><br/>
-                        We reserve the right to modify or replace these Terms at any time.
-                        Any changes will be effective immediately upon posting the revised
-                        Terms on the App. Your continued use of the App following the
-                        posting of any changes constitutes your acceptance of those changes.
-                        It is your responsibility to review these Terms periodically for
-                        updates.
+                        <strong>9. <%- language.changesToTerms %></strong><br/>
+                        <%- language.changesToTermsContent %>
                     </p>
 
                     <p>
-                        <strong>10. Termination</strong><br/>
-                        We reserve the right to terminate or suspend your account and access
-                        to the App at our sole discretion, without notice, for conduct that
-                        we believe violates these Terms or is harmful to other users, us, or
-                        third parties, or for any other reason.
+                        <strong>10. <%- language.termination %></strong><br/>
+                        <%- language.terminationContent %>
                     </p>
 
                     <p>
-                        <strong>11. Governing Law</strong><br/>
-                        These Terms shall be governed by and construed in accordance with
-                        the laws of [Your Jurisdiction], without regard to its conflict of
-                        law provisions. Any disputes arising out of or relating to these
-                        Terms or the App shall be resolved in the courts of [Your
-                        Jurisdiction].
+                        <strong>11. <%- language.governingLaw %></strong><br/>
+                        <%- language.governingLawContent %>
                     </p>
 
                     <p>
-                        <strong>12. Contact Information</strong><br/>
-                        If you have any questions or concerns about these Terms or the App,
-                        please contact us at:<br/>
-                        NexGenFit<br/>
+                        <strong>12. <%- language.contactInformation %></strong><br/>
+                        <%- language.contactInformationContent %>
                     </p>
 
                     <p>
-                        <strong>13. Entire Agreement</strong><br/>
-                        These Terms, together with our Privacy Policy and any other legal
-                        notices published by us on the App, constitute the entire agreement
-                        between you and NexGenFit regarding your use of the App. If any
-                        provision of these Terms is deemed invalid by a court of competent
-                        jurisdiction, the invalidity of such provision shall not affect the
-                        validity of the remaining provisions of these Terms, which shall
-                        remain in full force and effect.
+                        <strong>13. <%- language.entireAgreement %></strong><br/>
+                        <%- language.entireAgreementContent %>
                     </p>
 
                     <p>
-                        <strong>14. Waiver</strong><br/>
-                        No waiver of any term of these Terms shall be deemed a further or
-                        continuing waiver of such term or any other term, and our failure to
-                        assert any right or provision under these Terms shall not constitute
-                        a waiver of such right or provision.
+                        <strong>14. <%- language.waiver %></strong><br/>
+                        <%- language.waiverContent %>
                     </p>
 
                     <p>
-                        <strong>15. Severability</strong><br/>
-                        If any provision of these Terms is held to be invalid or
-                        unenforceable, such provision shall be struck and the remaining
-                        provisions shall be enforced to the fullest extent under law.
+                        <strong>15. <%- language.severability %></strong><br/>
+                        <%- language.severabilityContent %>
                     </p>
 
                     <p>
-                        By using NexGenFit, you acknowledge that you have read, understood,
-                        and agree to be bound by these Terms and Conditions.
+                        <%- language.conclusion %>
                     </p>
                 </div>
 
                 <div class="modal-footer">
-                    <button
-                            type="button"
-                            class="btn btn-secondary"
-                            id="declineBtn"
-                            data-bs-dismiss="modal"
-                    >
-                        Decline
+                    <button type="button" class="btn btn-secondary" id="declineBtn" data-bs-dismiss="modal">
+                        <%- language.decline %>
                     </button>
-                    <button
-                            type="button"
-                            class="btn btn-primary"
-                            id="acceptBtn"
-                            data-bs-dismiss="modal"
-                    >
-                        Accept
+                    <button type="button" class="btn btn-primary" id="acceptBtn" data-bs-dismiss="modal">
+                        <%- language.accept %>
                     </button>
                 </div>
             </div>
@@ -564,10 +487,12 @@
                 ".btn-group-1 button"
             );
             experienceButtons.forEach((button) => {
-                if (button.textContent.toLowerCase().includes(level.toLowerCase())) {
-                    button.classList.add("active"); // Highlight the active button
+                // If using textContent, the other language won't match
+                const buttonLevel = button.getAttribute("data-level");
+                if (buttonLevel.toLowerCase() === level.toLowerCase()) {
+                    button.classList.add("active");
                 } else {
-                    button.classList.remove("active"); // Remove highlight from other buttons
+                    button.classList.remove("active");
                 }
             });
 
@@ -724,13 +649,14 @@
             const goalButtons = document.querySelectorAll(
                 ".btn-group-3 button.btn-exper"
             );
-            const goalInput = document.getElementById("goal"); // Assuming there is a hidden input with id="goal"
+            const goalInput = document.getElementById("goal");
 
             goalButtons.forEach((button) => {
-                if (button.textContent.toLowerCase().includes(goal.toLowerCase())) {
-                    button.classList.add("active"); // Highlight the active button
+                const buttonGoal = button.getAttribute("data-goal");
+                if (buttonGoal.toLowerCase() === goal.toLowerCase()) {
+                    button.classList.add("active");
                 } else {
-                    button.classList.remove("active"); // Remove highlight from other buttons
+                    button.classList.remove("active");
                 }
             });
 
