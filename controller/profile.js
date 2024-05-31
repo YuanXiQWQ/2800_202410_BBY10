@@ -63,8 +63,7 @@ export async function postUserAvatar(req, res) {
 
             if (now - lastUpdated < thirtyDays) {
                 return res.status(404).json({
-                    success: false,
-                    message: 'Username can only be changed once every 30 days.'
+                    success: false, message: 'Username can only be changed once every 30 days.'
                 });
             }
 
@@ -127,6 +126,23 @@ export async function postPersonalInformation(req, res) {
             }
         }
 
+        /* Keep "==" and don't change to "===" because somehow it is not a number, and I'm afraid that if
+        some time it changes to number for some reason, so just keep that. */
+        if (height == 0) {
+            return res.status(400).json({success: false, message: 'You are disappearing...'});
+        } else if (height < 0) {
+            return res.status(400).json({
+                success: false, message: 'If you do this, you might clip through the ground.'
+            });
+        }
+
+        if (weight == 0) {
+            return res.status(400).json({success: false, message: 'You are disappearing...'});
+        } else if (weight < 0) {
+            return res.status(400).json({success: false, message: 'Wow, you are so slim.'});
+        }
+
+
         user.firstName = firstName || user.firstName;
         user.lastName = lastName || user.lastName;
         user.email = email || user.email;
@@ -177,10 +193,7 @@ export async function updateWorkoutSettings(req, res) {
         await user.save();
 
         req.session.userData = {
-            ...req.session.userData,
-            goal: user.goal,
-            fitnessLevel: user.fitnessLevel,
-            workoutDays: user.workoutDays
+            ...req.session.userData, goal: user.goal, fitnessLevel: user.fitnessLevel, workoutDays: user.workoutDays
         };
 
         res.status(200).json({success: true, message: 'Workout settings updated successfully'});
