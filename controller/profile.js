@@ -155,7 +155,7 @@ export async function postPersonalInformation(req, res) {
 
 /**
  * Function to update the user's workout settings.
- * Updates the user's goal, fitness level, and workout time.
+ * Updates the user's goal, fitness level, and workout days.
  *
  * @param {Request} req - Express request object containing the user's workout settings in the body
  * @param {Response} res - Express response object
@@ -172,7 +172,7 @@ export async function updateWorkoutSettings(req, res) {
 
         user.goal = goal || user.goal;
         user.fitnessLevel = fitnessLevel || user.fitnessLevel;
-        user.time = time || user.time;
+        user.workoutDays = time || user.workoutDays;
 
         await user.save();
 
@@ -180,7 +180,7 @@ export async function updateWorkoutSettings(req, res) {
             ...req.session.userData,
             goal: user.goal,
             fitnessLevel: user.fitnessLevel,
-            time: user.time
+            workoutDays: user.workoutDays
         };
 
         res.status(200).json({success: true, message: 'Workout settings updated successfully'});
@@ -212,7 +212,7 @@ export async function deleteAccount(req, res) {
 
             res.status(200).json({success: true, message: 'Account deleted successfully'});
         });
-       
+
     } catch (error) {
         console.error('Error deleting account:', error);
         res.status(500).json({success: false, message: 'Internal Server Error'});
