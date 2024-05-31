@@ -294,16 +294,16 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
 });
 
 app.get("/train-plank", ensureAuthenticated, (req, res) => {
-    res.render("train-plank")
+    res.render("train-plank", {language: res.locals.language})
 });
 
 
 app.get("/train-squat", ensureAuthenticated, (req, res) => {
-    res.render("train-squat")
+    res.render("train-squat", {language: res.locals.language})
 });
 
 app.get("/workouts", ensureAuthenticated, (req, res) => {
-    res.render("workouts")
+    res.render("workouts", {language: res.locals.language})
 });
 
 app.get("/logout", ensureAuthenticated, (req, res) => {
@@ -317,7 +317,7 @@ app.get("/logout", ensureAuthenticated, (req, res) => {
 
 app.get("*", (req, res) => {
     res.status(404);
-    res.render('404');
+    res.render('404', {language: res.locals.language});
 })
 
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));

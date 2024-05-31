@@ -1,19 +1,17 @@
 <%- include("templates/header") %>
 
-    <head>
-        <title>
-            <%= language.loading %>
-        </title>
-        <link rel="stylesheet" href="/styles/404.css" />
-    </head>
-    <body>
-        <div class="container">
-            <h1>Page not found - 404</h1>
-            <img src="/images/login.png" alt="404 Image" class="error-image">
-           
-            <a href="/" class="home-link">Go to Home</a>
-        </div>
-    </body>
-    
+<head>
+    <title>
+        <%= language.loading %>
+    </title>
+    <link rel="stylesheet" href="/styles/404.css"/>
+</head>
+<body>
+<div class="container">
+    <h1><%= language.pageNotFound %> - 404</h1>
+    <img src="/images/login.png" alt="404 Image" class="error-image">
+    <a href="/" class="home-link"><%= language.goToHome %></a>
+</div>
+</body>
 
-    <%- include("templates/footer") %>
+<%- include("templates/footer") %>

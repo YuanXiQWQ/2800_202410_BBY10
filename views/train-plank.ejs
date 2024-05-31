@@ -1,195 +1,190 @@
 <%- include("templates/header") %>
 
 <head>
-  <title>Exercise Tracker</title>
-  <link rel="stylesheet" href="/styles/train.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+    <title><%= language.exerciseTrackerTitle %></title>
+    <link rel="stylesheet" href="/styles/train.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
 </head>
 
 <div class="position-relative h-100">
-  <video
-    id="video"
-    width="100%"
-    height="100%"
-    style="object-fit: cover"
-    autoplay
-  ></video>
-  <canvas
-    id="canvas"
-    style="position: absolute; left: 0px; z-index: 1"
-  ></canvas>
+    <video
+            id="video"
+            width="100%"
+            height="100%"
+            style="object-fit: cover"
+            autoplay
+    ></video>
+    <canvas
+            id="canvas"
+            style="position: absolute; left: 0px; z-index: 1"
+    ></canvas>
 
-  <div class="alert alert-info center" role="alert">
-  </div>
+    <div class="alert alert-info center" role="alert">
+    </div>
 </div>
 
 <div class="card counter d-flex align-items-center justify-content-center">
-  <div class="timer-display black" style="font-size: 40px;">30</div>
+    <div class="timer-display black" style="font-size: 40px;">30</div>
 </div>
 
-
-
 <script>
-  let video, model, canvas, ctx;
-  let count = 0;
-  let inPosition = false;
+    let video, model, canvas, ctx;
+    let count = 0;
+    let inPosition = false;
 
-  async function setupCamera() {
-    video = document.getElementById("video");
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
+    async function setupCamera() {
+        video = document.getElementById("video");
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
 
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
+        const stream = await navigator.mediaDevices.getUserMedia({video: true});
+        video.srcObject = stream;
 
-    return new Promise((resolve) => {
-      video.onloadedmetadata = () => {
-        adjustCanvas();
-        resolve(video);
-      };
-    });
-  }
-
-  function adjustCanvas() {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.style.width = "100vw";
-    canvas.style.height = "100%";
-  }
-
-  window.addEventListener("resize", adjustCanvas);
-
-  async function loadModel() {
-    model = await poseDetection.createDetector(
-      poseDetection.SupportedModels.MoveNet,
-      { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
-    );
-    showAlert('The countdown will begin once you are in the correct position')
-  }
-
-  async function detectPose() {
-    const poses = await model.estimatePoses(video);
-    drawPoses(poses);
-    requestAnimationFrame(detectPose);
-  }
-
-  function drawPoses(poses) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    poses.forEach((pose) => {
-      drawSkeleton(pose);
-      // console.log(checkGroundPosition(pose))
-      if (checkGroundPosition(pose)) {
-        if (!inPosition) {
-          inPosition = true; // User in starting position
-        }
-      } else {
-        if (inPosition) {
-          count++;
-          updateCountDisplay();
-          showAlert("The countdown has started.")
-
-          inPosition = false; // Reset position flag after moving out of ground position
-        }
-      }
-    });
-  }
-
-  function drawSkeleton(pose) {
-    pose.keypoints.forEach((keypoint, i) => {
-      if (keypoint.score > 0.5) {
-        ctx.beginPath();
-        ctx.arc(keypoint.x, keypoint.y, 5, 0, 2 * Math.PI);
-        ctx.fillStyle = "#5B2DC6";
-        ctx.fill();
-      }
-    });
-
-    const adjacentKeyPoints = poseDetection.util.getAdjacentPairs(
-      poseDetection.SupportedModels.MoveNet
-    );
-    adjacentKeyPoints.forEach(([i, j]) => {
-      const kp1 = pose.keypoints[i];
-      const kp2 = pose.keypoints[j];
-      if (kp1.score > 0.5 && kp2.score > 0.5) {
-        ctx.beginPath();
-        ctx.moveTo(kp1.x, kp1.y);
-        ctx.lineTo(kp2.x, kp2.y);
-        ctx.strokeStyle = "#fb824e";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-    });
-  }
-
-  function checkGroundPosition(pose) {
-    const hips = pose.keypoints.find(
-      (kp) => kp.name === "left_hip" || kp.name === "right_hip"
-    );
-    const shoulders = pose.keypoints.find(
-      (kp) => kp.name === "left_shoulder" || kp.name === "right_shoulder"
-    );
-    const ankles = pose.keypoints.find(
-      (kp) => kp.name === "left_ankle" || kp.name === "right_ankle"
-    );
-
-    // console.log(hips,shoulders, ankles )
-    return (
-      hips &&
-      shoulders &&
-      ankles &&
-      Math.abs(hips.y - shoulders.y) < 20 &&
-      Math.abs(hips.y - ankles.y) < 20
-    );
-  }
-
-  function updateCountDisplay() {
-    const display = document.querySelector(".timer-display");
-    let timeLeft = 30; // start from 30 seconds
-
-    const timer = setInterval(function () {
-      timeLeft--;
-      display.textContent = timeLeft;
-
-      if (timeLeft <= 0) {
-        clearInterval(timer);
-        display.textContent = "Time's up!";
-        showAlert("Perfect, you are done ")
-
-      }
-    }, 1000);
-  }
-
-  async function main() {
-    await setupCamera();
-    await loadModel();
-    detectPose();
-  }
-
-
-  function showAlert(msg, duration = 5000) {
-    const alertBox = document.querySelector('.alert');
-    if (!alertBox) {
-        console.log("Alert box not found.");
-        return;
+        return new Promise((resolve) => {
+            video.onloadedmetadata = () => {
+                adjustCanvas();
+                resolve(video);
+            };
+        });
     }
 
-    alertBox.textContent = msg;
+    function adjustCanvas() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.style.width = "100vw";
+        canvas.style.height = "100%";
+    }
 
-    alertBox.style.visibility = 'visible';
-    alertBox.style.opacity = '1';
+    window.addEventListener("resize", adjustCanvas);
 
-    setTimeout(() => {
-        alertBox.style.opacity = '0';
+    async function loadModel() {
+        model = await poseDetection.createDetector(
+            poseDetection.SupportedModels.MoveNet,
+            {modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING}
+        );
+        showAlert('<%= language.countdownMessage %>')
+    }
+
+    async function detectPose() {
+        const poses = await model.estimatePoses(video);
+        drawPoses(poses);
+        requestAnimationFrame(detectPose);
+    }
+
+    function drawPoses(poses) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        poses.forEach((pose) => {
+            drawSkeleton(pose);
+            if (checkGroundPosition(pose)) {
+                if (!inPosition) {
+                    inPosition = true; // User in starting position
+                }
+            } else {
+                if (inPosition) {
+                    count++;
+                    updateCountDisplay();
+                    showAlert("<%= language.countdownStart %>")
+
+                    inPosition = false; // Reset position flag after moving out of ground position
+                }
+            }
+        });
+    }
+
+    function drawSkeleton(pose) {
+        pose.keypoints.forEach((keypoint, i) => {
+            if (keypoint.score > 0.5) {
+                ctx.beginPath();
+                ctx.arc(keypoint.x, keypoint.y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = "#5B2DC6";
+                ctx.fill();
+            }
+        });
+
+        const adjacentKeyPoints = poseDetection.util.getAdjacentPairs(
+            poseDetection.SupportedModels.MoveNet
+        );
+        adjacentKeyPoints.forEach(([i, j]) => {
+            const kp1 = pose.keypoints[i];
+            const kp2 = pose.keypoints[j];
+            if (kp1.score > 0.5 && kp2.score > 0.5) {
+                ctx.beginPath();
+                ctx.moveTo(kp1.x, kp1.y);
+                ctx.lineTo(kp2.x, kp2.y);
+                ctx.strokeStyle = "#FB824E";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        });
+    }
+
+    function checkGroundPosition(pose) {
+        const hips = pose.keypoints.find(
+            (kp) => kp.name === "left_hip" || kp.name === "right_hip"
+        );
+        const shoulders = pose.keypoints.find(
+            (kp) => kp.name === "left_shoulder" || kp.name === "right_shoulder"
+        );
+        const ankles = pose.keypoints.find(
+            (kp) => kp.name === "left_ankle" || kp.name === "right_ankle"
+        );
+
+        return (
+            hips &&
+            shoulders &&
+            ankles &&
+            Math.abs(hips.y - shoulders.y) < 20 &&
+            Math.abs(hips.y - ankles.y) < 20
+        );
+    }
+
+    function updateCountDisplay() {
+        const display = document.querySelector(".timer-display");
+        let timeLeft = 30; // start from 30 seconds
+
+        const timer = setInterval(function () {
+            timeLeft--;
+            display.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                display.textContent = "<%= language.timeUp %>";
+                showAlert("<%= language.perfectDone %>")
+            }
+        }, 1000);
+    }
+
+    async function main() {
+        await setupCamera();
+        await loadModel();
+        detectPose();
+    }
+
+    function showAlert(msg, duration = 5000) {
+        const alertBox = document.querySelector('.alert');
+        if (!alertBox) {
+            console.log("Alert box not found.");
+            return;
+        }
+
+        alertBox.textContent = msg;
+
+        alertBox.style.visibility = 'visible';
+        alertBox.style.opacity = '1';
 
         setTimeout(() => {
-            alertBox.style.visibility = 'hidden';
-        }, 500); 
-    }, duration);
-}
+            alertBox.style.opacity = '0';
 
+            setTimeout(() => {
+                alertBox.style.visibility = 'hidden';
+            }, 500);
+        }, duration);
+    }
 
-  main();
+    main();
 </script>
+
+<%- include("templates/footer") %>
