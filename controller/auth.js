@@ -37,7 +37,6 @@ const schemaLogin = Joi.object({
 });
 
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
-const passwordInvalidMessage = "Password must be 5-25 characters long, including at least 1 letter and 1 number. Only @#*_ are allowed as special characters.";
 
 /**
  * Schedule a job to delete temp users older than 24 hours.
@@ -160,6 +159,12 @@ export const createTransporter = async () => {
  */
 export const findByUsername = (username) => User.findOne({username});
 
+/**
+ * Function to find a user in the database by email.
+ *
+ * @param {string} email - email of the user
+ * @return {QueryWithHelpers<THydratedDocumentType | null, THydratedDocumentType, TQueryHelpers, TRawDocType, "findOne">} A promise that resolves to the user document if found, or null if not found.
+ */
 export const findByEmail = (email) => User.findOne({email});
 
 /**

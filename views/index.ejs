@@ -1,12 +1,14 @@
 <%- include("templates/header") %>
 <head>
+    <title>index</title>
     <link rel="stylesheet" href="./styles/index.css">
 </head>
 
 <div class="w-100 h-100 index-container">
     <div class="d-flex align-items-center justify-content-center flex-column position-absolute bottom-0 mb-2 pb-5 w-100">
-        <h1 class="text-center "><%= language.welcomeMessageIndex %> <span
-                    class="d-block black"><%= language.websiteTitle %></span></h1>
+        <h1 class="text-center "><%= language.welcomeMessageIndex %>
+            <span class="d-block black"><%= language.websiteTitle %></span>
+        </h1>
         <a href="/signup" class="text-decoration-none border-0">
             <button class="btn draw-border"><%= language.getStarted %></button>
         </a>

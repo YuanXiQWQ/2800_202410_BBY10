@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             });
 
+            /**
+             * Function to get day name from day code
+             *
+             * @param {string} dayCode day code
+             * @return {*} day name
+             */
             function getDayName(dayCode) {
                 const dayNames = {
                     mon: 'Monday',
@@ -33,6 +39,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 return dayNames[dayCode];
             }
 
+            /**
+             * Function to filter exercises by day
+             *
+             * @param {string} dayCode day code
+             * @return {*} filtered exercises
+             */
             function filterExercisesByDay(dayCode) {
                 const today = new Date();
                 const selectedDayName = getDayName(dayCode);
@@ -44,9 +56,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
+            /**
+             * Function to display exercises
+             *
+             * @param {string} dayCode day code
+             */
             function displayExercises(dayCode) {
                 const filteredExercises = filterExercisesByDay(dayCode);
-                exercisesList.innerHTML = ''; // 清空现有的锻炼信息
+                exercisesList.innerHTML = '';
 
                 if (filteredExercises.length > 0) {
                     filteredExercises.forEach(function (exercise) {

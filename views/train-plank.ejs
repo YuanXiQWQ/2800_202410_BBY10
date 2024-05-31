@@ -80,7 +80,7 @@
             drawSkeleton(pose);
             if (checkGroundPosition(pose)) {
                 if (!inPosition) {
-                    inPosition = true; // User in starting position
+                    inPosition = true;
                 }
             } else {
                 if (inPosition) {
@@ -88,7 +88,7 @@
                     updateCountDisplay();
                     showAlert("<%= language.countdownStart %>")
 
-                    inPosition = false; // Reset position flag after moving out of ground position
+                    inPosition = false;
                 }
             }
         });
@@ -143,7 +143,7 @@
 
     function updateCountDisplay() {
         const display = document.querySelector(".timer-display");
-        let timeLeft = 30; // start from 30 seconds
+        let timeLeft = 30;
 
         const timer = setInterval(function () {
             timeLeft--;

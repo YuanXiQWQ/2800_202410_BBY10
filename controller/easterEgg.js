@@ -128,6 +128,9 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
                 });
             });
 
+            /**
+             * Function to continue the submission
+             */
             function continueSubmission() {
                 img.src = `/images/easterEgg/${langPath}/kurae.png`;
                 shake(img.id);
@@ -185,6 +188,11 @@ function activateEasterEgg(characterKey, type, firstName, lastName) {
     });
 }
 
+/**
+ * Function to shake the img element
+ *
+ * @param {string} elemId the id of the element
+ */
 function shake(elemId) {
     let elem = document.getElementById(elemId);
     if (elem) {

@@ -109,14 +109,13 @@
         statusMessage.textContent = message;
         statusMessage.className = `alert ${colorClass} show`;
 
-        // Automatically hide the alert after 4 seconds
         setTimeout(() => {
             statusMessage.style.animation = "fadeOut 0.5s forwards";
             setTimeout(() => {
-                statusMessage.className = "alert"; // Reset the alert class
-                statusMessage.style.animation = ""; // Reset the animation property
-            }, 500); // Matches the duration of the fadeOut animation
-        }, 4000); // Time the alert is visible before beginning to fade
+                statusMessage.className = "alert";
+                statusMessage.style.animation = "";
+            }, 500);
+        }, 4000);
     }
 
     document
@@ -193,12 +192,8 @@
         const form = event.target;
         const formData = new FormData(form);
         const submitButton = document.getElementById("submitButton");
-        // const statusMessage = document.getElementById("statusMessage");
 
         submitButton.disabled = true;
-        // statusMessage.style.display = "block";
-        // statusMessage.textContent = ;
-        // statusMessage.style.color = "blue";
 
         showStatus("<%= language.sendingEmail %>", "blue");
 
@@ -221,9 +216,6 @@
         } catch (error) {
             console.log(error)
             showStatus("<%= language.errorOccurred %>" + error?.message, "red");
-
-            //   statusMessage.textContent = "An error occurred. Please try again.";
-            //   statusMessage.style.color = "red";
             submitButton.disabled = false;
         }
     }

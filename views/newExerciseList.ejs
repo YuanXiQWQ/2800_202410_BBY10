@@ -17,8 +17,8 @@
             }
 
         #workoutDaysSelect button {
-            background: #BD7FFF;
             margin-bottom: 5px;
+            background: #BD7FFF;
             }
 
         #workoutDaysSelect button:hover {
@@ -26,8 +26,8 @@
             }
 
         #workoutDaysSelect button.active {
-            border: 1px solid #8458B2;
             background: #DF7FFF;
+            border: 1px solid #8458B2;
             }
     </style>
 </head>
@@ -44,18 +44,18 @@
         <%= language.newExerciseList %>
     </header>
     <main>
-        <div class="alert secondary-color">
-            <%= language.newExerciseListTips %>
-        </div>
+        <div class="alert secondary-color"><%= language.newExerciseListTips %></div>
         <form id="exerciseListForm">
             <div class="mb-3">
                 <label for="startDate" class="form-label"><%= language.startDate %>:</label>
                 <input type="date" id="startDate" name="startDate" class="form-control" required>
             </div>
+
             <div class="mb-3">
                 <label for="endDate" class="form-label"><%= language.endDate %>:</label>
                 <input type="date" id="endDate" name="endDate" class="form-control" required>
             </div>
+
             <div class="mb-3">
                 <p class="font-size-16 semiBold"><%= language.workoutDays %></p>
                 <input type="hidden" id="days" name="time" value=""/>
@@ -63,29 +63,35 @@
                     <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('0')">
                         <%= language.monday %>
                     </button>
+
                     <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('1')">
                         <%= language.tuesday %>
                     </button>
+
                     <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('2')">
                         <%= language.wednesday %>
                     </button>
+
                     <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('3')">
                         <%= language.thursday %>
                     </button>
+
                     <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('4')">
                         <%= language.friday %>
                     </button>
+
                     <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('5')">
                         <%= language.saturday %>
                     </button>
+
                     <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('6')">
                         <%= language.sunday %>
                     </button>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary primary-color primary-color-hover">
-                <%= language.submit %>
-            </button>
+
+            <button type="submit"
+                    class="btn btn-primary primary-color primary-color-hover"><%= language.submit %></button>
         </form>
         <div id="statusMessage"></div>
     </main>
@@ -103,7 +109,7 @@
 
         document.getElementById('exerciseListForm').addEventListener('submit', (event) => {
             event.preventDefault();
-            
+
             submitButton.disabled = true;
 
             const form = event.target;
@@ -166,6 +172,11 @@
         });
     });
 
+    /**
+     * Function to handle the selected days
+     *
+     * @param {number} dayIndex 0-6, start at monday
+     */
     function toggleDay(dayIndex) {
         const daysInput = document.getElementById('days');
         let selectedDays = daysInput.value ? daysInput.value.split(',') : [];
@@ -182,6 +193,9 @@
         updateButtonStyles();
     }
 
+    /**
+     * Function to highlight the btn
+     */
     function updateButtonStyles() {
         const selectedDays = document.getElementById('days').value.split(',');
         document.querySelectorAll('.btn-group-2 button').forEach((button, index) => {

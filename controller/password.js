@@ -13,7 +13,6 @@ const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9@#*_]{5,25}$/;
  * @param {Response} res - Express response object
  * @returns {Promise<void>} A promise that resolves when the password reset email is sent
  */
-
 export async function forgetPassword(req, res) {
     const {email} = req.body;
     try {

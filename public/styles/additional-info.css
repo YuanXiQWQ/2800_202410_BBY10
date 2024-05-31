@@ -1,151 +1,142 @@
-  
-  /* Mark input boxes that gets an error on validation: */
-  input.invalid {
-    background-color: #ffdddd;
-  }
-  
-  /* Hide all steps by default: */
-  .tab {
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+    background-color: #FDD;
+    }
+
+/* Hide all steps by default: */
+.tab {
     display: none;
-  }
-  
-  /* Make circles that indicate the steps of the form: */
-  .step {
+    }
+
+/* Make circles that indicate the steps of the form: */
+.step {
     height: 15px;
     width: 15px;
     margin: 0 2px;
-    background-color: #3d4bcd;
+    background-color: #3D4BCD;
     border: none;
     border-radius: 50%;
     display: inline-block;
     opacity: 0.5;
-  }
-
+    }
 
 
 /* Style the form labels with a red asterisk */
 .form-label.required::after, .form-check-label.required::after {
-  content: ' *';
-  color: red;
-  margin-left: 5px;
-  vertical-align: middle; /* Ensures the asterisk is vertically aligned */
-  display: inline;
-}
-  
-  /* Mark the active step: */
-  .step.active {
+    content: ' *';
+    color: red;
+    margin-left: 5px;
+    vertical-align: middle;
+    display: inline;
+    }
+
+/* Mark the active step: */
+.step.active {
     opacity: 1;
-  }
-  
-  /* Mark the steps that are finished and valid: */
-  .step.finish {
-    background-color: #ff9262;
-  }
-  
-  .btn-width {
-      width: 7em;
-  }
+    }
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+    background-color: #FF9262;
+    }
+
+.btn-width {
+    width: 7em;
+    }
 
 .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3),
-.input-group:not(.has-validation)
-  > .form-floating:not(:last-child)
-  > .form-control,
-.input-group:not(.has-validation)
-  > .form-floating:not(:last-child)
-  > .form-select,
-.input-group:not(.has-validation)
-  > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(
-    .form-floating
-  ) {
-  border-bottom-right-radius: 10px;
-  border-top-right-radius: 10px;
-}
+.input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-control,
+.input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select,
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating) {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    -webkit-appearance: none;
+    margin: 0;
+    }
 
 /* Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
-}
+    -moz-appearance: textfield;
+    }
 
 .input-group .btn {
-  border: none;
-  border-radius: 20px;
-  z-index: 100;
-}
+    border: none;
+    border-radius: 20px;
+    z-index: 100;
+    }
 
 .input-group-append {
     position: absolute;
     right: 6px;
     top: 0;
 
-}
+    }
 
 
 .active-unit {
-    color: #3d4bcd;
+    color: #3D4BCD;
     font-weight: 900;
-}
+    }
 
 .btn-exper {
     border-radius: 10px;
-    background-color: #b6b8cb;
+    background-color: #B6B8CB;
     color: black;
     border: none;
     margin: 10px 0rem;
     padding: 1rem;
-}
+    }
 
 .btn-exper:hover {
     border-radius: 10px;
-    background-color: #ff9262;
+    background-color: #FF9262;
     color: white;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
+    }
 
 .btn.active {
     border-radius: 10px;
-    background-color: #ff9262;
+    background-color: #FF9262;
     color: white;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  }
+    }
 
-  .day-btn {
+.day-btn {
     width: 48%;
     padding: .5rem 1rem !important;
-  }
+    }
 
 /* Modal buttons */
 .modal-footer .btn {
-  border-radius: 20px; /* Rounded corners */
-  padding: 10px 20px; /* Padding for the buttons */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Font weight */
-  border: none; /* Remove border */
-  color: white; /* White text color */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
-}
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+    }
 
 /* Decline button styles */
 .modal-footer .btn-secondary {
-  background-color: #b6b8cb; /* Light gray color */
-}
+    background-color: #B6B8CB;
+    }
 
 .modal-footer .btn-secondary:hover {
-  background-color: #a5a7be; /* Slightly darker gray on hover */
-}
+    background-color: #A5A7BE;
+    }
 
 /* Accept button styles */
 .modal-footer .btn-primary {
-  background-color: #3d4bcd; /* Blue color */
-}
+    background-color: #3D4BCD;
+    }
 
 .modal-footer .btn-primary:hover {
-  background-color: #2a38a4; /* Slightly darker blue on hover */
-}
+    background-color: #2A38A4;
+    }

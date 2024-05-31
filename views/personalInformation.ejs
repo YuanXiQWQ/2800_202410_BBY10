@@ -12,18 +12,11 @@
 <div id="notification" class="alert notification hidden"></div>
 <div class="container mt-5" style="padding-bottom: 8rem;">
     <header class="d-flex align-items-center mb-4">
-        <a id="btn-back" href="/profile" class="btn btn-outline-secondary me-3">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.65419 7.95837H17.3334V10.0417H4.65419L10.2417 15.6292L8.76877 17.1021L0.666687 9.00003L8.76877 0.897949L10.2417 2.37087L4.65419 7.95837Z"
-                      fill="black"/>
-            </svg>
-        </a>
+        <a id="btn-back" href="/profile" class="btn btn-outline-secondary me-3"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.65419 7.95837H17.3334V10.0417H4.65419L10.2417 15.6292L8.76877 17.1021L0.666687 9.00003L8.76877 0.897949L10.2417 2.37087L4.65419 7.95837Z" fill="black"/></svg></a>
         <%= language.editYourPersonalInformation %>
     </header>
     <main>
-        <div class="alert secondary-color">
-            <%= language.changeYourPersonalInformationTips %>
-        </div>
+        <div class="alert secondary-color"><%= language.changeYourPersonalInformationTips %></div>
         <form method="POST" action="/postPersonalInformation" class="needs-validation" id="personalInformationForm"
               novalidate>
             <div class="mb-3">
@@ -31,30 +24,36 @@
                 <input name="firstName" id="firstName" type="text" class="form-control"
                        placeholder="<%= userData.firstName %>">
             </div>
+
             <div class="mb-3">
                 <label for="lastName" class="form-label"><%= language.lastName %>:</label>
                 <input name="lastName" id="lastName" type="text" class="form-control"
                        placeholder="<%= userData.lastName %>">
             </div>
+
             <div class="mb-3">
                 <label for="email" class="form-label"><%= language.email %>:</label>
                 <input name="email" id="email" type="email" class="form-control" placeholder="<%= userData.email %>">
             </div>
+
             <div class="mb-3">
                 <label for="birthday" class="form-label"><%= language.birthday %>:</label>
                 <input name="birthday" id="birthday" type="date" class="form-control"
                        value="<%= userData.birthday ? userData.birthday.toISOString().substring(0, 10) : '' %>">
             </div>
+
             <div class="mb-3">
                 <label for="height" class="form-label"><%= language.height %>(cm):</label>
                 <input name="height" id="height" type="number" class="form-control"
                        placeholder="<%= userData.height %>">
             </div>
+
             <div class="mb-3">
                 <label for="weight" class="form-label"><%= language.weight %>(kg):</label>
                 <input name="weight" id="weight" type="number" class="form-control"
                        placeholder="<%= userData.weight %>">
             </div>
+
             <button type="submit"
                     class="btn btn-primary primary-color primary-color-hover"><%= language.submit %></button>
         </form>
@@ -125,7 +124,7 @@
                     statusMessage.style.color = 'red';
                 }
             })
-            .catch(err => {
+            .catch(() => {
                 const statusMessage = document.getElementById('statusMessage');
                 statusMessage.textContent = '<%= language.errorOccurred %>';
                 statusMessage.style.color = 'red';

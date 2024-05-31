@@ -7,28 +7,28 @@
     <link rel="stylesheet" href="/styles/home.css"/>
     <style>
         .container {
-            display: flex;
-            flex-direction: column;
             gap: 50px;
+            display: flex;
             justify-items: center;
+            flex-direction: column;
             }
 
         #days {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f8f9fa;
-            border-radius: 10px;
             margin: 1em;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            justify-content: space-between;
             }
 
         #days div {
             flex: 1;
             padding: 10px;
-            text-align: center;
-            font-weight: bold;
             color: #4f4f4f;
             cursor: pointer;
+            font-weight: bold;
+            text-align: center;
             }
 
         #userAvatar {
@@ -39,19 +39,19 @@
         .user-avatar {
             width: 150px;
             height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
             cursor: pointer;
+            object-fit: cover;
+            border-radius: 50%;
             }
 
         #workoutPlan {
+            color: #000;
             margin: 1em;
             padding: 1em;
-            border: 1px solid #dadada;
-            border-radius: 20px;
-            background-color: #ffffff;
             cursor: pointer;
-            color: #000;
+            border-radius: 20px;
+            background-color: #FFF;
+            border: 1px solid #DADADA;
             }
 
         .container {
@@ -77,12 +77,12 @@
 
         #calendar-link {
             display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 10px;
-            cursor: pointer;
-            text-decoration: none;
             color: #4f4f4f;
+            cursor: pointer;
+            align-items: center;
+            text-decoration: none;
+            justify-content: center;
             }
 
         #calendar-link:hover {
@@ -101,9 +101,9 @@
 
         .card {
             background-color: #f8f9fa;
-            border-radius: 10px;
             padding: 20px;
             margin: 10px 0;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
 
@@ -124,24 +124,31 @@
         <div class="lang-text" data-day="mon">
             <%= language.mon %>
         </div>
+
         <div class="lang-text" data-day="tue">
             <%= language.tue %>
         </div>
+
         <div class="lang-text" data-day="wed">
             <%= language.wed %>
         </div>
+
         <div class="lang-text" data-day="thu">
             <%= language.thu %>
         </div>
+
         <div class="lang-text" data-day="fri">
             <%= language.fri %>
         </div>
+
         <div class="lang-text" data-day="sat">
             <%= language.sat %>
         </div>
+
         <div class="lang-text" data-day="sun">
             <%= language.sun %>
         </div>
+
         <a id="calendar-link" href="/calendar" class="undecorated">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M10 6l-1.41 1.41L13.17 12l-4.58 4.59L10 18l6-6z"/>

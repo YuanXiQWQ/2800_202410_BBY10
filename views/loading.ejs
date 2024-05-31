@@ -61,16 +61,10 @@
                 .catch((error) => console.error("Failed to fetch:", error));
         }
 
-        // Initial check
         checkStatus();
-        // Set initial delay time
-        let delayTime = 3000; // 3 seconds
-
-        // After 3 seconds, change the text to "Loading..."
+        let delayTime = 3000;
         setTimeout(() => {
             document.getElementById("loadingText").innerText = '<%= language.loading %>';
-
-            // After an additional 5 seconds, change the text to "Almost there!"
             setTimeout(() => {
                 document.getElementById("loadingText").innerText = '<%= language.almostThere %>';
             }, 5000);

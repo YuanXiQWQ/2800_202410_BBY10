@@ -1,6 +1,12 @@
 import {exercises} from "../model/exercises.js";
 import {User} from "../model/User.js";
 
+/**
+ * Function to get the user's ID from the database.
+ *
+ * @param {string} username - The username of the user
+ * @return {Promise<*>} - The user's ID
+ */
 async function getUserId(username) {
     const user = await User.findOne({username}).select("_id");
     return user?._id;
@@ -29,7 +35,7 @@ export async function getListOfExercises(req, res) {
 /**
  * Function to format a date in the format YYYY-MM-DD.
  *
- * @param date - The date to be formatted from the database
+ * @param  {string} date - The date to be formatted from the database
  * @return {string} - The formatted date
  */
 function formatDate(date) {

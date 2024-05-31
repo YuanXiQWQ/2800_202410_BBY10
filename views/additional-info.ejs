@@ -12,19 +12,10 @@
         </h1>
     </div>
 
-    <div
-            class="spinner-grow text-primary"
-            id="loadingIndicator"
-            style="display: none; text-align: center"
-            role="status"
-            role="status"
-    >
+    <div class="spinner-grow text-primary" id="loadingIndicator" style="display: none; text-align: center" role="status">
         <span class="sr-only"> <%= language.loading %> </span>
     </div>
     <form class="m-0 w-100" id="regForm" action="/submitAdditionalInfo" method="POST">
-        <!-- <p class="font-size-16 semiBold">Personal Information</p> -->
-
-        <!-- One "tab" for each step in the form: -->
         <div style="text-align: center; margin-bottom: 20px">
             <span class="step"></span>
             <span class="step"></span>
@@ -40,18 +31,10 @@
                     <input type="number" class="form-control" placeholder="<%= language.yourWeight %>"
                            aria-label="<%= language.weight %>" min="1" name="weight" required/>
                     <div class="input-group-append" id="weightUnitButtons">
-                        <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                onclick="setWeightUnit('kg')"
-                        >
+                        <button class="btn btn-outline-secondary" type="button" onclick="setWeightUnit('kg')">
                             kg
                         </button>
-                        <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                onclick="setWeightUnit('lb')"
-                        >
+                        <button class="btn btn-outline-secondary" type="button" onclick="setWeightUnit('lb')">
                             lb
                         </button>
                     </div>
@@ -63,28 +46,13 @@
                     <%= language.height %>
                 </label>
                 <div class="position-relative">
-                    <input
-                            type="number"
-                            class="form-control"
-                            placeholder="<%= language.yourHeight %>"
-                            aria-label="<%= language.height %>"
-                            min="1"
-                            name="height"
-                            required
-                    />
+                    <input type="number" class="form-control" placeholder="<%= language.yourHeight %>"
+                           aria-label="<%= language.height %>" min="1" name="height" required/>
                     <div class="input-group-append" id="heightUnitButtons">
-                        <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                onclick="setHeightUnit('cm')"
-                        >
+                        <button class="btn btn-outline-secondary" type="button" onclick="setHeightUnit('cm')">
                             cm
                         </button>
-                        <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                onclick="setHeightUnit('ft')"
-                        >
+                        <button class="btn btn-outline-secondary" type="button" onclick="setHeightUnit('ft')">
                             ft
                         </button>
                     </div>
@@ -96,44 +64,23 @@
             <p class="font-size-16 semiBold"><%= language.experienceInWorkout %></p>
             <input type="hidden" id="fitnessLevel" name="fitnessLevel" value=""/>
 
-            <div
-                    class="d-flex flex-column btn-group-1"
-                    role="group"
-                    aria-label="<%= language.workoutExperience %>"
-            >
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setExperience('Beginner')"
-                        data-level="Beginner"
-                >
+            <div class="d-flex flex-column btn-group-1" role="group" aria-label="<%= language.workoutExperience %>">
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setExperience('Beginner')"
+                        data-level="Beginner">
                     <p class="mb-1 bold text-start"><%= language.beginner %></p>
-                    <p class="mb-1 light text-start font-size-12">
-                        <%= language.lessThanSixMonths %>
-                    </p>
+                    <p class="mb-1 light text-start font-size-12"><%= language.lessThanSixMonths %></p>
                 </button>
 
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setExperience('Intermediate')"
-                        data-level="Intermediate"
-                >
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setExperience('Intermediate')"
+                        data-level="Intermediate">
                     <p class="mb-1 bold text-start"><%= language.intermediate %></p>
-                    <p class="mb-1 light text-start font-size-12">
-                        <%= language.moreThanSixMonthsLessThanTwoYears %>
-                    </p>
+                    <p class="mb-1 light text-start font-size-12"><%= language.moreThanSixMonthsLessThanTwoYears %></p>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setExperience('Advanced')"
-                        data-level="Advanced"
-                >
+
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setExperience('Advanced')"
+                        data-level="Advanced">
                     <p class="mb-1 bold text-start"><%= language.advanced %></p>
-                    <p class="mb-1 light text-start font-size-12">
-                        <%= language.moreThanTwoYears %>
-                    </p>
+                    <p class="mb-1 light text-start font-size-12"><%= language.moreThanTwoYears %></p>
                 </button>
             </div>
         </div>
@@ -142,58 +89,32 @@
             <p class="font-size-16 semiBold"><%= language.workoutDays %></p>
             <input type="hidden" id="days" name="time" value=""/>
 
-            <div
-                    class="btn-group-2 d-flex flex-wrap"
-                    role="group"
-                    aria-label="<%= language.daysOfWeek %>"
-            >
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn me-1"
-                        onclick="toggleDay('0')"
-                >
+            <div class="btn-group-2 d-flex flex-wrap" role="group" aria-label="<%= language.daysOfWeek %>">
+                <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('0')">
                     <%= language.monday %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn ms-1"
-                        onclick="toggleDay('1')"
-                >
+
+                <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('1')">
                     <%= language.tuesday %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn me-1"
-                        onclick="toggleDay('2')"
-                >
+
+                <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('2')">
                     <%= language.wednesday %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn ms-1"
-                        onclick="toggleDay('3')"
-                >
+
+                <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('3')">
                     <%= language.thursday %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn me-1"
-                        onclick="toggleDay('4')"
-                >
+
+                <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('4')">
                     <%= language.friday %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn ms-1"
-                        onclick="toggleDay('5')"
-                >
+
+                <button type="button" class="btn btn-exper day-btn ms-1" onclick="toggleDay('5')">
                     <%= language.saturday %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-exper day-btn me-1"
-                        onclick="toggleDay('6')"
-                >
+
+                <button type="button" class="btn btn-exper day-btn me-1" onclick="toggleDay('6')">
                     <%= language.sunday %>
                 </button>
             </div>
@@ -205,62 +126,32 @@
                 <label for="goal" class="form-label required"></label>
             </p>
 
-            <!-- <textarea class="form-control" id="goal" name="goal" required
-                          rows="3"></textarea> -->
-
-            <div
-                    class="d-flex flex-column btn-group-3"
-                    role="group"
-                    aria-label="<%= language.workoutExperience %>"
-            >
+            <div class="d-flex flex-column btn-group-3" role="group" aria-label="<%= language.workoutExperience %>">
                 <input type="hidden" id="goal" name="goal" value=""/>
 
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setGoal('GainMuscle')"
-                        data-goal="gainMuscle"
-                >
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setGoal('GainMuscle')"
+                        data-goal="gainMuscle">
                     <p class="mb-1 bold text-start"><%= language.gainMuscle %></p>
-
                 </button>
 
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setGoal('LoseWeight')"
-                        data-goal="loseWeight"
-                >
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setGoal('LoseWeight')"
+                        data-goal="loseWeight">
                     <p class="mb-1 bold text-start"><%= language.loseWeight %></p>
-
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setGoal('FatLoss')"
-                        data-goal="fatLoss"
-                >
+
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setGoal('FatLoss')"
+                        data-goal="fatLoss">
                     <p class="mb-1 bold text-start"><%= language.fatLoss %></p>
-
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-secondary btn-exper"
-                        onclick="setGoal('Flexibility')"
-                        data-goal="flexibility"
-                >
-                    <p class="mb-1 bold text-start"><%= language.flexibility %></p>
 
+                <button type="button" class="btn btn-secondary btn-exper" onclick="setGoal('Flexibility')"
+                        data-goal="flexibility">
+                    <p class="mb-1 bold text-start"><%= language.flexibility %></p>
                 </button>
             </div>
 
             <div class="form-check mt-3">
-                <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="termsCheckbox"
-                        required
-                />
+                <input class="form-check-input" type="checkbox" id="termsCheckbox" required/>
                 <p>
                     <label class="form-check-label required" for="termsCheckbox">
                         <%= language.agreeTo %>
@@ -272,26 +163,15 @@
 
         <div style="overflow: auto; margin-top: 20px">
             <div style="float: right">
-                <button
-                        type="button"
-                        class="btn btn-width secondary-color"
-                        id="prevBtn"
-                        onclick="nextPrev(-1)"
-                >
+                <button type="button" class="btn btn-width secondary-color" id="prevBtn" onclick="nextPrev(-1)">
                     <%= language.previous %>
                 </button>
-                <button
-                        type="button"
-                        class="btn btn-width primary-color"
-                        id="nextBtn"
-                        onclick="nextPrev(1)"
-                >
+
+                <button type="button" class="btn btn-width primary-color" id="nextBtn" onclick="nextPrev(1)">
                     <%= language.next %>
                 </button>
             </div>
         </div>
-
-        <!-- Circles that indicate the steps of the form: -->
     </form>
 
     <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
@@ -390,6 +270,7 @@
                     <button type="button" class="btn btn-secondary" id="declineBtn" data-bs-dismiss="modal">
                         <%- language.decline %>
                     </button>
+
                     <button type="button" class="btn btn-primary" id="acceptBtn" data-bs-dismiss="modal">
                         <%- language.accept %>
                     </button>
@@ -415,7 +296,6 @@
                 }
             });
 
-            // Set default units on initial load
             setWeightUnit("kg");
             setHeightUnit("cm");
 
@@ -459,14 +339,13 @@
 
             const index = selectedDays.indexOf(dayStr);
             if (index > -1) {
-                selectedDays.splice(index, 1); // Remove day if already selected
+                selectedDays.splice(index, 1);
             } else {
-                selectedDays.push(dayStr); // Add day if not already selected
+                selectedDays.push(dayStr);
             }
 
-            // Update the hidden input and button appearance
             document.getElementById("days").value = selectedDays.join(",");
-            console.log(document.getElementById("days").value); // 添加这行代码
+            console.log(document.getElementById("days").value);
             updateButtonStyles();
         }
 
@@ -497,18 +376,15 @@
                 }
             });
 
-            // Optionally set a hidden input value if needed for form submission
             document.getElementById("fitnessLevel").value = level;
         }
 
-        let currentTab = 0; // The Current tab is set to be the first tab (0)
-        showTab(currentTab); // Display the current tab
+        let currentTab = 0;
+        showTab(currentTab);
 
         function showTab(n) {
-            // This function will display the specified tab of the form ...
             const x = document.getElementsByClassName("tab");
             x[n].style.display = "block";
-            // ... and fix the Previous/Next buttons:
             if (n === 0) {
                 document.getElementById("prevBtn").style.display = "none";
             } else {
@@ -519,7 +395,6 @@
             } else {
                 document.getElementById("nextBtn").innerHTML = "<%= language.next %>";
             }
-            // ... and run a function that displays the correct step indicator:
             fixStepIndicator(n);
         }
 
@@ -576,7 +451,7 @@
             let x, y, i, valid = true;
             x = document.getElementsByClassName("tab");
             y = x[currentTab].getElementsByTagName("input");
-            
+
             for (i = 0; i < y.length; i++) {
                 if (y[i].value === "" || (y[i].type === "number" && parseFloat(y[i].value) < 1)) {
                     y[i].className += " invalid";
@@ -632,13 +507,11 @@
         }
 
         function fixStepIndicator(n) {
-            // This function removes the "active" class of all steps...
             let i,
                 x = document.getElementsByClassName("step");
             for (i = 0; i < x.length; i++) {
                 x[i].className = x[i].className.replace(" active", "");
             }
-            //... and adds the "active" class to the current step:
             x[n].className += " active";
         }
 
@@ -693,9 +566,8 @@
                 }
             });
 
-            goalInput.value = goal; // Set the hidden input value to the selected goal for form submission
+            goalInput.value = goal;
         }
     </script>
-
     <%- include("templates/footer") %>
 </div>

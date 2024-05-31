@@ -4,9 +4,9 @@ import moment from 'moment';
  * Function to calculate the dates
  * that meet the criteria specified in the time array between the start date and the end date.
  *
- * @param time - Array of numbers representing the days of the week the user can work out (0-6 for Monday-Sunday).
- * @param startDate - Moment object representing the start date of the fitness plan.
- * @param endDate - Moment object representing the end date of the fitness plan.
+ * @param {number[]} time - Array of numbers representing the days of the week the user can work out (0-6 for Monday-Sunday).
+ * @param {Moment} startDate - Moment object representing the start date of the fitness plan.
+ * @param {Moment} endDate - Moment object representing the end date of the fitness plan.
  * @return {*[]} - Array of strings representing the dates that meet the criteria.
  */
 function calculateWorkoutDays(time, startDate, endDate) {
@@ -30,8 +30,8 @@ function calculateWorkoutDays(time, startDate, endDate) {
  * @param {number} height - User's height in cm.
  * @param {number} weight - User's weight in kg.
  * @param {string} goal - User's fitness goal (e.g., lose weight, build muscle).
- * @param {object} startDate - Moment object representing the start date of the fitness plan.
- * @param {object} endDate - Moment object representing the end date of the fitness plan.
+ * @param {Moment} startDate - Moment object representing the start date of the fitness plan.
+ * @param {Moment} endDate - Moment object representing the end date of the fitness plan.
  * @return {string} - A prompt string to be sent to GPT-3.5-turbo for generating the fitness plan.
  */
 export function generatePrompt(time, fitnessLevel, height, weight, goal, startDate, endDate) {

@@ -1,6 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Function to load the language file.
+ *
+ * @param req - HTTP request object.
+ * @param res - HTTP response object.
+ * @param next - Next middleware function.
+ */
 export const loadLanguage = (req, res, next) => {
     let language = 'en-uk';
 
