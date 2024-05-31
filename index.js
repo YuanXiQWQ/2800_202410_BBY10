@@ -299,9 +299,18 @@ app.get("/changeLanguage", ensureAuthenticated, sessionValidation, (req, res) =>
     res.render("changeLanguage", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
-app.post("/postChangeLanguage", (req, res) => {
+app.post("/postChangeLanguage", (req, res, next) => {
     req.session.language = req.body.language;
-    changeLanguage(req, res).catch(err => console.log("Internal Server Error by: " + err))
+    changeLanguage(req, res)
+        .then(() => {
+            res.status(200).json({ success: true, message: "Language changed successfully" });
+        })
+        .catch(err => {
+            console.log("Internal Server Error by: " + err);
+            if (!res.headersSent) {
+                res.status(500).json({ success: false, message: "Internal Server Error: " + err });
+            }
+        });
 });
 
 app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => {

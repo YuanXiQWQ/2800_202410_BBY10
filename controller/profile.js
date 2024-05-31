@@ -237,17 +237,19 @@ export async function deleteAccount(req, res) {
  * @returns {Promise<void>} A promise that resolves when the language is changed
  */
 export const changeLanguage = (req, res) => {
-    const {language} = req.session;
+    return new Promise((resolve, reject) => {
+        const { language } = req.session;
 
-    const languageFilePath = path.join(process.cwd(), 'public', 'languages', `${language}.json`);
-    fs.readFile(languageFilePath, 'utf-8', (err, data) => {
-        if (err) {
-            console.error(`Could not read language file: ${err.message}`);
-            return res.json({success: false, message: res.locals.language.languageChangeFailed});
-        } else {
-            req.session.userData.preferredLanguage = language;
-            res.locals.language = JSON.parse(data);
-            return res.json({success: true, message: res.locals.language.languageChangeSuccess});
-        }
+        const languageFilePath = path.join(process.cwd(), 'public', 'languages', `${language}.json`);
+        fs.readFile(languageFilePath, 'utf-8', (err, data) => {
+            if (err) {
+                console.error(`Could not read language file: ${err.message}`);
+                reject({ success: false, message: res.locals.language.languageChangeFailed });
+            } else {
+                req.session.userData.preferredLanguage = language;
+                res.locals.language = JSON.parse(data);
+                resolve({ success: true, message: res.locals.language.languageChangeSuccess });
+            }
+        });
     });
 };

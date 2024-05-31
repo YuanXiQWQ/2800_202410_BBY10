@@ -466,6 +466,7 @@
 
             // Update the hidden input and button appearance
             document.getElementById("days").value = selectedDays.join(",");
+            console.log(document.getElementById("days").value); // 添加这行代码
             updateButtonStyles();
         }
 
@@ -575,27 +576,59 @@
             let x, y, i, valid = true;
             x = document.getElementsByClassName("tab");
             y = x[currentTab].getElementsByTagName("input");
-
-            // A loop that checks every input field in the current tab:
+            
             for (i = 0; i < y.length; i++) {
-                // If a field is empty or less than 1...
-                if (y[i].value === "" || parseFloat(y[i].value) < 1) {
-                    // add an "invalid" class to the field:
+                if (y[i].value === "" || (y[i].type === "number" && parseFloat(y[i].value) < 1)) {
                     y[i].className += " invalid";
-                    // and set the current valid status to false:
                     valid = false;
                 } else {
-                    // remove "invalid" class if the field is valid
                     y[i].classList.remove("invalid");
                 }
             }
 
-            // If the valid status is true, mark the step as finished and valid:
+            if (currentTab === 2) {
+                const selectedDays = document.getElementById("days").value;
+                if (selectedDays === "") {
+                    valid = false;
+                    document.getElementById("days").className += " invalid";
+                } else {
+                    document.getElementById("days").classList.remove("invalid");
+                }
+            }
+
+            if (currentTab === 1) {
+                const fitnessLevel = document.getElementById("fitnessLevel").value;
+                if (fitnessLevel === "") {
+                    valid = false;
+                    document.getElementById("fitnessLevel").className += " invalid";
+                } else {
+                    document.getElementById("fitnessLevel").classList.remove("invalid");
+                }
+            }
+
+            if (currentTab === 3) {
+                const goal = document.getElementById("goal").value;
+                if (goal === "") {
+                    valid = false;
+                    document.getElementById("goal").className += " invalid";
+                } else {
+                    document.getElementById("goal").classList.remove("invalid");
+                }
+
+                const termsCheckbox = document.getElementById("termsCheckbox");
+                if (!termsCheckbox.checked) {
+                    valid = false;
+                    termsCheckbox.className += " invalid";
+                } else {
+                    termsCheckbox.classList.remove("invalid");
+                }
+            }
+
             if (valid) {
                 document.getElementsByClassName("step")[currentTab].className += " finish";
             }
 
-            return valid; // return the valid status
+            return valid;
         }
 
         function fixStepIndicator(n) {
