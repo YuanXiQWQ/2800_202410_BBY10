@@ -48,6 +48,8 @@ export async function sendMessageToChatGPT(messageToSend) {
         for (let i = 0; i < 3; i++) {
             try {
                 parsedMessage = JSON.parse(message);
+                console.log(parsedMessage, 'parsedMessageparsedMessage')
+
                 success = true;
                 break;
             } catch (parseError) {
