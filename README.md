@@ -110,6 +110,10 @@ Project follows the [MIT License](./LICENSE)
 
 ## Contact Information
 
+**GitHub**:
+[Issues](https://github.com/YuanXiQWQ/2800_202410_BBY10/issues)
+[Discussions](https://github.com/YuanXiQWQ/2800_202410_BBY10/discussions)
+
 **Email**: 2800202410bby10@gmail.com
 
 ---
