@@ -14,16 +14,15 @@ export async function logIn(req, res) {
     try {
         const user = await findByEmail(email);
 
-        if (!user) return res.status(404).json({message: "User not found", success: false});
+        if (!user) return res.status(404).json({message: res.locals.language.userNotFound, success: false});
         const isMatch = await validatePassword(user, password);
-        if (!isMatch) return res.status(400).json({message: "Invalid password", success: false});
+        if (!isMatch) return res.status(400).json({message: res.locals.language.invalidPassword, success: false});
         req.session.userData = user;
-        
 
         res.status(200).json({success: true});
 
     } catch (error) {
         console.error("Error logging in:", error);
-        res.status(500).json({message: "Internal Server Error", success: false});
+        res.status(500).json({message: res.locals.language.internalServerError, success: false});
     }
 }
