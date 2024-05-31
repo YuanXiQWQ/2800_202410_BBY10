@@ -453,7 +453,7 @@
             y = x[currentTab].getElementsByTagName("input");
 
             for (i = 0; i < y.length; i++) {
-                if (y[i].value === "" || (y[i].type === "number" && parseFloat(y[i].value) < 1)) {
+                if (y[i].value === "" || parseFloat(y[i].value.length) < 1) {
                     y[i].className += " invalid";
                     valid = false;
                 } else {
@@ -502,6 +502,7 @@
             if (valid) {
                 document.getElementsByClassName("step")[currentTab].className += " finish";
             }
+            console.log(valid)
 
             return valid;
         }
