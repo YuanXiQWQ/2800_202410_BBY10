@@ -16,7 +16,7 @@ import {
 import {forgetPassword, resetPassword} from "./controller/password.js";
 import {sendInformation} from "./controller/chatgptIntegration.js";
 import {getListOfExercises} from "./controller/exercises.js";
-import {authValidation, sessionValidation,} from "./middleware/authorization.js";
+import {authValidation, sessionValidation} from "./middleware/authorization.js";
 import {logIn} from "./controller/login.js";
 import {User, TempUser} from "./model/User.js";
 import {loadLanguage} from "./middleware/loadLanguage.js";
@@ -49,11 +49,13 @@ app.use(session({
 app.use(loadLanguage);
 
 app.get("/", authValidation, (req, res) => {
-    res.render("index", {language: res.locals.language});
+    const isLoggedIn = !!req.session.userData;
+    res.render("index", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.get("/signup", authValidation, (req, res) => {
-    res.render("signup", {language: res.locals.language});
+    const isLoggedIn = !!req.session.userData;
+    res.render("signup", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.post("/submitUser", upload.none(), async (req, res) => {
@@ -89,7 +91,7 @@ app.get("/verify-email", async (req, res) => {
             email: tempUser.email,
             birthday: tempUser.birthday,
             password: tempUser.password,
-            isVerified: true
+            isVerified: true,
         });
 
         await newUser.save();
@@ -103,12 +105,13 @@ app.get("/verify-email", async (req, res) => {
     }
 });
 
-app.get("/additional-info", (req, res) => {
+app.get("/additional-info", ensureAuthenticated, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     if (!req.session.userData || !req.session.userData.isVerified) return res.redirect("/signup");
-    res.render("additional-info", {language: res.locals.language});
+    res.render("additional-info", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
-app.post("/submitAdditionalInfo", (req, res) => {
+app.post("/submitAdditionalInfo", ensureAuthenticated, (req, res) => {
     console.log(req?.body);
     AdditionalUserInfo(req, res).catch((err) => {
         console.error("Error submitting additional info:", err);
@@ -118,8 +121,9 @@ app.post("/submitAdditionalInfo", (req, res) => {
     });
 });
 
-app.get("/calendar", (req, res) => {
-    res.render("calendar");
+app.get("/calendar", ensureAuthenticated, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("calendar", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.get("/exercisesList", async (req, res) => {
@@ -132,24 +136,29 @@ app.get("/exercisesList", async (req, res) => {
 });
 
 app.get("/newExerciseList", ensureAuthenticated, (req, res) => {
-    res.render("newExerciseList", {language: res.locals.language});
+    const isLoggedIn = !!req.session.userData;
+    res.render("newExerciseList", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.post("/submitNewExerciseList", ensureAuthenticated, (req, res) => {
-    sendInformation(req, res).then(() => {
-        if (!res.headersSent) {
-            res.status(200).json({success: true, message: "success"});
-        }
-    }).catch((err) => {
-        console.error("Error submitting new exercise list:", err);
-        if (!res.headersSent) {
-            res.status(500).json({success: false, message: "Internal Server Error: " + err});
-        }
-    });
+    sendInformation(req, res)
+        .then(() => {
+            if (!res.headersSent) {
+                res.status(200).json({success: true, message: "success"});
+            }
+        })
+        .catch((err) => {
+            console.error("Error submitting new exercise list:", err);
+            if (!res.headersSent) {
+                res.status(500).json({success: false, message: "Internal Server Error: " + err});
+            }
+        });
 });
 
-
-app.get("/login", (req, res) => res.render("login", {language: res.locals.language}));
+app.get("/login", authValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("login", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.post("/logging-in", async (req, res) => {
     try {
@@ -165,30 +174,43 @@ app.post("/logging-in", async (req, res) => {
     }
 });
 
+app.get("/forget-password", authValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("forgetPassword", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
-app.get("/forget-password", (req, res) => res.render("forgetPassword", {language: res.locals.language}));
-
-app.get("/about", (req, res) => res.render("about", {language: res.locals.language}));
+app.get("/about", authValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("about", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.post("/forget-password", forgetPassword);
 
-app.get("/reset-password", (req, res) => {
+app.get("/reset-password", authValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     const token = req.query.token;
     if (!token) return res.status(400).send("Invalid or expired token.");
-    res.render("resetPassword", {token, language: res.locals.language});
+    res.render("resetPassword", {
+        token, userData: req.session.userData, language: res.locals.language, login: isLoggedIn
+    });
 });
 
 app.post("/reset-password", resetPassword);
 
-app.get("/home", ensureAuthenticated, async (req, res) => {
-    res.render("home", {userData: req.session.userData, language: res.locals.language});
+app.get("/home", ensureAuthenticated, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("home", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
-app.get("/profile", ensureAuthenticated, (req, res) => res.render("profile", {userData: req.session.userData}));
+app.get("/profile", ensureAuthenticated, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("profile", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
-app.get("/editUserAvatar", ensureAuthenticated, sessionValidation, (req, res) => res.render("editUserAvatar", {
-    userData: req.session.userData, language: res.locals.language,
-}));
+app.get("/editUserAvatar", ensureAuthenticated, sessionValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("editUserAvatar", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.post("/postUserAvatar", ensureAuthenticated, sessionValidation, upload.single("avatar"), postUserAvatar);
 
@@ -208,18 +230,22 @@ app.get("/avatar/:filename", ensureAuthenticated, sessionValidation, (req, res) 
         });
 });
 
-app.get("/changePassword", ensureAuthenticated, (req, res) => res.render("changePassword", {language: res.locals.language}));
+app.get("/changePassword", ensureAuthenticated, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("changePassword", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.post("/postPassword", ensureAuthenticated, changePassword);
 
 app.get("/personalInformation", ensureAuthenticated, sessionValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     findByUsername(req.session.userData.username)
         .then((user) => {
             if (!user) {
                 return res.status(404).send("User not found");
             }
             res.render("personalInformation", {
-                userData: user, language: res.locals.language,
+                userData: user, language: res.locals.language, login: isLoggedIn,
             });
         })
         .catch((err) => {
@@ -231,13 +257,14 @@ app.get("/personalInformation", ensureAuthenticated, sessionValidation, (req, re
 app.post("/postPersonalInformation", ensureAuthenticated, sessionValidation, postPersonalInformation);
 
 app.get("/workoutSettings", ensureAuthenticated, sessionValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     findByUsername(req.session.userData.username)
         .then((user) => {
             if (!user) {
                 return res.status(404).send("User not found");
             }
             res.render("workoutSettings", {
-                userData: user, language: res.locals.language,
+                userData: user, language: res.locals.language, login: isLoggedIn,
             });
         })
         .catch((err) => {
@@ -249,13 +276,14 @@ app.get("/workoutSettings", ensureAuthenticated, sessionValidation, (req, res) =
 app.post("/postWorkoutSettings", ensureAuthenticated, sessionValidation, updateWorkoutSettings);
 
 app.get("/deleteAccount", ensureAuthenticated, sessionValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     findByUsername(req.session.userData.username)
         .then((user) => {
             if (!user) {
                 return res.status(404).send("User not found");
             }
             res.render("deleteAccount", {
-                userData: user, language: res.locals.language,
+                userData: user, language: res.locals.language, login: isLoggedIn,
             });
         })
         .catch((err) => {
@@ -266,17 +294,24 @@ app.get("/deleteAccount", ensureAuthenticated, sessionValidation, (req, res) => 
 
 app.post("/postDeletingAccount", ensureAuthenticated, sessionValidation, deleteAccount);
 
-app.get("/changeLanguage", ensureAuthenticated, sessionValidation, (req, res) => res.render("changeLanguage", {language: res.locals.language}));
+app.get("/changeLanguage", ensureAuthenticated, sessionValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("changeLanguage", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.post("/postChangeLanguage", (req, res) => {
     req.session.language = req.body.language;
-    changeLanguage(req, res);
+    changeLanguage(req, res).catch(err => console.log("Internal Server Error by: " + err))
 });
 
-app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => res.render("loading"));
+app.get("/process", ensureAuthenticated, sessionValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
+    res.render("loading", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.get("/exercises", ensureAuthenticated, (req, res) => {
-    res.render("workouts")
+    const isLoggedIn = !!req.session.userData;
+    res.render("workouts", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.get("/process-info", ensureAuthenticated, sessionValidation, (req, res) => {
@@ -294,16 +329,18 @@ app.post("/sendInformation", ensureAuthenticated, (req, res) => {
 });
 
 app.get("/train-plank", ensureAuthenticated, (req, res) => {
-    res.render("train-plank", {language: res.locals.language})
+    const isLoggedIn = !!req.session.userData;
+    res.render("train-plank", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
-
 app.get("/train-squat", ensureAuthenticated, (req, res) => {
-    res.render("train-squat", {language: res.locals.language})
+    const isLoggedIn = !!req.session.userData;
+    res.render("train-squat", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.get("/workouts", ensureAuthenticated, (req, res) => {
-    res.render("workouts", {language: res.locals.language})
+    const isLoggedIn = !!req.session.userData;
+    res.render("workouts", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
 });
 
 app.get("/logout", ensureAuthenticated, (req, res) => {
@@ -315,9 +352,10 @@ app.get("/logout", ensureAuthenticated, (req, res) => {
     });
 });
 
-app.get("*", (req, res) => {
+app.get("*", authValidation, (req, res) => {
+    const isLoggedIn = !!req.session.userData;
     res.status(404);
-    res.render('404', {language: res.locals.language});
-})
+    res.render("404", {userData: req.session.userData, language: res.locals.language, login: isLoggedIn});
+});
 
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
