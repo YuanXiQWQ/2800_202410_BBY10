@@ -11,13 +11,14 @@ integrating AI technology and the MoveNet API.
 
 List team members and/or short bio here...
 
-| **Team Name**    | BBY-10                                                                                              |
-|------------------|-----------------------------------------------------------------------------------------------------|
-| **Team Members** | **Bios**                                                                                            |
-| Matthew Wing     |                                                                                                     |
-| Jason Liu        |                                                                                                     |
-| Amal Allaham     |                                                                                                     |
-| Jiarui Xing      | Hi! My name is Jiarui Xing, and people usually call me Jerry. I will try my best to work in a team! |
+| **Team Name**    | 
+|------------------|
+| BBY-10           |
+| **Team Members** |
+| Matthew Wing     |
+| Jason Liu        |
+| Amal Allaham     |
+| Jiarui Xing      |
 
 ## 3. Technologies and Resources Used
 
@@ -34,28 +35,3 @@ were used.
 * Adobe Photoshop 2023 (For Icons and Logo)
 * JetBrains WebStorm v2024.1, Microsoft Visual Studio Code (IDE)
 * Microsoft Windows 10 22H2, 11 (OS)
-
-## 4. Complete setup/installation/usage
-
-State what a user needs to do when they come to your project. How do others start using your code or application?
-Here are the steps ...
-
-* ...
-* ...
-* ...
-
-## 5. Known Bugs and Limitations
-
-Here are some known bugs:
-
-* ...
-* ...
-* ...
-
-## 6. Features for Future
-
-What we'd like to build in the future:
-
-* ...
-* ...
-* ...
